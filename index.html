@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angielski z Kristiną</title>
+<meta name="description" content="Prywatne lekcje angielskiego online dla dzieci 4–12 lat. Bezpłatna lekcja próbna, bezpieczny dostęp bez zakładania kont, ceny już od 30 zł za lekcję (50 minut).">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Angielski z Kristiną">
+<meta property="og:title" content="Angielski z Kristiną — lekcje online dla dzieci 4–12 lat">
+<meta property="og:description" content="Prywatne lekcje 1 na 1 z ciepłą, doświadczoną nauczycielką. Bezpłatna lekcja próbna, bez zakładania kont. Już od 30 zł za lekcję (50 minut).">
+<meta property="og:image" content="og-image.jpg">
+<meta property="og:image:width" content="1424">
+<meta property="og:image:height" content="752">
+<meta property="og:image:alt" content="Nauczycielka prowadząca lekcję angielskiego online z dzieckiem">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Angielski z Kristiną — lekcje online dla dzieci 4–12 lat">
+<meta name="twitter:description" content="Prywatne lekcje 1 na 1 z ciepłą, doświadczoną nauczycielką. Bezpłatna lekcja próbna, bez zakładania kont.">
+<meta name="twitter:image" content="og-image.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%233E7C74'/%3E%3Ctext x='32' y='44' font-family='Georgia, Baskerville, serif' font-size='34' font-weight='700' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF5EC;
+    --surface:#FFFFFF;
+    --surface-alt:#FFF1DE;
+    --surface-teal:#EAF3F0;
+    --ink:#2B3A38;
+    --ink-soft:#5C6D69;
+    --accent:#3E7C74;
+    --accent-dark:#2C5C56;
+    --accent-tint:#DCEAE6;
+    --accent-warm:#E8935C;
+    --accent-warm-dark:#C96F38;
+    --accent-warm-darker:#A85826;
+    --accent-warm-tint:#FBE3D0;
+    --accent-gold:#C68F32;
+    --accent-gold-dark:#9C6A1E;
+    --accent-gold-tint:#F5E6C6;
+    --band-warm:#8B4020;
+    --on-band-warm:#FFF8EE;
+    --on-accent-dark:#F7FBFA;
+    --border:#E9DEC9;
+    --shadow: 36 42 34;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1B2422; --surface:#223330; --surface-alt:#2B3A30; --surface-teal:#213330;
+      --ink:#F2EEE4; --ink-soft:#BFCCC7;
+      --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
+      --accent-warm:#F2A56D; --accent-warm-dark:#F7BC8E; --accent-warm-darker:#F7BC8E; --accent-warm-tint:#3A2E22;
+      --accent-gold:#E0B45C; --accent-gold-dark:#E0B45C; --accent-gold-tint:#3A2F1B;
+      --band-warm:#F0B27A; --on-band-warm:#1C1208; --on-accent-dark:#0E1B18;
+      --border:#3A4A43; --shadow: 0 0 0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B2422; --surface:#223330; --surface-alt:#2B3A30; --surface-teal:#213330;
+    --ink:#F2EEE4; --ink-soft:#BFCCC7;
+    --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
+    --accent-warm:#F2A56D; --accent-warm-dark:#F7BC8E; --accent-warm-darker:#F7BC8E; --accent-warm-tint:#3A2E22;
+    --accent-gold:#E0B45C; --accent-gold-dark:#E0B45C; --accent-gold-tint:#3A2F1B;
+    --band-warm:#F0B27A; --on-band-warm:#1C1208; --on-accent-dark:#0E1B18;
+    --border:#3A4A43; --shadow: 0 0 0;
+  }
+
+  *{box-sizing:border-box;}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth;} }
+  html{overflow-x:hidden;}
+  body{background:var(--bg);color:var(--ink);font-family:'Karla', system-ui, sans-serif;font-size:1.05rem;line-height:1.65;overflow-x:hidden;max-width:100vw;}
+  h1,h2,h3{font-family:'Baloo 2', system-ui, sans-serif;font-weight:700;text-wrap:balance;color:var(--ink);margin:0;}
+  p{margin:0;}
+  img{display:block;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  section{padding:64px 0;}
+  @media (max-width:720px){ section{padding:44px 0;} }
+  .full-bleed{width:100%;}
+  .section-label{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:10px;display:block;}
+
+  /* ---------- reveal-on-scroll (safe: visible by default, JS only adds a temporary pre-state) ---------- */
+  .reveal{transition:opacity .55s ease, transform .55s ease;}
+  .reveal.pre{opacity:0;transform:translateY(18px);}
+  .stagger-1{transition-delay:.06s;} .stagger-2{transition-delay:.12s;} .stagger-3{transition-delay:.18s;} .stagger-4{transition-delay:.24s;}
+
+  /* ---------- nav ---------- */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:16px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:700;font-size:1.15rem;min-width:0;}
+  .brand-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .brand-mark{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--surface);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex:none;}
+  .nav-right{display:flex;align-items:center;gap:16px;flex:none;}
+  @media (max-width:480px){
+    .nav{gap:8px;}
+    .nav-right{gap:8px;}
+    .nav-cta{padding:9px 14px;font-size:.82rem;}
+    .lang-toggle, .lang-toggle svg{width:36px;height:36px;}
+  }
+  @media (max-width:380px){
+    .brand-text{display:none;}
+  }
+  .nav-cta{background:var(--accent-warm);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 6px 16px rgb(var(--shadow)/.18);white-space:nowrap;}
+  .nav-cta:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible{outline:3px solid var(--accent-warm); outline-offset:2px;}
+
+  .lang-toggle{background:none;border:none;cursor:pointer;padding:0;width:44px;height:44px;border-radius:50%;position:relative;flex:none;transition:transform .18s ease;}
+  .lang-toggle:hover{transform:scale(1.07);}
+  .lang-toggle:active{transform:scale(.95);}
+  .lang-toggle svg{width:44px;height:44px;display:block;border-radius:50%;box-shadow:0 4px 12px rgb(var(--shadow)/.24);}
+  .lang-toggle .flag-ring{fill:none;stroke:var(--surface);stroke-width:2.5;}
+  .lang-toggle .flag-half{transition:opacity .22s ease, filter .22s ease;}
+  .lang-toggle[aria-checked="false"] .flag-half-en{opacity:.4;filter:grayscale(.4);}
+  .lang-toggle[aria-checked="true"] .flag-half-pl{opacity:.4;filter:grayscale(.4);}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:24px;padding-bottom:40px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;gap:36px;} }
+  .eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-dark);background:var(--accent-tint);padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+  .hero h1{font-size:clamp(2.2rem,4.6vw,3.3rem);line-height:1.1;}
+  .hero-sub{margin-top:18px;font-size:1.12rem;color:var(--ink-soft);max-width:46ch;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;}
+  .btn-primary{background:var(--accent-warm);color:#fff;padding:15px 26px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;box-shadow:0 10px 24px rgb(var(--shadow)/.22);border:none;cursor:pointer;display:inline-block;transition:transform .18s ease, box-shadow .18s ease;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgb(var(--shadow)/.28);}
+  .btn-ghost{padding:15px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;color:var(--accent-dark);border:2px solid var(--accent-tint);background:transparent;display:inline-block;transition:background .18s ease;}
+  .btn-ghost:hover{background:var(--accent-tint);}
+  .hero-photo-wrap{position:relative;display:flex;justify-content:center;}
+  .hero-blob{position:absolute;inset:0;margin:auto;width:100%;max-width:380px;aspect-ratio:1/1.05;background:var(--accent-tint);border-radius:62% 38% 55% 45% / 48% 55% 45% 52%;z-index:0;}
+  .hero-photo{position:relative;z-index:1;width:78%;max-width:300px;aspect-ratio:4/5;object-fit:cover;border-radius:38% 62% 52% 48% / 54% 46% 54% 46%;border:6px solid var(--surface);box-shadow:0 24px 48px rgb(var(--shadow)/.22);}
+  .hero-badge{position:absolute;z-index:2;right:4%;bottom:4%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 16px;box-shadow:0 10px 24px rgb(var(--shadow)/.16);font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .hero-badge svg{width:18px;height:18px;flex:none;color:var(--accent-warm);}
+
+  /* ---------- booking widget ---------- */
+  .booking-card{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:32px 34px;box-shadow:0 24px 48px rgb(var(--shadow)/.14);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;}
+  @media (max-width:760px){ .booking-card{grid-template-columns:1fr;padding:26px 24px;} }
+  .booking-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .live-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-tint);flex:none;}
+  .booking-head span{font-size:.85rem;font-weight:700;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.04em;}
+  .week-nav{display:flex;gap:6px;margin-left:auto;}
+  .week-nav-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .15s ease;}
+  .week-nav-btn:hover:not(:disabled){background:var(--accent-tint);}
+  .week-nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+  @media (max-width:560px){ .week-grid{grid-template-columns:repeat(4,1fr);} }
+  .day-col{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .day-label{font-size:.75rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;}
+  .slot-chip{width:100%;text-align:center;font-size:.75rem;font-variant-numeric:tabular-nums;padding:7px 4px;border-radius:8px;background:var(--accent-tint);color:var(--accent-dark);font-weight:600;border:none;cursor:pointer;transition:transform .15s ease, background .15s ease;}
+  .slot-chip:hover:not(:disabled){transform:translateY(-2px);}
+  .slot-chip.is-suggested{background:var(--accent-warm);color:#fff;box-shadow:0 6px 14px rgb(var(--shadow)/.22);}
+  .slot-chip.is-past{opacity:.32;cursor:not-allowed;}
+  .slot-chip.is-past:hover{transform:none;}
+  .booking-cta{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;min-width:210px;}
+  .booking-cta .suggested-label{font-size:.78rem;color:var(--ink-soft);}
+  .booking-cta .suggested-slot{font-family:'Baloo 2';font-weight:700;font-size:1.2rem;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .booking-note{margin-top:18px;font-size:.8rem;color:var(--ink-soft);}
+
+  /* ---------- tiles (shared: trust + safety) ---------- */
+  .trust-block{padding:16px 0 56px;}
+  .tile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media (max-width:860px){ .tile-grid{grid-template-columns:repeat(2,1fr);} }
+  .tile{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:10px;transition:transform .18s ease, box-shadow .18s ease;}
+  .tile:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgb(var(--shadow)/.12);}
+  .tile-icon{width:34px;height:34px;color:var(--accent);}
+  .tile strong{font-size:.98rem;}
+  .tile span{font-size:.88rem;color:var(--ink-soft);}
+
+  /* ---------- section wave dividers: sit flush at the band's own top edge (no padding before them), so the flat color they start with matches the previous section's trailing background exactly and blends with no seam ---------- */
+  .band-wave{display:block;width:100%;height:72px;}
+  @media (max-width:720px){ .band-wave{height:40px;} }
+  .band-inner{padding-top:44px;}
+
+  /* ---------- about ---------- */
+  .about-band{background:var(--surface-teal);padding:0 0 76px;}
+  @media (max-width:720px){ .about-band{padding-bottom:52px;} }
+  .about-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:52px;align-items:center;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-band h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:18px;}
+  .about-band p + p{margin-top:14px;color:var(--ink-soft);}
+  .video-card{border-radius:24px;overflow:hidden;border:1px solid var(--border);background:var(--surface);box-shadow:0 20px 40px rgb(var(--shadow)/.14);}
+  .video-card video{width:100%;display:block;background:#000;aspect-ratio:16/10;object-fit:cover;}
+  .video-caption{padding:14px 18px;font-size:.88rem;color:var(--ink-soft);}
+
+  /* ---------- stats band ---------- */
+  .stats-band{background:var(--band-warm);color:var(--on-band-warm);padding:0 0 84px;}
+  @media (max-width:720px){ .stats-band{padding-bottom:56px;} }
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:center;margin-top:36px;}
+  @media (max-width:720px){ .stats-grid{grid-template-columns:1fr;} }
+  .stats-band .section-label{color:var(--on-band-warm);opacity:.75;}
+  .stats-band h2{color:var(--on-band-warm);}
+  .stat-num{font-family:'Baloo 2';font-weight:800;font-size:clamp(2rem,5vw,2.8rem);font-variant-numeric:tabular-nums;color:var(--on-band-warm);}
+  .stat-label{font-size:.92rem;margin-top:6px;color:var(--on-band-warm);opacity:.82;}
+
+  /* ---------- steps ---------- */
+  .steps-band{background:var(--surface-teal);padding:0 0 76px;}
+  @media (max-width:720px){ .steps-band{padding-bottom:52px;} }
+  .steps-head{max-width:60ch;margin-bottom:40px;}
+  .steps-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:860px){ .steps{grid-template-columns:1fr;} }
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:28px 26px;transition:transform .18s ease, box-shadow .18s ease;}
+  .step:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgb(var(--shadow)/.12);}
+  .step-num{font-family:'Baloo 2';font-weight:800;font-size:1.7rem;margin-bottom:14px;}
+  .step:nth-child(1) .step-num{color:var(--accent);}
+  .step:nth-child(2) .step-num{color:var(--accent-warm-dark);}
+  .step:nth-child(3) .step-num{color:var(--accent-gold-dark);}
+  .step h3{font-size:1.08rem;margin-bottom:8px;}
+  .step p{color:var(--ink-soft);font-size:.94rem;}
+
+  /* ---------- cancellation banner ---------- */
+  .cancel-block{padding:48px 0;}
+  .cancel-banner{background:var(--accent-warm-tint);border-radius:24px;padding:30px 34px;display:flex;gap:20px;align-items:center;}
+  @media (max-width:640px){ .cancel-banner{flex-direction:column;text-align:center;} }
+  .cancel-icon{width:52px;height:52px;flex:none;border-radius:16px;background:var(--surface);color:var(--accent-warm-darker);display:flex;align-items:center;justify-content:center;}
+  .cancel-icon svg{width:26px;height:26px;}
+  .cancel-banner h3{font-size:1.05rem;margin-bottom:4px;}
+  .cancel-banner p{font-size:.92rem;color:var(--ink-soft);}
+
+  /* ---------- savings ---------- */
+  .savings{padding:48px 0;}
+  .savings-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center;}
+  @media (max-width:860px){ .savings-grid{grid-template-columns:1fr;} }
+  .savings h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:14px;}
+  .savings-copy p{color:var(--ink-soft);}
+  .savings-copy p + p{margin-top:12px;}
+  .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:30px 32px;box-shadow:0 20px 40px rgb(var(--shadow)/.1);}
+  .bar-row{margin-bottom:22px;}
+  .bar-row:last-child{margin-bottom:0;}
+  .bar-row-head{display:flex;justify-content:space-between;font-size:.88rem;font-weight:700;margin-bottom:8px;}
+  .bar-track{background:var(--border);border-radius:999px;height:16px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;width:0;transition:width 1s cubic-bezier(.22,1,.36,1);}
+  .bar-row:nth-child(1) .bar-fill{background:var(--ink-soft);}
+  .bar-row:nth-child(2) .bar-fill{background:var(--accent-warm);}
+  .bar-row.in-view:nth-child(1) .bar-fill{width:50%;}
+  .bar-row.in-view:nth-child(2) .bar-fill{width:100%;}
+  .chart-foot{margin-top:18px;font-size:.8rem;color:var(--ink-soft);border-top:1px solid var(--border);padding-top:14px;}
+
+  /* ---------- pricing ---------- */
+  .pricing-block{padding:48px 0;}
+  .pricing-wrap{background:var(--surface-alt);border-radius:28px;padding:52px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
+  @media (max-width:760px){ .pricing-wrap{grid-template-columns:1fr;padding:36px 26px;} }
+  .price-copy h2{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:12px;}
+  .price-copy p{color:var(--ink-soft);max-width:44ch;}
+  .price-list{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+  .price-list li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:.95rem;}
+  .price-list svg{width:18px;height:18px;flex:none;margin-top:2px;color:var(--accent);}
+  .price-card{background:var(--surface);border-radius:22px;padding:30px 36px;text-align:center;box-shadow:0 20px 40px rgb(var(--shadow)/.14);min-width:250px;}
+  .price-card .tag{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-warm-darker);}
+  .price-card .amount{font-family:'Baloo 2';font-weight:800;font-size:2.7rem;margin:10px 0 2px;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .price-card .unit-badge{display:inline-block;margin-top:6px;background:var(--accent-tint);color:var(--accent-dark);font-weight:700;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;padding:6px 12px;border-radius:999px;}
+  .price-card .note{margin-top:16px;font-size:.82rem;color:var(--ink-soft);border-top:1px solid var(--border);padding-top:14px;}
+
+  /* ---------- safety ---------- */
+  .safety-band{background:var(--surface-teal);padding:0 0 76px;}
+  @media (max-width:720px){ .safety-band{padding-bottom:52px;} }
+  .safety-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center;}
+  @media (max-width:860px){ .safety-grid{grid-template-columns:1fr;} }
+  .safety-list{display:flex;flex-direction:column;gap:20px;}
+  .safety-item{display:flex;gap:16px;}
+  .safety-icon{width:44px;height:44px;flex:none;border-radius:14px;background:var(--surface);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;}
+  .safety-icon svg{width:22px;height:22px;}
+  .safety-item h3{font-size:1rem;margin-bottom:4px;}
+  .safety-item p{font-size:.92rem;color:var(--ink-soft);}
+  .safety-band h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:16px;}
+  .safety-band .safety-grid > div:first-child p{color:var(--ink-soft);margin-top:14px;max-width:42ch;}
+
+  /* ---------- faq ---------- */
+  .faq{padding:48px 0;}
+  .faq h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:32px;text-align:center;}
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+  .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px 24px;transition:box-shadow .18s ease;}
+  .faq-item:hover{box-shadow:0 10px 22px rgb(var(--shadow)/.1);}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:.98rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:"+";font-size:1.3rem;color:var(--accent);flex:none;transition:transform .2s ease;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{margin-top:12px;color:var(--ink-soft);font-size:.94rem;}
+
+  /* ---------- footer cta ---------- */
+  .cta-block{padding:48px 0 64px;}
+  .cta-band{background:var(--accent-dark);color:var(--on-accent-dark);border-radius:32px;padding:56px 48px;text-align:center;}
+  @media (max-width:640px){ .cta-band{padding:44px 26px;} }
+  .cta-band h2{color:var(--on-accent-dark);font-size:clamp(1.7rem,3.4vw,2.4rem);}
+  .cta-band p{color:var(--on-accent-dark);opacity:.85;margin-top:12px;max-width:48ch;margin-left:auto;margin-right:auto;}
+  .cta-contacts{margin-top:30px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .contact-pill{background:color-mix(in srgb, var(--on-accent-dark) 12%, transparent);border:1px solid color-mix(in srgb, var(--on-accent-dark) 26%, transparent);padding:10px 18px;border-radius:999px;font-size:.9rem;text-decoration:none;color:var(--on-accent-dark);display:flex;align-items:center;gap:8px;transition:transform .18s ease;}
+  .contact-pill:hover{transform:translateY(-2px);}
+  footer.site-footer{padding:32px 0 48px;text-align:center;font-size:.82rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:8px;}
+  footer.site-footer a{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="nav">
+    <div class="brand"><span class="brand-mark">K</span><span class="brand-text">Angielski z Kristiną</span></div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Przełącz język / Switch language">
+        <svg viewBox="0 0 44 44">
+          <clipPath id="flagClip"><circle cx="22" cy="22" r="20"/></clipPath>
+          <g clip-path="url(#flagClip)">
+            <g class="flag-half flag-half-pl">
+              <rect x="0" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
+            </g>
+            <g class="flag-half flag-half-en">
+              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
+              <path d="M22 0L44 44M44 0L22 44" stroke="#fff" stroke-width="6"/>
+              <path d="M22 0L44 44M44 0L22 44" stroke="#CF142B" stroke-width="2.4"/>
+              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
+              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
+              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
+              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+            </g>
+          </g>
+          <circle class="flag-ring" cx="22" cy="22" r="20"/>
+        </svg>
+      </button>
+      <a class="nav-cta" href="#rezerwacja" data-i18n="nav_cta">Umów lekcję</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow" data-i18n="hero_eyebrow">Lekcje online · dzieci 4–12 lat</span>
+      <h1 data-i18n="hero_h1">Angielski, który dzieci naprawdę polubią</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Prywatne lekcje 1 na 1 z Kristiną — ciepłą i cierpliwą nauczycielką, która uczy najmłodszych online. Bez zakładania kont, bez stresu — jeden stały, bezpieczny dostęp do zajęć.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#rezerwacja" data-i18n="hero_cta1">Umów bezpłatną lekcję próbną</a>
+        <a class="btn-ghost" href="#poznaj" data-i18n="hero_cta2">Poznaj Kristinę</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-blob"></div>
+      <img class="hero-photo" src="kristina.jpg" alt="Kristina, nauczycielka języka angielskiego">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 16.9l-5.7 2.9 1.1-6.4L2.8 8.8l6.4-.9z"/></svg>
+        <span data-i18n="hero_badge">Filipiny · nauczanie online</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="rezerwacja" style="padding-bottom:8px;">
+  <div class="booking-card">
+    <div>
+      <div class="booking-head">
+        <span class="live-dot"></span><span data-i18n="booking_live">Dostępność w tym tygodniu</span>
+        <div class="week-nav">
+          <button class="week-nav-btn" id="weekPrev" aria-label="Poprzedni tydzień">‹</button>
+          <button class="week-nav-btn" id="weekNext" aria-label="Następny tydzień">›</button>
+        </div>
+      </div>
+      <div class="week-grid" id="weekGrid"></div>
+    </div>
+    <div class="booking-cta">
+      <span class="suggested-label" data-i18n="booking_suggested_label">Najbliższy wolny termin</span>
+      <span class="suggested-slot" id="suggestedSlot">—</span>
+      <a class="btn-primary" id="bookLink" href="#" target="_blank" rel="noopener" data-i18n="booking_button">Zarezerwuj ten termin</a>
+    </div>
+  </div>
+  <p class="booking-note" data-i18n="booking_note">Kliknij dowolny termin w harmonogramie, aby go wybrać, albo strzałkami zobacz kolejne dni. Termin orientacyjny — dokładną dostępność potwierdzimy na WhatsApp w ciągu kilku godzin.</p>
+</div>
+
+<div class="wrap trust-block">
+  <div class="tile-grid">
+    <div class="tile reveal">
+      <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="8" r="3"/><path d="M2 19c0-3 2.2-5 5-5s5 2 5 5"/><circle cx="17" cy="8" r="3"/><path d="M12 19c0-3 2.2-5 5-5s5 2 5 5"/></svg>
+      <strong data-i18n="trust1_t">Zajęcia 1 na 1</strong>
+      <span data-i18n="trust1_d">Indywidualne podejście dopasowane do wieku i tempa dziecka.</span>
+    </div>
+    <div class="tile reveal stagger-1">
+      <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <strong data-i18n="trust2_t">Stały, prywatny dostęp</strong>
+      <span data-i18n="trust2_d">Jeden link i hasło na cały okres nauki — bez zakładania kont.</span>
+    </div>
+    <div class="tile reveal stagger-2">
+      <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+      <strong data-i18n="trust3_t">Elastyczne terminy</strong>
+      <span data-i18n="trust3_d">Lekcje dopasowane do planu dnia Twojego dziecka.</span>
+    </div>
+    <div class="tile reveal stagger-3">
+      <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <strong data-i18n="trust4_t">Bezpieczne płatności</strong>
+      <span data-i18n="trust4_d">Rozliczenia przez zaufanego operatora — nie przechowujemy danych karty.</span>
+    </div>
+  </div>
+</div>
+
+<div class="full-bleed about-band" id="poznaj">
+  <svg class="band-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,20 C1140,70 1020,10 720,38 C420,66 300,6 0,42 Z" style="fill:var(--bg)"/></svg>
+  <div class="wrap about-grid band-inner">
+    <div class="reveal">
+      <span class="section-label" data-i18n="about_label">O nauczycielce</span>
+      <h2 data-i18n="about_h2">Poznaj Kristinę</h2>
+      <p data-i18n="about_p1">Cześć, mam na imię Kristina! Specjalizuję się w nauczaniu dzieci — pracowałam zarówno z najmłodszymi, jak i z nastolatkami, indywidualnie i w grupach. Uczę z pasją i naprawdę kocham to, co robię. Nauka języka to długi proces, ale staje się zabawą, gdy dziecko zaczyna go lubić — dlatego zawsze dbam, by moi uczniowie czuli się zachęceni i pewni siebie w rozmowie po angielsku.</p>
+      <p data-i18n="about_p2">Moja supermoc? Dobrze gram na gitarze i pianinie, a do tego potrafię zjeść całą galonową miskę lodów jednym podejściem! Mam nadzieję, że poznamy się już niedługo.</p>
+    </div>
+    <div class="video-card reveal stagger-1">
+      <video controls preload="metadata" poster="kristina.jpg">
+        <source src="kristina-intro.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption" data-i18n="about_video_caption">Krótkie nagranie — poznaj Kristinę, zanim umówisz pierwszą lekcję.</div>
+    </div>
+  </div>
+</div>
+
+<div class="full-bleed stats-band">
+  <svg class="band-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,14 C1140,64 1020,4 720,32 C420,60 300,0 0,36 Z" style="fill:var(--surface-teal)"/></svg>
+  <div class="wrap band-inner">
+    <span class="section-label reveal" data-i18n="stats_label">W liczbach</span>
+    <h2 class="reveal" data-i18n="stats_h2">Doświadczenie, które mówi samo za siebie</h2>
+    <div class="stats-grid">
+      <div class="reveal"><div class="stat-num" data-count="14821">14 821</div><div class="stat-label" data-i18n="stats1">przeprowadzonych lekcji</div></div>
+      <div class="reveal stagger-1"><div class="stat-num" data-count="58">58</div><div class="stat-label" data-i18n="stats2">aktualnych uczniów</div></div>
+      <div class="reveal stagger-2"><div class="stat-num" data-count="2437">2 437</div><div class="stat-label" data-i18n="stats3">pozytywnych opinii</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="full-bleed steps-band">
+  <svg class="band-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,18 C1140,68 1020,8 720,36 C420,64 300,4 0,40 Z" style="fill:var(--band-warm)"/></svg>
+  <div class="wrap band-inner">
+    <div class="steps-head reveal">
+      <span class="section-label" data-i18n="steps_label">Jak to działa</span>
+      <h2 data-i18n="steps_h2">Trzy kroki do pierwszej lekcji</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">01</div><h3 data-i18n="step1_t">Bezpłatna lekcja próbna</h3><p data-i18n="step1_d">Umawiacie dogodny termin, poznajecie Kristinę i sprawdzacie, czy metoda pasuje Waszemu dziecku — bez zobowiązań.</p></div>
+      <div class="step reveal stagger-1"><div class="step-num">02</div><h3 data-i18n="step2_t">Jeden stały dostęp</h3><p data-i18n="step2_d">Dziecko otrzymuje prywatny link i hasło do wirtualnej sali zajęć. Bez zakładania konta — wystarczy kliknąć o umówionej godzinie.</p></div>
+      <div class="step reveal stagger-2"><div class="step-num">03</div><h3 data-i18n="step3_t">Regularne zajęcia</h3><p data-i18n="step3_d">Cotygodniowe lekcje w stałym rytmie. Informację o postępach dziecka przygotowujemy na życzenie rodzica — bez zbędnych powiadomień, nie spamujemy.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap cancel-block">
+  <div class="cancel-banner reveal">
+    <div class="cancel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l2.5 1.5"/></svg></div>
+    <div>
+      <h3 data-i18n="cancel_t">Elastyczna polityka odwołań</h3>
+      <p data-i18n="cancel_d">Wiemy, że dzieci czasem chorują, a czasem wolą wyjść na plac zabaw. Odwołanie zgłoszone do 2 godzin przed lekcją jest całkowicie bezpłatne.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap savings">
+  <div class="savings-grid">
+    <div class="savings-copy reveal">
+      <span class="section-label" data-i18n="savings_label">Ten sam budżet, więcej nauki</span>
+      <h2 data-i18n="savings_h2">Więcej kontaktu z językiem za mniej</h2>
+      <p data-i18n="savings_p1">Przeciętny korepetytor w Polsce liczy sobie 40–80 zł za godzinę. Za budżet jednej takiej lekcji tygodniowo Kristina daje dwa razy więcej czasu nauki miesięcznie.</p>
+      <p data-i18n="savings_p2">To ma znaczenie: krótszy, częstszy kontakt z angielskim działa jak językowa "kąpiel" (immersion) i daje lepsze efekty niż jedna długa lekcja raz w tygodniu.</p>
+    </div>
+    <div class="chart-card reveal stagger-1">
+      <div class="bar-row" id="barRow1">
+        <div class="bar-row-head"><span data-i18n="chart_row1">Tradycyjne korepetycje</span><span data-i18n="chart_val1">4 lekcje / mies.</span></div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+      <div class="bar-row" id="barRow2">
+        <div class="bar-row-head"><span data-i18n="chart_row2">Angielski z Kristiną</span><span data-i18n="chart_val2">8 lekcji / mies.</span></div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+      <div class="chart-foot" data-i18n="chart_foot">Przykładowe wyliczenie przy budżecie ok. 240 zł miesięcznie i cenie 30 zł za lekcję (50 minut).</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap pricing-block">
+  <div class="pricing-wrap reveal">
+    <div class="price-copy">
+      <span class="section-label" data-i18n="price_label">Cennik</span>
+      <h2 data-i18n="price_h2">Prosta, przejrzysta cena</h2>
+      <p data-i18n="price_p">Bez opłat platformowych i ukrytych kosztów — płacicie wyłącznie za czas spędzony z nauczycielką.</p>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg><span data-i18n="price_li1">Pierwsza lekcja próbna gratis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg><span data-i18n="price_li2">Płatność z góry, online, za lekcję lub pakiet</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg><span data-i18n="price_li3">Rabaty przy zakupie pakietu lekcji — zapytaj przy zapisie</span></li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="tag" data-i18n="price_tag">Lekcja indywidualna</div>
+      <div class="amount">30 zł</div>
+      <div class="unit-badge" data-i18n="price_unit">za lekcję (50 minut)</div>
+      <div class="note" data-i18n="price_note">Cena wprowadzająca dla pierwszych rodzin</div>
+    </div>
+  </div>
+</div>
+
+<div class="full-bleed safety-band">
+  <svg class="band-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L1440,0 L1440,20 C1140,70 1020,10 720,38 C420,66 300,6 0,42 Z" style="fill:var(--bg)"/></svg>
+  <div class="wrap band-inner">
+    <div class="safety-grid">
+      <div class="reveal">
+        <span class="section-label" data-i18n="safety_label">Bezpieczeństwo</span>
+        <h2 data-i18n="safety_h2">Priorytet: bezpieczeństwo dziecka</h2>
+        <p data-i18n="safety_p">Minimalizujemy ilość gromadzonych danych i nie zostawiamy śladu dziecka w żadnym systemie logowania.</p>
+      </div>
+      <div class="safety-list">
+        <div class="safety-item reveal"><div class="safety-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div><h3 data-i18n="safety1_t">Prywatny dostęp zamiast konta</h3><p data-i18n="safety1_d">Stały link i hasło do sali zajęć — dziecko nie zakłada konta ani nie podaje własnych danych logowania.</p></div></div>
+        <div class="safety-item reveal stagger-1"><div class="safety-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><div><h3 data-i18n="safety2_t">Minimum danych</h3><p data-i18n="safety2_d">Przechowujemy wyłącznie dane kontaktowe rodzica potrzebne do umówienia i rozliczenia zajęć.</p></div></div>
+        <div class="safety-item reveal stagger-2"><div class="safety-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="13" rx="2"/><path d="M9 3.5h6M12 10v5"/></svg></div><div><h3 data-i18n="safety3_t">Brak nagrań bez zgody</h3><p data-i18n="safety3_d">Zajęcia nie są nagrywane ani utrwalane bez wyraźnej, odrębnej zgody rodzica.</p></div></div>
+        <div class="safety-item reveal stagger-3"><div class="safety-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/></svg></div><div><h3 data-i18n="safety4_t">Zgoda i płatność</h3><p data-i18n="safety4_d">Przed pierwszą lekcją prosimy o zgodę rodzica zgodnie z RODO; płatności obsługuje zewnętrzny operator, bez dostępu do danych karty.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap faq">
+  <h2 data-i18n="faq_h2">Najczęstsze pytania</h2>
+  <div class="faq-list">
+    <details class="faq-item reveal"><summary data-i18n="faq1_q">Czy muszę zakładać konto?</summary><p data-i18n="faq1_a">Nie. Otrzymujecie jeden stały link i hasło do sali zajęć — wystarczy kliknąć w umówionym terminie.</p></details>
+    <details class="faq-item reveal stagger-1"><summary data-i18n="faq2_q">Jakiej platformy używamy do lekcji?</summary><p data-i18n="faq2_a">Rozmowa wideo odbywa się w prostej, bezpiecznej sali zajęć w przeglądarce, z możliwością udostępniania ekranu — bez instalowania dodatkowych aplikacji.</p></details>
+    <details class="faq-item reveal stagger-2"><summary data-i18n="faq3_q">Od jakiego wieku mogą zacząć dzieci?</summary><p data-i18n="faq3_a">Pracujemy z dziećmi w wieku 4–12 lat — program, tempo i materiały dopasowujemy do wieku i poziomu dziecka.</p></details>
+    <details class="faq-item reveal stagger-3"><summary data-i18n="faq4_q">Jak wygląda płatność?</summary><p data-i18n="faq4_a">Płatność online, z góry, za pojedynczą lekcję lub pakiet, przez bezpiecznego operatora płatności.</p></details>
+    <details class="faq-item reveal stagger-4"><summary data-i18n="faq5_q">Czy Kristina ma zaświadczenie o niekaralności?</summary><p data-i18n="faq5_a">Bezpieczeństwo dzieci jest naszym priorytetem — zaświadczenie o niekaralności udostępniamy na życzenie rodzica. Napisz do nas, a je prześlemy.</p></details>
+  </div>
+</div>
+
+<div class="wrap cta-block">
+  <div class="cta-band reveal">
+    <h2 data-i18n="cta_h2">Umówmy pierwszą lekcję</h2>
+    <p data-i18n="cta_p">Napisz do nas na WhatsApp, a zaproponujemy termin bezpłatnej lekcji próbnej dopasowany do planu Twojego dziecka.</p>
+    <div class="cta-contacts">
+      <a class="contact-pill" href="https://wa.me/48111222333" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"/></svg>
+        <span data-i18n="cta_whatsapp">Napisz na WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span data-i18n="footer_line">Angielski z Kristiną · lekcje online dla dzieci 4–12 lat</span>
+  <a href="regulamin.html" data-i18n="footer_link">Regulamin i polityka prywatności (RODO)</a>
+</footer>
+
+<script>
+(function(){
+  var dict = {
+    nav_cta:{pl:"Umów lekcję",en:"Book a lesson"},
+    hero_eyebrow:{pl:"Lekcje online · dzieci 4–12 lat",en:"Online lessons · kids 4–12"},
+    hero_h1:{pl:"Angielski, który dzieci naprawdę polubią",en:"English kids will actually love"},
+    hero_sub:{pl:"Prywatne lekcje 1 na 1 z Kristiną — ciepłą i cierpliwą nauczycielką, która uczy najmłodszych online. Bez zakładania kont, bez stresu — jeden stały, bezpieczny dostęp do zajęć.",en:"Private 1-on-1 lessons with Kristina — a warm, patient teacher who teaches young children online. No accounts, no stress — one fixed, secure way to join class."},
+    hero_cta1:{pl:"Umów bezpłatną lekcję próbną",en:"Book a free trial lesson"},
+    hero_cta2:{pl:"Poznaj Kristinę",en:"Meet Kristina"},
+    hero_badge:{pl:"Filipiny · nauczanie online",en:"Philippines · online teaching"},
+    booking_live:{pl:"Dostępność w tym tygodniu",en:"Availability this week"},
+    booking_suggested_label:{pl:"Najbliższy wolny termin",en:"Next available slot"},
+    booking_chosen_label:{pl:"Wybrany termin",en:"Selected time"},
+    booking_button:{pl:"Zarezerwuj ten termin",en:"Book this slot"},
+    booking_note:{pl:"Kliknij dowolny termin w harmonogramie, aby go wybrać, albo strzałkami zobacz kolejne dni. Termin orientacyjny — dokładną dostępność potwierdzimy na WhatsApp w ciągu kilku godzin.",en:"Click any slot in the schedule to pick it, or use the arrows to see more days. This is indicative — we'll confirm exact availability on WhatsApp within a few hours."},
+    week_prev:{pl:"Poprzedni tydzień",en:"Previous week"},
+    week_next:{pl:"Następny tydzień",en:"Next week"},
+    trust1_t:{pl:"Zajęcia 1 na 1",en:"1-on-1 lessons"},
+    trust1_d:{pl:"Indywidualne podejście dopasowane do wieku i tempa dziecka.",en:"An individual approach matched to your child's age and pace."},
+    trust2_t:{pl:"Stały, prywatny dostęp",en:"Fixed, private access"},
+    trust2_d:{pl:"Jeden link i hasło na cały okres nauki — bez zakładania kont.",en:"One link and password for the whole course — no accounts needed."},
+    trust3_t:{pl:"Elastyczne terminy",en:"Flexible scheduling"},
+    trust3_d:{pl:"Lekcje dopasowane do planu dnia Twojego dziecka.",en:"Lessons fitted around your child's daily routine."},
+    trust4_t:{pl:"Bezpieczne płatności",en:"Secure payments"},
+    trust4_d:{pl:"Rozliczenia przez zaufanego operatora — nie przechowujemy danych karty.",en:"Handled by a trusted payment provider — we never store card details."},
+    about_label:{pl:"O nauczycielce",en:"About the teacher"},
+    about_h2:{pl:"Poznaj Kristinę",en:"Meet Kristina"},
+    about_p1:{pl:"Cześć, mam na imię Kristina! Specjalizuję się w nauczaniu dzieci — pracowałam zarówno z najmłodszymi, jak i z nastolatkami, indywidualnie i w grupach. Uczę z pasją i naprawdę kocham to, co robię. Nauka języka to długi proces, ale staje się zabawą, gdy dziecko zaczyna go lubić — dlatego zawsze dbam, by moi uczniowie czuli się zachęceni i pewni siebie w rozmowie po angielsku.",en:"Hi, I'm Kristina! I specialise in teaching children — I've worked one-on-one and in groups, with young kids and teenagers alike. I teach with real passion and I love what I do. Learning a language is a long journey, but it becomes fun once a child starts to enjoy it — so I always make sure my students feel encouraged and confident speaking English."},
+    about_p2:{pl:"Moja supermoc? Dobrze gram na gitarze i pianinie, a do tego potrafię zjeść całą galonową miskę lodów jednym podejściem! Mam nadzieję, że poznamy się już niedługo.",en:"My superpower? I play guitar and piano fairly well, and I can finish a whole tub of ice cream in one sitting! I can't wait to meet you and your child."},
+    about_video_caption:{pl:"Krótkie nagranie — poznaj Kristinę, zanim umówisz pierwszą lekcję.",en:"A short video — meet Kristina before you book your first lesson."},
+    stats_label:{pl:"W liczbach",en:"By the numbers"},
+    stats_h2:{pl:"Doświadczenie, które mówi samo za siebie",en:"Experience that speaks for itself"},
+    stats1:{pl:"przeprowadzonych lekcji",en:"lessons taught"},
+    stats2:{pl:"aktualnych uczniów",en:"current students"},
+    stats3:{pl:"pozytywnych opinii",en:"positive reviews"},
+    steps_label:{pl:"Jak to działa",en:"How it works"},
+    steps_h2:{pl:"Trzy kroki do pierwszej lekcji",en:"Three steps to your first lesson"},
+    step1_t:{pl:"Bezpłatna lekcja próbna",en:"Free trial lesson"},
+    step1_d:{pl:"Umawiacie dogodny termin, poznajecie Kristinę i sprawdzacie, czy metoda pasuje Waszemu dziecku — bez zobowiązań.",en:"Pick a convenient time, meet Kristina, and see if her method suits your child — no commitment."},
+    step2_t:{pl:"Jeden stały dostęp",en:"One fixed access"},
+    step2_d:{pl:"Dziecko otrzymuje prywatny link i hasło do wirtualnej sali zajęć. Bez zakładania konta — wystarczy kliknąć o umówionej godzinie.",en:"Your child gets a private link and password to the virtual classroom. No account needed — just click at the scheduled time."},
+    step3_t:{pl:"Regularne zajęcia",en:"Regular lessons"},
+    step3_d:{pl:"Cotygodniowe lekcje w stałym rytmie. Informację o postępach dziecka przygotowujemy na życzenie rodzica — bez zbędnych powiadomień, nie spamujemy.",en:"Weekly lessons on a steady rhythm. A progress update is prepared on request — no unnecessary notifications, we never spam."},
+    cancel_t:{pl:"Elastyczna polityka odwołań",en:"Flexible cancellation policy"},
+    cancel_d:{pl:"Wiemy, że dzieci czasem chorują, a czasem wolą wyjść na plac zabaw. Odwołanie zgłoszone do 2 godzin przed lekcją jest całkowicie bezpłatne.",en:"We know kids sometimes get sick, or would rather be at the playground. Cancel up to 2 hours before the lesson at no charge."},
+    savings_label:{pl:"Ten sam budżet, więcej nauki",en:"Same budget, more learning"},
+    savings_h2:{pl:"Więcej kontaktu z językiem za mniej",en:"More contact with English, for less"},
+    savings_p1:{pl:"Przeciętny korepetytor w Polsce liczy sobie 40–80 zł za godzinę. Za budżet jednej takiej lekcji tygodniowo Kristina daje dwa razy więcej czasu nauki miesięcznie.",en:"A typical private tutor in Poland charges 40-80 zł per hour. For the budget of one such lesson a week, Kristina gives twice as much learning time per month."},
+    savings_p2:{pl:"To ma znaczenie: krótszy, częstszy kontakt z angielskim działa jak językowa \"kąpiel\" (immersion) i daje lepsze efekty niż jedna długa lekcja raz w tygodniu.",en:"That matters: shorter, more frequent contact with English works like language immersion, and beats one long weekly lesson."},
+    chart_row1:{pl:"Tradycyjne korepetycje",en:"Traditional tutoring"},
+    chart_row2:{pl:"Angielski z Kristiną",en:"English with Kristina"},
+    chart_val1:{pl:"4 lekcje / mies.",en:"4 lessons / mo."},
+    chart_val2:{pl:"8 lekcji / mies.",en:"8 lessons / mo."},
+    chart_foot:{pl:"Przykładowe wyliczenie przy budżecie ok. 240 zł miesięcznie i cenie 30 zł za lekcję (50 minut).",en:"Example calculation for a budget of roughly 240 zł/month at 30 zł per lesson (50 minutes)."},
+    price_label:{pl:"Cennik",en:"Pricing"},
+    price_h2:{pl:"Prosta, przejrzysta cena",en:"Simple, transparent pricing"},
+    price_p:{pl:"Bez opłat platformowych i ukrytych kosztów — płacicie wyłącznie za czas spędzony z nauczycielką.",en:"No platform fees, no hidden costs — you only pay for time spent with the teacher."},
+    price_li1:{pl:"Pierwsza lekcja próbna gratis",en:"First trial lesson is free"},
+    price_li2:{pl:"Płatność z góry, online, za lekcję lub pakiet",en:"Pay online in advance, per lesson or package"},
+    price_li3:{pl:"Rabaty przy zakupie pakietu lekcji — zapytaj przy zapisie",en:"Discounts on lesson packages — just ask when booking"},
+    price_tag:{pl:"Lekcja indywidualna",en:"Individual lesson"},
+    price_unit:{pl:"za lekcję (50 minut)",en:"per lesson (50 minutes)"},
+    price_note:{pl:"Cena wprowadzająca dla pierwszych rodzin",en:"Introductory price for our first families"},
+    safety_label:{pl:"Bezpieczeństwo",en:"Safety"},
+    safety_h2:{pl:"Priorytet: bezpieczeństwo dziecka",en:"Top priority: your child's safety"},
+    safety_p:{pl:"Minimalizujemy ilość gromadzonych danych i nie zostawiamy śladu dziecka w żadnym systemie logowania.",en:"We minimise the data we collect and leave no trace of your child in any login system."},
+    safety1_t:{pl:"Prywatny dostęp zamiast konta",en:"Private access instead of an account"},
+    safety1_d:{pl:"Stały link i hasło do sali zajęć — dziecko nie zakłada konta ani nie podaje własnych danych logowania.",en:"A fixed link and password to the classroom — your child never creates an account or shares login details."},
+    safety2_t:{pl:"Minimum danych",en:"Minimal data"},
+    safety2_d:{pl:"Przechowujemy wyłącznie dane kontaktowe rodzica potrzebne do umówienia i rozliczenia zajęć.",en:"We store only the parent's contact details needed to book and bill lessons."},
+    safety3_t:{pl:"Brak nagrań bez zgody",en:"No recording without consent"},
+    safety3_d:{pl:"Zajęcia nie są nagrywane ani utrwalane bez wyraźnej, odrębnej zgody rodzica.",en:"Lessons are never recorded or stored without the parent's explicit, separate consent."},
+    safety4_t:{pl:"Zgoda i płatność",en:"Consent and payment"},
+    safety4_d:{pl:"Przed pierwszą lekcją prosimy o zgodę rodzica zgodnie z RODO; płatności obsługuje zewnętrzny operator, bez dostępu do danych karty.",en:"Before the first lesson we ask for GDPR-compliant parental consent; payments run through an external provider with no access to card details."},
+    faq_h2:{pl:"Najczęstsze pytania",en:"Frequently asked questions"},
+    faq1_q:{pl:"Czy muszę zakładać konto?",en:"Do I need to create an account?"},
+    faq1_a:{pl:"Nie. Otrzymujecie jeden stały link i hasło do sali zajęć — wystarczy kliknąć w umówionym terminie.",en:"No. You get one fixed link and password to the classroom — just click at the scheduled time."},
+    faq2_q:{pl:"Jakiej platformy używamy do lekcji?",en:"What platform do we use for lessons?"},
+    faq2_a:{pl:"Rozmowa wideo odbywa się w prostej, bezpiecznej sali zajęć w przeglądarce, z możliwością udostępniania ekranu — bez instalowania dodatkowych aplikacji.",en:"The video call happens in a simple, secure browser-based classroom with screen sharing — no extra apps to install."},
+    faq3_q:{pl:"Od jakiego wieku mogą zacząć dzieci?",en:"From what age can children start?"},
+    faq3_a:{pl:"Pracujemy z dziećmi w wieku 4–12 lat — program, tempo i materiały dopasowujemy do wieku i poziomu dziecka.",en:"We work with children aged 4-12 — the program, pace and materials are matched to your child's age and level."},
+    faq4_q:{pl:"Jak wygląda płatność?",en:"How does payment work?"},
+    faq4_a:{pl:"Płatność online, z góry, za pojedynczą lekcję lub pakiet, przez bezpiecznego operatora płatności.",en:"Payment is online, in advance, per single lesson or package, through a secure payment provider."},
+    faq5_q:{pl:"Czy Kristina ma zaświadczenie o niekaralności?",en:"Does Kristina have a criminal record certificate?"},
+    faq5_a:{pl:"Bezpieczeństwo dzieci jest naszym priorytetem — zaświadczenie o niekaralności udostępniamy na życzenie rodzica. Napisz do nas, a je prześlemy.",en:"Children's safety is our top priority — a criminal record certificate is available on request. Just message us and we'll send it over."},
+    cta_h2:{pl:"Umówmy pierwszą lekcję",en:"Let's book your first lesson"},
+    cta_p:{pl:"Napisz do nas na WhatsApp, a zaproponujemy termin bezpłatnej lekcji próbnej dopasowany do planu Twojego dziecka.",en:"Message us on WhatsApp and we'll suggest a free trial lesson time that fits your child's schedule."},
+    cta_whatsapp:{pl:"Napisz na WhatsApp",en:"Message on WhatsApp"},
+    footer_line:{pl:"Angielski z Kristiną · lekcje online dla dzieci 4–12 lat",en:"English with Kristina · online lessons for kids 4-12"},
+    footer_link:{pl:"Regulamin i polityka prywatności (RODO)",en:"Terms & privacy policy (GDPR)"}
+  };
+
+  var currentLang = 'pl';
+
+  function setLang(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n')];
+      if(entry) el.textContent = entry[lang];
+    });
+    document.getElementById('langToggle').setAttribute('aria-checked', lang==='en');
+    document.getElementById('weekPrev').setAttribute('aria-label', dict.week_prev[lang]);
+    document.getElementById('weekNext').setAttribute('aria-label', dict.week_next[lang]);
+    try{ localStorage.setItem('akk_lang', lang); }catch(e){}
+    renderWeek();
+  }
+  document.getElementById('langToggle').addEventListener('click', function(){
+    setLang(currentLang === 'pl' ? 'en' : 'pl');
+  });
+
+  var WEEKDAYS_PL = ['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'];
+  var WEEKDAYS_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var DAY_ABBR_PL = ['Nd','Pn','Wt','Śr','Cz','Pt','So'];
+  var DAY_ABBR_EN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  function startOfDay(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+
+  function nextSlot(){
+    var now = new Date();
+    var d = new Date(now); d.setMinutes(0,0,0);
+    for(var i=0;i<8;i++){
+      var day = d.getDay();
+      var isWeekend = day===0 || day===6;
+      var targetHour = isWeekend ? 10 : 17;
+      var candidate = new Date(d); candidate.setHours(targetHour,0,0,0);
+      if(candidate > now) return candidate;
+      d.setDate(d.getDate()+1); d.setHours(0,0,0,0);
+    }
+    return null;
+  }
+
+  function formatSlot(date, lang){
+    var now = new Date();
+    var diffDays = Math.round((startOfDay(date)-startOfDay(now))/86400000);
+    var hh = String(date.getHours()).padStart(2,'0');
+    if(lang==='en'){
+      var dayLabel = diffDays===0?'today': diffDays===1?'tomorrow': WEEKDAYS_EN[date.getDay()];
+      return dayLabel+', '+hh+':00';
+    }
+    var dayLabelPl = diffDays===0?'dziś': diffDays===1?'jutro': WEEKDAYS_PL[date.getDay()];
+    return dayLabelPl+', godz. '+hh+':00';
+  }
+
+  var autoSlot = nextSlot();
+  var selectedSlot = autoSlot;
+  var weekOffset = 0;
+
+  function updateSuggested(){
+    var suggestedEl = document.getElementById('suggestedSlot');
+    var bookLink = document.getElementById('bookLink');
+    var labelEl = document.querySelector('.suggested-label');
+    if(!selectedSlot) return;
+    suggestedEl.textContent = formatSlot(selectedSlot, currentLang);
+    var isAuto = autoSlot && selectedSlot.getTime()===autoSlot.getTime();
+    var key = isAuto ? 'booking_suggested_label' : 'booking_chosen_label';
+    labelEl.setAttribute('data-i18n', key);
+    labelEl.textContent = dict[key][currentLang];
+    var msg = currentLang==='en'
+      ? "Hi! I'd like to book a free trial lesson with Kristina for: "+formatSlot(selectedSlot,'en')+". Child's name and age: "
+      : 'Dzień dobry! Chciał(a)bym zarezerwować bezpłatną lekcję próbną z Kristiną w terminie: '+formatSlot(selectedSlot,'pl')+'. Imię i wiek dziecka: ';
+    bookLink.href = 'https://wa.me/48111222333?text='+encodeURIComponent(msg);
+  }
+
+  function renderWeek(){
+    var grid = document.getElementById('weekGrid');
+    grid.innerHTML = '';
+    var abbr = currentLang==='en' ? DAY_ABBR_EN : DAY_ABBR_PL;
+    var today = startOfDay(new Date());
+    var weekStart = new Date(today); weekStart.setDate(weekStart.getDate() + weekOffset*7);
+    var now = new Date();
+    for(var i=0;i<7;i++){
+      var d = new Date(weekStart); d.setDate(d.getDate()+i);
+      var isWeekend = d.getDay()===0 || d.getDay()===6;
+      var hour = isWeekend ? 10 : 17;
+      var chipDate = new Date(d); chipDate.setHours(hour,0,0,0);
+      var col = document.createElement('div'); col.className='day-col';
+      var label = document.createElement('div'); label.className='day-label'; label.textContent = abbr[d.getDay()];
+      var chip = document.createElement('button'); chip.type='button'; chip.className='slot-chip';
+      chip.textContent = String(hour).padStart(2,'0')+':00';
+      if(chipDate <= now){ chip.disabled = true; chip.classList.add('is-past'); }
+      if(selectedSlot && chipDate.getTime()===selectedSlot.getTime()){ chip.classList.add('is-suggested'); }
+      chip.addEventListener('click', (function(dt){ return function(){ selectedSlot = dt; renderWeek(); }; })(chipDate));
+      col.appendChild(label); col.appendChild(chip);
+      grid.appendChild(col);
+    }
+    document.getElementById('weekPrev').disabled = weekOffset<=0;
+    document.getElementById('weekNext').disabled = weekOffset>=3;
+    updateSuggested();
+  }
+  document.getElementById('weekPrev').addEventListener('click', function(){ if(weekOffset>0){ weekOffset--; renderWeek(); } });
+  document.getElementById('weekNext').addEventListener('click', function(){ if(weekOffset<3){ weekOffset++; renderWeek(); } });
+
+  var saved = 'pl';
+  try{ saved = localStorage.getItem('akk_lang') || 'pl'; }catch(e){}
+  setLang(saved);
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(!reduceMotion){
+    var revealEls = document.querySelectorAll('.reveal');
+    var vh = window.innerHeight;
+    revealEls.forEach(function(el){ if(el.getBoundingClientRect().top > vh*0.85){ el.classList.add('pre'); } });
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.remove('pre'); revealObserver.unobserve(entry.target); }
+      });
+    },{threshold:0.12});
+    revealEls.forEach(function(el){ if(el.classList.contains('pre')) revealObserver.observe(el); });
+    setTimeout(function(){ revealEls.forEach(function(el){ el.classList.remove('pre'); }); }, 4000);
+
+    var barObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); barObserver.unobserve(entry.target); }
+      });
+    },{threshold:0.4});
+    document.querySelectorAll('.bar-row').forEach(function(el){ barObserver.observe(el); });
+
+    function animateCount(el){
+      var target = parseInt(el.getAttribute('data-count'),10);
+      var finalText = el.textContent;
+      var start = null; var duration = 1100;
+      var safety = setTimeout(function(){ el.textContent = finalText; }, duration + 500);
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts-start)/duration,1);
+        var eased = 1-Math.pow(1-p,3);
+        var val = Math.round(target*eased);
+        el.textContent = val.toLocaleString('pl-PL');
+        if(p<1){ requestAnimationFrame(step); } else { el.textContent = finalText; clearTimeout(safety); }
+      }
+      requestAnimationFrame(step);
+    }
+    var statObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ animateCount(entry.target); statObserver.unobserve(entry.target); }
+      });
+    },{threshold:0.5});
+    document.querySelectorAll('.stat-num').forEach(function(el){ statObserver.observe(el); });
+  } else {
+    document.querySelectorAll('.bar-row').forEach(function(el){ el.classList.add('in-view'); });
+  }
+})();
+</script>
+</body>
+</html>
