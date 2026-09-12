@@ -94,7 +94,9 @@
   /* ---------- nav ---------- */
   .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:16px;}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:700;font-size:1.15rem;min-width:0;}
+  .brand-lines{display:flex;flex-direction:column;min-width:0;line-height:1.2;}
   .brand-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .brand-tagline{font-family:'Karla';font-weight:600;font-size:.72rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .brand-mark{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--surface);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex:none;}
   .nav-right{display:flex;align-items:center;gap:16px;flex:none;}
   @media (max-width:480px){
@@ -105,6 +107,7 @@
   }
   @media (max-width:380px){
     .brand-text{display:none;}
+    .brand-tagline{display:none;}
   }
   .nav-cta{background:var(--accent-warm);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 6px 16px rgb(var(--shadow)/.18);white-space:nowrap;}
   .nav-cta:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible{outline:3px solid var(--accent-warm); outline-offset:2px;}
@@ -298,7 +301,7 @@
 
 <div class="wrap">
   <div class="nav">
-    <div class="brand"><span class="brand-mark">K</span><span class="brand-text">Angielski z Kristiną</span></div>
+    <div class="brand"><span class="brand-mark">K</span><span class="brand-lines"><span class="brand-text">Angielski z Kristiną</span><span class="brand-tagline" data-i18n="brand_tagline">Angielski z sercem</span></span></div>
     <div class="nav-right">
       <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Przełącz język / Switch language">
         <svg viewBox="0 0 44 44">
@@ -545,6 +548,7 @@
 (function(){
   var dict = {
     nav_cta:{pl:"Umów lekcję",en:"Book a lesson"},
+    brand_tagline:{pl:"Angielski z sercem",en:"English, with heart"},
     hero_eyebrow:{pl:"Lekcje online · dzieci 4–12 lat",en:"Online lessons · kids 4–12"},
     hero_h1:{pl:"Angielski, który dzieci naprawdę polubią",en:"English kids will actually love"},
     hero_sub:{pl:"Prywatne lekcje 1 na 1 z Kristiną — ciepłą i cierpliwą nauczycielką, która uczy najmłodszych online. Bez zakładania kont, bez stresu — jeden stały, bezpieczny dostęp do zajęć.",en:"Private 1-on-1 lessons with Kristina — a warm, patient teacher who teaches young children online. No accounts, no stress — one fixed, secure way to join class."},
