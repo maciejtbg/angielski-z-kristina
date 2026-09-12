@@ -26,6 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=optional" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=optional" rel="stylesheet">
 <style>
   :root{
     --bg:#FBF5EC;
@@ -70,6 +71,41 @@
     --band-warm:#F0B27A; --on-band-warm:#1C1208; --on-accent-dark:#0E1B18;
     --border:#3A4A43; --shadow: 0 0 0;
   }
+
+  /* ---------- "Czuły" (tender) style variant — same token names, warm rose/blush palette ---------- */
+  :root[data-style="tender"]{
+    --bg:#FDF3F3; --surface:#FFFFFF; --surface-alt:#FBE3EC; --surface-teal:#FCEAEE;
+    --ink:#4A2E35; --ink-soft:#8C6670;
+    --accent:#C97B93; --accent-dark:#9C5470; --accent-tint:#F5DCE3;
+    --accent-warm:#E0A06E; --accent-warm-dark:#B9754A; --accent-warm-darker:#A05A2E; --accent-warm-tint:#FBE9D9;
+    --accent-gold:#C99A5B; --accent-gold-dark:#96702E; --accent-gold-tint:#F5E7CC;
+    --band-warm:#8C4A3A; --on-band-warm:#FFF5F0; --on-accent-dark:#FDF3F3;
+    --border:#F2D9E0; --shadow: 74 46 53;
+  }
+  @media (prefers-color-scheme: dark){
+    :root[data-style="tender"]:not([data-theme="light"]){
+      --bg:#2B1B20; --surface:#3A242B; --surface-alt:#452832; --surface-teal:#3D262E;
+      --ink:#F7E8EC; --ink-soft:#D9B4BE;
+      --accent:#E8A8C0; --accent-dark:#F2C4D6; --accent-tint:#4A2E3A;
+      --accent-warm:#F2C296; --accent-warm-dark:#F7D6B0; --accent-warm-darker:#F7D6B0; --accent-warm-tint:#4A3526;
+      --accent-gold:#E8C88E; --accent-gold-dark:#E8C88E; --accent-gold-tint:#3E301C;
+      --band-warm:#F2BCAC; --on-band-warm:#2B1712; --on-accent-dark:#2B1822;
+      --border:#4A2E3A; --shadow: 0 0 0;
+    }
+  }
+  :root[data-style="tender"][data-theme="dark"]{
+    --bg:#2B1B20; --surface:#3A242B; --surface-alt:#452832; --surface-teal:#3D262E;
+    --ink:#F7E8EC; --ink-soft:#D9B4BE;
+    --accent:#E8A8C0; --accent-dark:#F2C4D6; --accent-tint:#4A2E3A;
+    --accent-warm:#F2C296; --accent-warm-dark:#F7D6B0; --accent-warm-darker:#F7D6B0; --accent-warm-tint:#4A3526;
+    --accent-gold:#E8C88E; --accent-gold-dark:#E8C88E; --accent-gold-tint:#3E301C;
+    --band-warm:#F2BCAC; --on-band-warm:#2B1712; --on-accent-dark:#2B1822;
+    --border:#4A2E3A; --shadow: 0 0 0;
+  }
+  [data-style="tender"] .brand-tagline{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--accent-dark);}
+  [data-style="tender"] .icon-classic{display:none;}
+  [data-style="tender"] .icon-tender{display:inline-flex;}
+  .icon-tender{display:none;}
 
   *{box-sizing:border-box;}
   @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth;} }
@@ -295,6 +331,12 @@
   .contact-pill:hover{transform:translateY(-2px);}
   footer.site-footer{padding:32px 0 48px;text-align:center;font-size:.82rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:8px;}
   footer.site-footer a{text-decoration:underline;}
+  .style-switch{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;}
+  .style-switch-label{font-size:.72rem;color:var(--ink-soft);opacity:.7;}
+  .style-toggle{background:none;border:none;cursor:pointer;padding:0;}
+  .style-track{position:relative;width:38px;height:20px;border-radius:999px;background:var(--accent-tint);border:1px solid var(--border);display:block;}
+  .style-thumb{position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:0 2px 5px rgb(var(--shadow)/.2);transition:transform .25s cubic-bezier(.4,0,.2,1);}
+  .style-track.is-tender .style-thumb{transform:translateX(18px);}
 </style>
 </head>
 <body>
@@ -344,7 +386,8 @@
       <div class="hero-blob"></div>
       <img class="hero-photo" src="kristina.jpg" alt="Kristina, nauczycielka języka angielskiego">
       <div class="hero-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 16.9l-5.7 2.9 1.1-6.4L2.8 8.8l6.4-.9z"/></svg>
+        <svg class="icon-classic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 16.9l-5.7 2.9 1.1-6.4L2.8 8.8l6.4-.9z"/></svg>
+        <svg class="icon-tender" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span data-i18n="hero_badge">Filipiny · nauczanie online</span>
       </div>
     </div>
@@ -542,6 +585,13 @@
 <footer class="site-footer">
   <span data-i18n="footer_line">Angielski z Kristiną · lekcje online dla dzieci 4–12 lat</span>
   <a href="regulamin.html" data-i18n="footer_link">Regulamin i polityka prywatności (RODO)</a>
+  <div class="style-switch">
+    <span class="style-switch-label" data-i18n="style_classic">klasyczny</span>
+    <button class="style-toggle" id="styleToggle" role="switch" aria-checked="false" aria-label="Przełącz wygląd strony">
+      <span class="style-track" id="styleTrack"><span class="style-thumb"></span></span>
+    </button>
+    <span class="style-switch-label" data-i18n="style_tender">czuły</span>
+  </div>
 </footer>
 
 <script>
@@ -634,7 +684,9 @@
     cta_p:{pl:"Napisz do nas na WhatsApp, a zaproponujemy termin bezpłatnej lekcji próbnej dopasowany do planu Twojego dziecka.",en:"Message us on WhatsApp and we'll suggest a free trial lesson time that fits your child's schedule."},
     cta_whatsapp:{pl:"Napisz na WhatsApp",en:"Message on WhatsApp"},
     footer_line:{pl:"Angielski z Kristiną · lekcje online dla dzieci 4–12 lat",en:"English with Kristina · online lessons for kids 4-12"},
-    footer_link:{pl:"Regulamin i polityka prywatności (RODO)",en:"Terms & privacy policy (GDPR)"}
+    footer_link:{pl:"Regulamin i polityka prywatności (RODO)",en:"Terms & privacy policy (GDPR)"},
+    style_classic:{pl:"klasyczny",en:"classic"},
+    style_tender:{pl:"czuły",en:"tender"}
   };
 
   var currentLang = 'pl';
@@ -741,6 +793,20 @@
   var saved = 'pl';
   try{ saved = localStorage.getItem('akk_lang') || 'pl'; }catch(e){}
   setLang(saved);
+
+  function setStyleVariant(variant){
+    document.documentElement.setAttribute('data-style', variant);
+    document.getElementById('styleTrack').classList.toggle('is-tender', variant==='tender');
+    document.getElementById('styleToggle').setAttribute('aria-checked', variant==='tender');
+    try{ localStorage.setItem('akk_style', variant); }catch(e){}
+  }
+  document.getElementById('styleToggle').addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-style') === 'tender' ? 'tender' : 'classic';
+    setStyleVariant(current === 'classic' ? 'tender' : 'classic');
+  });
+  var savedStyle = 'classic';
+  try{ savedStyle = localStorage.getItem('akk_style') || 'classic'; }catch(e){}
+  setStyleVariant(savedStyle);
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
