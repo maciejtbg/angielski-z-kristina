@@ -103,6 +103,209 @@
     --border:#4A3B2C; --shadow: 0 0 0;
   }
   [data-style="tender"] .hero-badge svg.icon-tender{color:#D98A93;}
+
+  /* ---------- Leśna przygoda (forest) ---------- */
+  :root[data-style="forest"]{
+    --bg:#F5F7EE; --surface:#FFFFFF; --surface-alt:#EAE3CC; --surface-teal:#E8EEE0;
+    --ink:#3A4A32; --ink-soft:#6E7C64;
+    --accent:#4A7856; --accent-dark:#355A3F; --accent-tint:#DCE8DC;
+    --accent-warm:#D9A441; --accent-warm-dark:#AD7E28; --accent-warm-darker:#8F6820; --accent-warm-tint:#F5E8C6;
+    --accent-gold:#B8923C; --accent-gold-dark:#8A6A24; --accent-gold-tint:#F0E4C2;
+    --band-warm:#5C4022; --on-band-warm:#FFF8EC; --on-accent-dark:#F5F7EE;
+    --border:#E3DEC0; --shadow: 58 74 50;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="forest"]:not([data-theme="light"]){
+    --bg:#1E241C; --surface:#2A3326; --surface-alt:#332F1F; --surface-teal:#28322A;
+    --ink:#EDEFE2; --ink-soft:#BFC7B2;
+    --accent:#8FC49E; --accent-dark:#B0DABB; --accent-tint:#324A38;
+    --accent-warm:#E8C578; --accent-warm-dark:#F0D394; --accent-warm-darker:#F0D394; --accent-warm-tint:#4A3C24;
+    --accent-gold:#D4B872; --accent-gold-dark:#D4B872; --accent-gold-tint:#3E341E;
+    --band-warm:#E0B87C; --on-band-warm:#241A0E; --on-accent-dark:#1A2418;
+    --border:#3E4A38; --shadow: 0 0 0;
+  }}
+  :root[data-style="forest"][data-theme="dark"]{
+    --bg:#1E241C; --surface:#2A3326; --surface-alt:#332F1F; --surface-teal:#28322A;
+    --ink:#EDEFE2; --ink-soft:#BFC7B2;
+    --accent:#8FC49E; --accent-dark:#B0DABB; --accent-tint:#324A38;
+    --accent-warm:#E8C578; --accent-warm-dark:#F0D394; --accent-warm-darker:#F0D394; --accent-warm-tint:#4A3C24;
+    --accent-gold:#D4B872; --accent-gold-dark:#D4B872; --accent-gold-tint:#3E341E;
+    --band-warm:#E0B87C; --on-band-warm:#241A0E; --on-accent-dark:#1A2418;
+    --border:#3E4A38; --shadow: 0 0 0;
+  }
+
+  /* ---------- Słoneczny dzień (sunny) ---------- */
+  :root[data-style="sunny"]{
+    --bg:#FFF9EC; --surface:#FFFFFF; --surface-alt:#FDEBC7; --surface-teal:#E7F1F5;
+    --ink:#3A3626; --ink-soft:#7A7157;
+    --accent:#3E7F94; --accent-dark:#2C5F70; --accent-tint:#D9EAF0;
+    --accent-warm:#E8B84A; --accent-warm-dark:#B8872A; --accent-warm-darker:#96701F; --accent-warm-tint:#FBEDC6;
+    --accent-gold:#C99A3C; --accent-gold-dark:#8F6E22; --accent-gold-tint:#F5E8C6;
+    --band-warm:#8F5A1E; --on-band-warm:#FFF8EC; --on-accent-dark:#FFF9EC;
+    --border:#F0E0B8; --shadow: 58 54 38;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="sunny"]:not([data-theme="light"]){
+    --bg:#221E14; --surface:#2E2A1E; --surface-alt:#3A3320; --surface-teal:#20282C;
+    --ink:#F5EEDC; --ink-soft:#C9BF9E;
+    --accent:#7FC0D6; --accent-dark:#A0D4E6; --accent-tint:#233C44;
+    --accent-warm:#F0CC7C; --accent-warm-dark:#F5D896; --accent-warm-darker:#F5D896; --accent-warm-tint:#4A3C1E;
+    --accent-gold:#E0C078; --accent-gold-dark:#E0C078; --accent-gold-tint:#3E321A;
+    --band-warm:#F0C083; --on-band-warm:#221808; --on-accent-dark:#182024;
+    --border:#403620; --shadow: 0 0 0;
+  }}
+  :root[data-style="sunny"][data-theme="dark"]{
+    --bg:#221E14; --surface:#2E2A1E; --surface-alt:#3A3320; --surface-teal:#20282C;
+    --ink:#F5EEDC; --ink-soft:#C9BF9E;
+    --accent:#7FC0D6; --accent-dark:#A0D4E6; --accent-tint:#233C44;
+    --accent-warm:#F0CC7C; --accent-warm-dark:#F5D896; --accent-warm-darker:#F5D896; --accent-warm-tint:#4A3C1E;
+    --accent-gold:#E0C078; --accent-gold-dark:#E0C078; --accent-gold-tint:#3E321A;
+    --band-warm:#F0C083; --on-band-warm:#221808; --on-accent-dark:#182024;
+    --border:#403620; --shadow: 0 0 0;
+  }
+
+  /* ---------- Morska przygoda (ocean) ---------- */
+  :root[data-style="ocean"]{
+    --bg:#F0F8F7; --surface:#FFFFFF; --surface-alt:#FDE7DE; --surface-teal:#DFF0EE;
+    --ink:#243B3C; --ink-soft:#5C7A78;
+    --accent:#3E9490; --accent-dark:#2C706C; --accent-tint:#D6ECEA;
+    --accent-warm:#E86F5C; --accent-warm-dark:#B8503F; --accent-warm-darker:#964030; --accent-warm-tint:#FBDCD4;
+    --accent-gold:#C9963C; --accent-gold-dark:#8F6A22; --accent-gold-tint:#F5E4C2;
+    --band-warm:#2C6864; --on-band-warm:#F0FAF8; --on-accent-dark:#F0F8F7;
+    --border:#D2E8E4; --shadow: 36 59 60;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="ocean"]:not([data-theme="light"]){
+    --bg:#16221F; --surface:#1E2E2A; --surface-alt:#302420; --surface-teal:#1C2C28;
+    --ink:#E4F2EE; --ink-soft:#A8C9C2;
+    --accent:#7FCCC4; --accent-dark:#A6E0D8; --accent-tint:#22423E;
+    --accent-warm:#F0977E; --accent-warm-dark:#F5B29E; --accent-warm-darker:#F5B29E; --accent-warm-tint:#4A2A20;
+    --accent-gold:#E0C078; --accent-gold-dark:#E0C078; --accent-gold-tint:#3E321A;
+    --band-warm:#8FDCD2; --on-band-warm:#0E201C; --on-accent-dark:#0E1A18;
+    --border:#324A44; --shadow: 0 0 0;
+  }}
+  :root[data-style="ocean"][data-theme="dark"]{
+    --bg:#16221F; --surface:#1E2E2A; --surface-alt:#302420; --surface-teal:#1C2C28;
+    --ink:#E4F2EE; --ink-soft:#A8C9C2;
+    --accent:#7FCCC4; --accent-dark:#A6E0D8; --accent-tint:#22423E;
+    --accent-warm:#F0977E; --accent-warm-dark:#F5B29E; --accent-warm-darker:#F5B29E; --accent-warm-tint:#4A2A20;
+    --accent-gold:#E0C078; --accent-gold-dark:#E0C078; --accent-gold-tint:#3E321A;
+    --band-warm:#8FDCD2; --on-band-warm:#0E201C; --on-accent-dark:#0E1A18;
+    --border:#324A44; --shadow: 0 0 0;
+  }
+
+  /* ---------- Jagodowy wieczór (berry) ---------- */
+  :root[data-style="berry"]{
+    --bg:#F4F5FA; --surface:#FFFFFF; --surface-alt:#FDE9D6; --surface-teal:#E6E8F5;
+    --ink:#33395A; --ink-soft:#6A7096;
+    --accent:#5C6FA0; --accent-dark:#424E7C; --accent-tint:#DEE2F2;
+    --accent-warm:#D9A85C; --accent-warm-dark:#AD8038; --accent-warm-darker:#8F6828; --accent-warm-tint:#F5E8CC;
+    --accent-gold:#C9A050; --accent-gold-dark:#8F7028; --accent-gold-tint:#F0E4C6;
+    --band-warm:#424E7C; --on-band-warm:#F5F6FC; --on-accent-dark:#F4F5FA;
+    --border:#DCDFF0; --shadow: 51 57 90;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="berry"]:not([data-theme="light"]){
+    --bg:#1A1C2C; --surface:#242840; --surface-alt:#302A20; --surface-teal:#24263A;
+    --ink:#EAEBF7; --ink-soft:#B8BCDC;
+    --accent:#9CACDC; --accent-dark:#BCC8EC; --accent-tint:#323C60;
+    --accent-warm:#E8C583; --accent-warm-dark:#F0D49E; --accent-warm-darker:#F0D49E; --accent-warm-tint:#4A3C24;
+    --accent-gold:#D8BC7C; --accent-gold-dark:#D8BC7C; --accent-gold-tint:#3E341E;
+    --band-warm:#B8C4EE; --on-band-warm:#181A2C; --on-accent-dark:#12141F;
+    --border:#3A3E5C; --shadow: 0 0 0;
+  }}
+  :root[data-style="berry"][data-theme="dark"]{
+    --bg:#1A1C2C; --surface:#242840; --surface-alt:#302A20; --surface-teal:#24263A;
+    --ink:#EAEBF7; --ink-soft:#B8BCDC;
+    --accent:#9CACDC; --accent-dark:#BCC8EC; --accent-tint:#323C60;
+    --accent-warm:#E8C583; --accent-warm-dark:#F0D49E; --accent-warm-darker:#F0D49E; --accent-warm-tint:#4A3C24;
+    --accent-gold:#D8BC7C; --accent-gold-dark:#D8BC7C; --accent-gold-tint:#3E341E;
+    --band-warm:#B8C4EE; --on-band-warm:#181A2C; --on-accent-dark:#12141F;
+    --border:#3A3E5C; --shadow: 0 0 0;
+  }
+
+  /* ---------- Sad wiśniowy (cherry) ---------- */
+  :root[data-style="cherry"]{
+    --bg:#F6FAF2; --surface:#FFFFFF; --surface-alt:#FCE3E6; --surface-teal:#E5F1DE;
+    --ink:#33422C; --ink-soft:#6E7C64;
+    --accent:#6FA05C; --accent-dark:#517842; --accent-tint:#DFEDD6;
+    --accent-warm:#C9576A; --accent-warm-dark:#9C3F4E; --accent-warm-darker:#82333F; --accent-warm-tint:#F5DBDF;
+    --accent-gold:#B89440; --accent-gold-dark:#856A22; --accent-gold-tint:#EFE3C2;
+    --band-warm:#7A2E3A; --on-band-warm:#FCF0F0; --on-accent-dark:#F6FAF2;
+    --border:#DCEACE; --shadow: 51 66 44;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="cherry"]:not([data-theme="light"]){
+    --bg:#1A2216; --surface:#242E1E; --surface-alt:#301E20; --surface-teal:#22281C;
+    --ink:#EBF2E4; --ink-soft:#B8C7AC;
+    --accent:#A0D48C; --accent-dark:#C0E4AE; --accent-tint:#324A2A;
+    --accent-warm:#E89AA6; --accent-warm-dark:#F0B4BE; --accent-warm-darker:#F0B4BE; --accent-warm-tint:#4A2A2E;
+    --accent-gold:#D8C078; --accent-gold-dark:#D8C078; --accent-gold-tint:#3E3420;
+    --band-warm:#EC9CA8; --on-band-warm:#240E12; --on-accent-dark:#141F10;
+    --border:#3A4A32; --shadow: 0 0 0;
+  }}
+  :root[data-style="cherry"][data-theme="dark"]{
+    --bg:#1A2216; --surface:#242E1E; --surface-alt:#301E20; --surface-teal:#22281C;
+    --ink:#EBF2E4; --ink-soft:#B8C7AC;
+    --accent:#A0D48C; --accent-dark:#C0E4AE; --accent-tint:#324A2A;
+    --accent-warm:#E89AA6; --accent-warm-dark:#F0B4BE; --accent-warm-darker:#F0B4BE; --accent-warm-tint:#4A2A2E;
+    --accent-gold:#D8C078; --accent-gold-dark:#D8C078; --accent-gold-tint:#3E3420;
+    --band-warm:#EC9CA8; --on-band-warm:#240E12; --on-accent-dark:#141F10;
+    --border:#3A4A32; --shadow: 0 0 0;
+  }
+
+  /* ---------- Lawendowe pole (lavender) ---------- */
+  :root[data-style="lavender"]{
+    --bg:#F8F6FB; --surface:#FFFFFF; --surface-alt:#FBE9D9; --surface-teal:#EDE8F5;
+    --ink:#3E3550; --ink-soft:#7C7092;
+    --accent:#8A7CB8; --accent-dark:#685C94; --accent-tint:#E8E2F5;
+    --accent-warm:#E8A06E; --accent-warm-dark:#B87748; --accent-warm-darker:#966038; --accent-warm-tint:#FBE7D6;
+    --accent-gold:#B8985C; --accent-gold-dark:#856E32; --accent-gold-tint:#EFE4CC;
+    --band-warm:#5C4E80; --on-band-warm:#F8F5FC; --on-accent-dark:#F8F6FB;
+    --border:#E4DCF0; --shadow: 62 53 80;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="lavender"]:not([data-theme="light"]){
+    --bg:#201C2C; --surface:#2C2640; --surface-alt:#302620; --surface-teal:#2A2438;
+    --ink:#F0ECF7; --ink-soft:#C4BADC;
+    --accent:#BCACE0; --accent-dark:#D4C8EE; --accent-tint:#3E3460;
+    --accent-warm:#F0BC94; --accent-warm-dark:#F5D0B0; --accent-warm-darker:#F5D0B0; --accent-warm-tint:#4A3628;
+    --accent-gold:#DCC48A; --accent-gold-dark:#DCC48A; --accent-gold-tint:#3E3420;
+    --band-warm:#D0C0EC; --on-band-warm:#1E1830; --on-accent-dark:#16111F;
+    --border:#403A5C; --shadow: 0 0 0;
+  }}
+  :root[data-style="lavender"][data-theme="dark"]{
+    --bg:#201C2C; --surface:#2C2640; --surface-alt:#302620; --surface-teal:#2A2438;
+    --ink:#F0ECF7; --ink-soft:#C4BADC;
+    --accent:#BCACE0; --accent-dark:#D4C8EE; --accent-tint:#3E3460;
+    --accent-warm:#F0BC94; --accent-warm-dark:#F5D0B0; --accent-warm-darker:#F5D0B0; --accent-warm-tint:#4A3628;
+    --accent-gold:#DCC48A; --accent-gold-dark:#DCC48A; --accent-gold-tint:#3E3420;
+    --band-warm:#D0C0EC; --on-band-warm:#1E1830; --on-accent-dark:#16111F;
+    --border:#403A5C; --shadow: 0 0 0;
+  }
+
+  /* ---------- Miś Uszatek (teddy) ---------- */
+  :root[data-style="teddy"]{
+    --bg:#FBF7F1; --surface:#FFFFFF; --surface-alt:#E4F0EC; --surface-teal:#EAE0D2;
+    --ink:#4A3826; --ink-soft:#8C7660;
+    --accent:#6FA894; --accent-dark:#4E8272; --accent-tint:#DCEEE6;
+    --accent-warm:#B88552; --accent-warm-dark:#8F6438; --accent-warm-darker:#755128; --accent-warm-tint:#F0E2CC;
+    --accent-gold:#C9A05C; --accent-gold-dark:#8F7332; --accent-gold-tint:#F0E2C2;
+    --band-warm:#7A5838; --on-band-warm:#FBF3E8; --on-accent-dark:#FBF7F1;
+    --border:#E8DCC8; --shadow: 74 56 38;
+  }
+  @media (prefers-color-scheme: dark){ :root[data-style="teddy"]:not([data-theme="light"]){
+    --bg:#22201A; --surface:#2E2A22; --surface-alt:#20302A; --surface-teal:#302A20;
+    --ink:#F5EFE4; --ink-soft:#CFC0AC;
+    --accent:#A0D4C0; --accent-dark:#C0E4D4; --accent-tint:#2A423A;
+    --accent-warm:#E0B884; --accent-warm-dark:#EDCCA0; --accent-warm-darker:#EDCCA0; --accent-warm-tint:#4A3A24;
+    --accent-gold:#E0C088; --accent-gold-dark:#E0C088; --accent-gold-tint:#3E341E;
+    --band-warm:#E4C094; --on-band-warm:#241C10; --on-accent-dark:#1C1A14;
+    --border:#463C2C; --shadow: 0 0 0;
+  }}
+  :root[data-style="teddy"][data-theme="dark"]{
+    --bg:#22201A; --surface:#2E2A22; --surface-alt:#20302A; --surface-teal:#302A20;
+    --ink:#F5EFE4; --ink-soft:#CFC0AC;
+    --accent:#A0D4C0; --accent-dark:#C0E4D4; --accent-tint:#2A423A;
+    --accent-warm:#E0B884; --accent-warm-dark:#EDCCA0; --accent-warm-darker:#EDCCA0; --accent-warm-tint:#4A3A24;
+    --accent-gold:#E0C088; --accent-gold-dark:#E0C088; --accent-gold-tint:#3E341E;
+    --band-warm:#E4C094; --on-band-warm:#241C10; --on-accent-dark:#1C1A14;
+    --border:#463C2C; --shadow: 0 0 0;
+  }
   [data-style="tender"] .brand-tagline{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--accent-dark);}
   [data-style="tender"] .icon-classic{display:none;}
   [data-style="tender"] .icon-tender{display:inline-flex;}
@@ -332,12 +535,15 @@
   .contact-pill:hover{transform:translateY(-2px);}
   footer.site-footer{padding:32px 0 48px;text-align:center;font-size:.82rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:8px;}
   footer.site-footer a{text-decoration:underline;}
-  .style-switch{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;}
-  .style-switch-label{font-size:.72rem;color:var(--ink-soft);opacity:.7;}
-  .style-toggle{background:none;border:none;cursor:pointer;padding:0;}
-  .style-track{position:relative;width:38px;height:20px;border-radius:999px;background:var(--accent-tint);border:1px solid var(--border);display:block;}
-  .style-thumb{position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:0 2px 5px rgb(var(--shadow)/.2);transition:transform .25s cubic-bezier(.4,0,.2,1);}
-  .style-track.is-tender .style-thumb{transform:translateX(18px);}
+  .theme-switch{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px;}
+  .theme-switch-label{font-size:.72rem;color:var(--ink-soft);opacity:.75;}
+  .theme-swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:280px;}
+  .theme-swatch{width:24px;height:24px;border-radius:50%;padding:0;cursor:pointer;flex:none;
+    border:2px solid var(--surface);box-shadow:0 0 0 1px var(--border);
+    background:linear-gradient(135deg, var(--sw-a) 50%, var(--sw-b) 50%);
+    transition:transform .15s ease, box-shadow .15s ease;}
+  .theme-swatch:hover{transform:scale(1.18);}
+  .theme-swatch.is-active{box-shadow:0 0 0 1px var(--border), 0 0 0 3px var(--ink);}
 </style>
 </head>
 <body>
@@ -586,12 +792,20 @@
 <footer class="site-footer">
   <span data-i18n="footer_line">Angielski z Kristiną · lekcje online dla dzieci 4–12 lat</span>
   <a href="regulamin.html" data-i18n="footer_link">Regulamin i polityka prywatności (RODO)</a>
-  <div class="style-switch">
-    <span class="style-switch-label" data-i18n="style_classic">klasyczny</span>
-    <button class="style-toggle" id="styleToggle" role="switch" aria-checked="false" aria-label="Przełącz wygląd strony">
-      <span class="style-track" id="styleTrack"><span class="style-thumb"></span></span>
-    </button>
-    <span class="style-switch-label" data-i18n="style_tender">czuły</span>
+  <div class="theme-switch">
+    <span class="theme-switch-label" data-i18n="theme_label">Wygląd strony</span>
+    <div class="theme-swatches" id="themeSwatches" role="radiogroup" aria-label="Wybierz wygląd strony">
+      <button class="theme-swatch" data-theme-slug="classic" style="--sw-a:#3E7C74;--sw-b:#E8935C" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="tender" style="--sw-a:#C4922E;--sw-b:#E8957A" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="forest" style="--sw-a:#4A7856;--sw-b:#D9A441" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="sunny" style="--sw-a:#3E7F94;--sw-b:#E8B84A" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="ocean" style="--sw-a:#3E9490;--sw-b:#E86F5C" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="berry" style="--sw-a:#5C6FA0;--sw-b:#D9A85C" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="cherry" style="--sw-a:#6FA05C;--sw-b:#C9576A" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="lavender" style="--sw-a:#8A7CB8;--sw-b:#E8A06E" role="radio"></button>
+      <button class="theme-swatch" data-theme-slug="teddy" style="--sw-a:#6FA894;--sw-b:#B88552" role="radio"></button>
+    </div>
+    <span class="theme-switch-label" id="themeCurrentName"></span>
   </div>
 </footer>
 
@@ -686,8 +900,7 @@
     cta_whatsapp:{pl:"Napisz na WhatsApp",en:"Message on WhatsApp"},
     footer_line:{pl:"Angielski z Kristiną · lekcje online dla dzieci 4–12 lat",en:"English with Kristina · online lessons for kids 4-12"},
     footer_link:{pl:"Regulamin i polityka prywatności (RODO)",en:"Terms & privacy policy (GDPR)"},
-    style_classic:{pl:"klasyczny",en:"classic"},
-    style_tender:{pl:"czuły",en:"tender"}
+    theme_label:{pl:"Wygląd strony",en:"Site style"}
   };
 
   var currentLang = 'pl';
@@ -704,6 +917,7 @@
     document.getElementById('weekNext').setAttribute('aria-label', dict.week_next[lang]);
     try{ localStorage.setItem('akk_lang', lang); }catch(e){}
     renderWeek();
+    if(typeof refreshThemeLabel === 'function') refreshThemeLabel();
   }
   document.getElementById('langToggle').addEventListener('click', function(){
     setLang(currentLang === 'pl' ? 'en' : 'pl');
@@ -795,19 +1009,41 @@
   try{ saved = localStorage.getItem('akk_lang') || 'pl'; }catch(e){}
   setLang(saved);
 
-  function setStyleVariant(variant){
-    document.documentElement.setAttribute('data-style', variant);
-    document.getElementById('styleTrack').classList.toggle('is-tender', variant==='tender');
-    document.getElementById('styleToggle').setAttribute('aria-checked', variant==='tender');
-    try{ localStorage.setItem('akk_style', variant); }catch(e){}
+  var themeNames = {
+    classic:{pl:"Klasyczny",en:"Classic"},
+    tender:{pl:"Czuły",en:"Tender"},
+    forest:{pl:"Leśna przygoda",en:"Forest adventure"},
+    sunny:{pl:"Słoneczny dzień",en:"Sunny day"},
+    ocean:{pl:"Morska przygoda",en:"Ocean adventure"},
+    berry:{pl:"Jagodowy wieczór",en:"Berry evening"},
+    cherry:{pl:"Sad wiśniowy",en:"Cherry orchard"},
+    lavender:{pl:"Lawendowe pole",en:"Lavender field"},
+    teddy:{pl:"Miś Uszatek",en:"Teddy bear"}
+  };
+  function refreshThemeLabel(){
+    if(typeof themeNames === 'undefined') return;
+    var slug = document.documentElement.getAttribute('data-style') || 'classic';
+    var el = document.getElementById('themeCurrentName');
+    if(el && themeNames[slug]) el.textContent = themeNames[slug][currentLang];
   }
-  document.getElementById('styleToggle').addEventListener('click', function(){
-    var current = document.documentElement.getAttribute('data-style') === 'tender' ? 'tender' : 'classic';
-    setStyleVariant(current === 'classic' ? 'tender' : 'classic');
+  function setThemeStyle(slug){
+    if(slug === 'classic'){ document.documentElement.removeAttribute('data-style'); }
+    else{ document.documentElement.setAttribute('data-style', slug); }
+    document.querySelectorAll('.theme-swatch').forEach(function(btn){
+      var active = btn.getAttribute('data-theme-slug') === slug;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-checked', active);
+    });
+    refreshThemeLabel();
+    try{ localStorage.setItem('akk_style', slug); }catch(e){}
+  }
+  document.getElementById('themeSwatches').addEventListener('click', function(e){
+    var btn = e.target.closest('.theme-swatch');
+    if(btn) setThemeStyle(btn.getAttribute('data-theme-slug'));
   });
   var savedStyle = 'classic';
   try{ savedStyle = localStorage.getItem('akk_style') || 'classic'; }catch(e){}
-  setStyleVariant(savedStyle);
+  setThemeStyle(savedStyle);
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
