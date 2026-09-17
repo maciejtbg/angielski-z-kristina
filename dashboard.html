@@ -15,7 +15,7 @@
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
     --danger:#B4483A; --busy:#D8CDBA;
-    --type-trial:#C68F32; --type-oneoff:#3E7C74; --type-weekly:#6C8FB0; --type-daily:#B0616C;
+    --type-trial:#6FA79C; --type-oneoff:#2C5C56; --type-weekly:#6C8FB0; --type-daily:#8B6CB0;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -23,7 +23,7 @@
       --ink:#F2EEE4; --ink-soft:#BFCCC7;
       --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
       --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0; --busy:#3A4A43;
-      --type-trial:#E0B45C; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#D693A0;
+      --type-trial:#A9DED0; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#C3AEE0;
     }
   }
   *{box-sizing:border-box;}
@@ -87,6 +87,17 @@
 
   form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;}
   form.grid-form label{display:flex;flex-direction:column;gap:5px;font-size:.78rem;color:var(--ink-soft);font-weight:600;}
+
+  .cell.now-row{box-shadow:inset 0 2px 0 var(--accent-warm);}
+  .hr-label.now-row{color:var(--accent-warm);font-weight:800;}
+
+  .log-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.84rem;}
+  .log-item:last-child{border-bottom:none;}
+  .log-main{display:flex;flex-direction:column;gap:2px;}
+  .log-time{color:var(--ink-soft);font-size:.74rem;}
+  .log-item.is-undo-marker .log-main{color:var(--ink-soft);font-style:italic;}
+  .log-item.is-undone .log-main{text-decoration:line-through;color:var(--ink-soft);}
+  .btn-undo{background:transparent;border:1.5px solid var(--accent-warm);color:var(--accent-warm);border-radius:999px;padding:6px 13px;font-weight:700;font-size:.76rem;cursor:pointer;flex:none;}
 </style>
 </head>
 <body class="lang-pending">
@@ -223,6 +234,12 @@
       <p class="sub" data-i18n="policy_note" style="margin:12px 0 0;">Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).</p>
     </div>
   </section>
+
+  <section>
+    <h2 data-i18n="log_h2">Historia zmian</h2>
+    <p class="sub" data-i18n="log_sub" style="margin-top:-8px;">Każda zmiana na stronie (Twoja i rodziców) zapisuje się tutaj. Tylko najnowszą zmianę można cofnąć.</p>
+    <div class="card"><div id="logList"></div></div>
+  </section>
 </div>
 
 <script src="demo-db.js"></script>
@@ -275,7 +292,23 @@
     policy_h2:{pl:"Polityka odwołań i przesunięć",en:"Cancellation & reschedule policy"},
     policy_window_label:{pl:"Bezpłatne odwołanie/przesunięcie, jeśli zgłoszone co najmniej (godzin przed lekcją):",en:"Free cancellation/reschedule if requested at least this many hours before the lesson:"},
     policy_note:{pl:"Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).",en:"After that window, cancelling does not refund the lesson to the parent's balance; rescheduling within that window costs an extra lesson from the package (if available)."},
-    day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"}
+    day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
+    log_h2:{pl:"Historia zmian",en:"Change history"},
+    log_sub:{pl:"Każda zmiana na stronie (Twoja i rodziców) zapisuje się tutaj. Tylko najnowszą zmianę można cofnąć.",en:"Every change on the site (yours and the parents') is recorded here. Only the most recent change can be undone."},
+    log_empty:{pl:"Brak zmian.",en:"No changes yet."},
+    undo_btn:{pl:"Cofnij",en:"Undo"},
+    undo_done:{pl:"Cofnięto zmianę.",en:"Change undone."},
+    dup_package_error:{pl:"Ten uczeń ma już pakiet za tyle samo lekcji. Zmień liczbę lekcji albo usuń/zmień poprzedni pakiet.",en:"This student already has a package with that many lessons. Change the lesson count, or edit/remove the existing package instead."},
+    confirm_delete_package:{pl:"Na pewno usunąć ten pakiet?",en:"Delete this package?"},
+    log_add_student:{pl:"Dodano ucznia",en:"Added student"},
+    log_price_change:{pl:"Zmieniono cenę/lekcję",en:"Changed price/lesson"},
+    log_pkg_add:{pl:"Dodano pakiet",en:"Added package"},
+    log_pkg_edit:{pl:"Zmieniono pakiet",en:"Edited package"},
+    log_pkg_delete:{pl:"Usunięto pakiet",en:"Deleted package"},
+    log_pkg_label_edit:{pl:"Zmieniono nazwę pakietu",en:"Renamed package"},
+    log_add_lesson:{pl:"Dodano lekcję",en:"Added lesson"},
+    log_status_change:{pl:"Zmieniono status lekcji",en:"Changed lesson status"},
+    log_policy_change:{pl:"Zmieniono politykę odwołań",en:"Changed cancellation policy"}
   };
   function perLessonStr(price, lessons){
     if(!lessons) return '0';
@@ -323,6 +356,7 @@
   function persist(){ AKKDemo.save(db); }
 
   document.getElementById('resetDemo').addEventListener('click', function(){
+    if(!confirm(currentLang==='en' ? 'Reset all demo data? This cannot be undone.' : 'Zresetować wszystkie dane demo? Tego nie da się cofnąć.')) return;
     db = AKKDemo.reset();
     renderAll();
   });
@@ -360,11 +394,18 @@
       byCell[key] = l;
     });
 
+    var now = new Date();
+    var showNowMarker = (now>=weekStart && now<new Date(weekStart.getTime()+7*86400000)) && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
+    var nowHour = now.getHours();
+
     HOURS.forEach(function(h){
+      var isNowRow = showNowMarker && h===nowHour;
       var lbl = document.createElement('div'); lbl.className='hr-label'; lbl.textContent = h+':00';
+      if(isNowRow) lbl.classList.add('now-row');
       grid.appendChild(lbl);
       for(var d=0; d<7; d++){
         var cell = document.createElement('div'); cell.className='cell';
+        if(isNowRow) cell.classList.add('now-row');
         var l = byCell[d+'_'+h];
         if(l){
           cell.classList.add('busy');
@@ -396,7 +437,11 @@
         if(s===l.status) o.selected = true;
         statusSel.appendChild(o);
       });
-      statusSel.addEventListener('change', function(){ l.status = statusSel.value; persist(); renderWeekGrid(); });
+      statusSel.addEventListener('change', function(){
+        var newVal = statusSel.value;
+        AKKDemo.withLog(db, t('log_status_change')+': '+studentName(l.studentId)+' → '+t('status_'+newVal), function(){ l.status = newVal; });
+        persist(); renderWeekGrid(); renderActivityLog();
+      });
       tr.innerHTML = '<td>'+dateStr+'</td><td>'+timeStr+'</td><td>'+studentName(l.studentId)+'</td><td><span class="badge type-'+l.type+'">'+t('type_'+l.type)+'</span></td>';
       var statusTd = document.createElement('td');
       statusTd.appendChild(statusSel);
@@ -435,9 +480,17 @@
       var priceRow = document.createElement('div'); priceRow.className='price-row';
       var priceLabel = document.createElement('span'); priceLabel.textContent = t('f_price')+':';
       var priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min=0; priceInput.value = s.pricePerLesson;
-      priceInput.addEventListener('change', function(){ s.pricePerLesson = Number(priceInput.value)||0; persist(); });
+      priceInput.addEventListener('change', function(){
+        var newVal = Number(priceInput.value)||0;
+        AKKDemo.withLog(db, t('log_price_change')+': '+s.name+' → '+newVal+' zł', function(){ s.pricePerLesson = newVal; });
+        persist(); renderActivityLog();
+      });
       priceRow.appendChild(priceLabel); priceRow.appendChild(priceInput); priceRow.appendChild(document.createTextNode('zł'));
       card.appendChild(priceRow);
+
+      function packageLessonsConflict(lessons, excludeId){
+        return s.packages.some(function(x){ return x.id!==excludeId && x.lessons===lessons; });
+      }
 
       s.packages.forEach(function(p){
         var row = document.createElement('div'); row.className='pkg-row';
@@ -448,12 +501,35 @@
         updateCalc();
         lessonsIn.addEventListener('input', updateCalc);
         priceIn.addEventListener('input', updateCalc);
-        lessonsIn.addEventListener('change', function(){ p.lessons = Number(lessonsIn.value)||1; persist(); });
-        priceIn.addEventListener('change', function(){ p.price = Number(priceIn.value)||0; persist(); });
+        lessonsIn.addEventListener('change', function(){
+          var newVal = Number(lessonsIn.value)||1;
+          if(packageLessonsConflict(newVal, p.id)){
+            alert(t('dup_package_error'));
+            lessonsIn.value = p.lessons;
+            updateCalc();
+            return;
+          }
+          AKKDemo.withLog(db, t('log_pkg_edit')+': '+s.name+' — '+p.lessons+'→'+newVal+' '+t('pkg_lessons'), function(){ p.lessons = newVal; });
+          persist(); renderActivityLog();
+        });
+        priceIn.addEventListener('change', function(){
+          var newVal = Number(priceIn.value)||0;
+          AKKDemo.withLog(db, t('log_pkg_edit')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' → '+newVal+' zł', function(){ p.price = newVal; });
+          persist(); renderActivityLog();
+        });
         var labelIn = document.createElement('input'); labelIn.type='text'; labelIn.value=p.label; labelIn.placeholder=t('pkg_label'); labelIn.style.flex='1'; labelIn.style.minWidth='100px';
-        labelIn.addEventListener('change', function(){ p.label = labelIn.value; persist(); });
+        labelIn.addEventListener('change', function(){
+          AKKDemo.withLog(db, t('log_pkg_label_edit')+': '+s.name, function(){ p.label = labelIn.value; });
+          persist(); renderActivityLog();
+        });
         var delBtn = document.createElement('button'); delBtn.className='icon-btn'; delBtn.textContent='✕ '+t('pkg_delete');
-        delBtn.addEventListener('click', function(){ s.packages = s.packages.filter(function(x){return x.id!==p.id;}); persist(); renderStudents(); });
+        delBtn.addEventListener('click', function(){
+          if(!confirm(t('confirm_delete_package'))) return;
+          AKKDemo.withLog(db, t('log_pkg_delete')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' ('+p.price+' zł)', function(){
+            s.packages = s.packages.filter(function(x){return x.id!==p.id;});
+          });
+          persist(); renderStudents(); renderActivityLog();
+        });
         row.appendChild(lessonsIn); row.appendChild(document.createTextNode(t('pkg_lessons'))); row.appendChild(priceIn); row.appendChild(document.createTextNode('zł')); row.appendChild(calc); row.appendChild(labelIn); row.appendChild(delBtn);
         card.appendChild(row);
       });
@@ -464,8 +540,16 @@
       var newLabel = document.createElement('input'); newLabel.type='text'; newLabel.placeholder=t('pkg_label'); newLabel.style.flex='1'; newLabel.style.minWidth='120px';
       var addBtn = document.createElement('button'); addBtn.className='btn-ghost-sm'; addBtn.type='button'; addBtn.textContent=t('pkg_add');
       addBtn.addEventListener('click', function(){
-        s.packages.push({ id:AKKDemo.uid(), label:newLabel.value||'', lessons:Number(newLessons.value)||1, price:Number(newPrice.value)||0 });
-        persist(); renderStudents();
+        var lessonsVal = Number(newLessons.value)||1;
+        if(packageLessonsConflict(lessonsVal, null)){
+          alert(t('dup_package_error'));
+          return;
+        }
+        var priceVal = Number(newPrice.value)||0;
+        AKKDemo.withLog(db, t('log_pkg_add')+': '+s.name+' — '+lessonsVal+' '+t('pkg_lessons')+' ('+priceVal+' zł)', function(){
+          s.packages.push({ id:AKKDemo.uid(), label:newLabel.value||'', lessons:lessonsVal, price:priceVal });
+        });
+        persist(); renderStudents(); renderActivityLog();
       });
       addRow.appendChild(newLessons); addRow.appendChild(newPrice); addRow.appendChild(newLabel); addRow.appendChild(addBtn);
       card.appendChild(addRow);
@@ -476,19 +560,22 @@
 
   document.getElementById('addStudentForm').addEventListener('submit', function(e){
     e.preventDefault();
-    db.students.push({
-      id: AKKDemo.uid(),
-      name: document.getElementById('nsName').value,
-      parentName: document.getElementById('nsParent').value,
-      contact: document.getElementById('nsContact').value,
-      pricePerLesson: Number(document.getElementById('nsPrice').value)||30,
-      creditBalance: 0,
-      packages: []
+    var name = document.getElementById('nsName').value;
+    AKKDemo.withLog(db, t('log_add_student')+': '+name, function(){
+      db.students.push({
+        id: AKKDemo.uid(),
+        name: name,
+        parentName: document.getElementById('nsParent').value,
+        contact: document.getElementById('nsContact').value,
+        pricePerLesson: Number(document.getElementById('nsPrice').value)||30,
+        creditBalance: 0,
+        packages: []
+      });
     });
     persist();
     e.target.reset();
     document.getElementById('nsPrice').value = 30;
-    renderStudents(); renderAddLessonOptions();
+    renderStudents(); renderAddLessonOptions(); renderActivityLog();
   });
 
   // ---------- Add lesson ----------
@@ -523,18 +610,57 @@
         d2.setDate(d2.getDate()+1);
       }
     }
-    occurrences.forEach(function(dt){
-      db.lessons.push({ id:AKKDemo.uid(), studentId:studentId, datetime:dt.toISOString(), type:type, seriesId: (type==='weekly'||type==='daily')?seriesId:undefined, status:'booked' });
+    var sName = studentName(studentId);
+    AKKDemo.withLog(db, t('log_add_lesson')+': '+sName+' — '+t('type_'+type)+' ('+occurrences.length+'x)', function(){
+      occurrences.forEach(function(dt){
+        db.lessons.push({ id:AKKDemo.uid(), studentId:studentId, datetime:dt.toISOString(), type:type, seriesId: (type==='weekly'||type==='daily')?seriesId:undefined, status:'booked' });
+      });
     });
     persist();
-    renderWeekGrid(); renderTable();
+    renderWeekGrid(); renderTable(); renderActivityLog();
   });
 
   var policyInput = document.getElementById('policyWindow');
   policyInput.addEventListener('change', function(){
-    db.settings.cancellationWindowHours = Number(policyInput.value)||0;
-    persist();
+    var newVal = Number(policyInput.value)||0;
+    AKKDemo.withLog(db, t('log_policy_change')+': '+newVal+'h', function(){ db.settings.cancellationWindowHours = newVal; });
+    persist(); renderActivityLog();
   });
+
+  function renderActivityLog(){
+    var list = document.getElementById('logList');
+    if(!list) return;
+    list.innerHTML = '';
+    var log = db.activityLog || [];
+    if(log.length===0){
+      var p = document.createElement('p'); p.className='sub'; p.style.margin='0'; p.textContent = t('log_empty');
+      list.appendChild(p); return;
+    }
+    log.forEach(function(entry, idx){
+      if(!entry) return;
+      var row = document.createElement('div'); row.className='log-item';
+      if(entry.isUndoMarker) row.classList.add('is-undo-marker');
+      if(entry.undone) row.classList.add('is-undone');
+      var main = document.createElement('div'); main.className='log-main';
+      var desc = document.createElement('span'); desc.textContent = entry.description || '';
+      var time = document.createElement('span'); time.className='log-time';
+      try{ time.textContent = new Date(entry.timestamp).toLocaleString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}); }catch(e){ time.textContent=''; }
+      main.appendChild(desc); main.appendChild(time);
+      row.appendChild(main);
+      var canUndo = idx===0 && !entry.isUndoMarker && !entry.undone;
+      if(canUndo){
+        var undoBtn = document.createElement('button'); undoBtn.className='btn-undo'; undoBtn.type='button'; undoBtn.textContent = t('undo_btn');
+        undoBtn.addEventListener('click', function(){
+          var undone = AKKDemo.undoTop(db);
+          if(!undone) return;
+          persist();
+          renderAll();
+        });
+        row.appendChild(undoBtn);
+      }
+      list.appendChild(row);
+    });
+  }
 
   function renderAll(){
     renderWeekGrid();
@@ -542,6 +668,7 @@
     renderPayments();
     renderStudents();
     renderAddLessonOptions();
+    renderActivityLog();
     policyInput.value = db.settings.cancellationWindowHours;
   }
 

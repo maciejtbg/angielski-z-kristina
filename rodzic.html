@@ -15,6 +15,7 @@
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
     --danger:#B4483A; --free:#DCEAE6; --busy:#D8CDBA; --mine:#3E7C74;
+    --type-trial:#6FA79C; --type-oneoff:#2C5C56; --type-weekly:#6C8FB0; --type-daily:#8B6CB0;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -23,6 +24,7 @@
       --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
       --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0;
       --free:#2E4842; --busy:#3A4A43; --mine:#7FC6B4;
+      --type-trial:#A9DED0; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#C3AEE0;
     }
   }
   *{box-sizing:border-box;}
@@ -65,8 +67,12 @@
   .badge.status-completed{background:var(--surface-alt);color:var(--ink-soft);}
   .badge.status-cancelled{background:#F7E2DC;color:var(--danger);}
   @media (prefers-color-scheme: dark){ .badge.status-cancelled{background:#3A2420;color:#F0A794;} }
+  .badge.type-trial{background:var(--type-trial);color:#fff;} .badge.type-oneoff{background:var(--type-oneoff);color:#fff;}
+  .badge.type-weekly{background:var(--type-weekly);color:#fff;} .badge.type-daily{background:var(--type-daily);color:#fff;}
   .btn-tiny{font-size:.72rem;font-weight:700;border-radius:999px;padding:5px 11px;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--accent-dark);}
   .btn-tiny.danger{color:var(--danger);border-color:var(--danger);}
+  .lesson-policy-note{flex-basis:100%;font-size:.76rem;color:var(--accent-dark);}
+  .lesson-policy-note.warn{color:var(--danger);}
 
   .balance{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .balance .num{font-family:'Baloo 2';font-size:1.6rem;color:var(--accent-dark);}
@@ -86,8 +92,12 @@
   .day-head{font-weight:700;text-align:center;padding:6px 0;font-size:.76rem;color:var(--ink-soft);}
   .cell{border-radius:6px;min-height:30px;background:var(--free);cursor:pointer;border:none;padding:0;}
   .cell.is-busy{background:var(--busy);cursor:default;}
-  .cell.is-mine{background:var(--mine);color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:default;}
+  .cell.is-mine{background:var(--mine);color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:default;text-align:center;line-height:1.2;}
+  .cell.is-mine.type-trial{background:var(--type-trial);} .cell.is-mine.type-oneoff{background:var(--type-oneoff);}
+  .cell.is-mine.type-weekly{background:var(--type-weekly);} .cell.is-mine.type-daily{background:var(--type-daily);}
   .cell.is-past{opacity:.35;cursor:default;}
+  .cell.now-row{box-shadow:inset 0 2px 0 var(--accent-warm);}
+  .hr-label.now-row{color:var(--accent-warm);font-weight:800;}
   .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;margin-top:10px;color:var(--ink-soft);}
   .legend span{display:inline-flex;align-items:center;gap:5px;}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
@@ -176,7 +186,12 @@
         <div class="legend">
           <span><i class="dot" style="background:var(--free)"></i><span data-i18n="leg_free">wolne</span></span>
           <span><i class="dot" style="background:var(--busy)"></i><span data-i18n="leg_busy">zajęte (inna rodzina)</span></span>
-          <span><i class="dot" style="background:var(--mine)"></i><span data-i18n="leg_mine">Twoja lekcja</span></span>
+        </div>
+        <div class="legend" style="margin-top:4px;">
+          <span><i class="dot" style="background:var(--type-trial)"></i><span data-i18n="type_trial">Próbna</span></span>
+          <span><i class="dot" style="background:var(--type-oneoff)"></i><span data-i18n="type_oneoff">Jednorazowa</span></span>
+          <span><i class="dot" style="background:var(--type-weekly)"></i><span data-i18n="type_weekly">Cotygodniowa</span></span>
+          <span><i class="dot" style="background:var(--type-daily)"></i><span data-i18n="type_daily">Codzienna</span></span>
         </div>
       </div>
     </section>
@@ -231,6 +246,13 @@
     reschedule_ok_free:{pl:"Przesunięto lekcję — bezpłatnie, w ramach polityki odwołań.",en:"Lesson rescheduled — free of charge, within the cancellation policy window."},
     reschedule_ok_charged:{pl:"Przesunięto lekcję — to za późno na bezpłatną zmianę, więc pobrano dodatkową lekcję z pakietu.",en:"Lesson rescheduled — this was too late for a free change, so an extra lesson was taken from your package."},
     reschedule_need_credit:{pl:"To za późno na bezpłatne przesunięcie, a nie masz już lekcji na saldzie, żeby za nie zapłacić.",en:"It's too late for a free reschedule, and you have no lessons left on your balance to cover it."},
+    free_until:{pl:"Bezpłatna zmiana jeszcze przez",en:"Free change for another"},
+    charge_note:{pl:"Za późno na bezpłatną zmianę — odwołanie nie zwróci lekcji, przesunięcie kosztuje dodatkową lekcję",en:"Too late for a free change — cancelling won't refund this lesson, rescheduling costs an extra lesson"},
+    days_short:{pl:"d",en:"d"}, hours_short:{pl:"godz.",en:"h"}, min_short:{pl:"min",en:"min"},
+    log_cancel:{pl:"Odwołano lekcję",en:"Cancelled lesson"},
+    log_reschedule:{pl:"Przesunięto lekcję",en:"Rescheduled lesson"},
+    log_booked:{pl:"Zarezerwowano termin",en:"Booked a slot"},
+    log_purchase:{pl:"Kupiono pakiet",en:"Bought a package"},
     pkg_lessons:{pl:"lekcji",en:"lessons"},
     pkg_per_lesson:{pl:"lekcję",en:"lesson"},
     history_h2:{pl:"Historia lekcji",en:"Lesson history"},
@@ -319,8 +341,10 @@
     if(!confirm(t('confirm_cancel'))) return;
     var s = currentStudent();
     var refund = withinFreeWindow(lesson.datetime);
-    lesson.status = 'cancelled';
-    if(refund) s.creditBalance += 1;
+    AKKDemo.withLog(db, t('log_cancel')+': '+s.name+(refund?'':' (-1)'), function(){
+      lesson.status = 'cancelled';
+      if(refund) s.creditBalance += 1;
+    });
     persist();
     alert(refund ? t('cancel_refunded') : t('cancel_no_refund'));
     renderPortal();
@@ -341,16 +365,32 @@
     var lesson = db.lessons.find(function(l){ return l.id===reschedulingLessonId; });
     if(!lesson) return;
     var free = withinFreeWindow(lesson.datetime);
-    if(!free){
-      if(s.creditBalance <= 0){ alert(t('reschedule_need_credit')); return; }
-      s.creditBalance -= 1;
-    }
-    lesson.datetime = newDt.toISOString();
+    if(!free && s.creditBalance <= 0){ alert(t('reschedule_need_credit')); return; }
+    AKKDemo.withLog(db, t('log_reschedule')+': '+s.name+(free?'':' (-1)'), function(){
+      if(!free) s.creditBalance -= 1;
+      lesson.datetime = newDt.toISOString();
+    });
     reschedulingLessonId = null;
     document.getElementById('rescheduleBanner').style.display = 'none';
     persist();
     alert(free ? t('reschedule_ok_free') : t('reschedule_ok_charged'));
     renderPortal();
+  }
+
+  function formatDuration(hours){
+    if(hours>=24){
+      var days = Math.floor(hours/24);
+      var rem = Math.round(hours%24);
+      return days+t('days_short')+' '+rem+t('hours_short');
+    }
+    if(hours>=1) return Math.floor(hours)+t('hours_short')+' '+Math.round((hours%1)*60)+t('min_short');
+    return Math.max(0,Math.round(hours*60))+t('min_short');
+  }
+  function policyNote(lesson){
+    var windowH = (db.settings && db.settings.cancellationWindowHours) || 0;
+    var remaining = hoursUntil(lesson.datetime) - windowH;
+    if(remaining > 0) return { text: t('free_until')+' '+formatDuration(remaining), warn:false };
+    return { text: t('charge_note'), warn:true };
   }
 
   function renderUpcoming(){
@@ -369,7 +409,7 @@
       var row = document.createElement('div'); row.className='lesson-item';
       var dateStr = dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{weekday:'short',day:'numeric',month:'short'});
       var main = document.createElement('div'); main.className='lesson-main';
-      main.innerHTML = '<span>'+dateStr+', '+String(dt.getHours()).padStart(2,'0')+':00</span><span class="badge">'+t('type_'+l.type)+'</span>';
+      main.innerHTML = '<span>'+dateStr+', '+String(dt.getHours()).padStart(2,'0')+':00</span><span class="badge type-'+l.type+'">'+t('type_'+l.type)+'</span>';
       var actions = document.createElement('div'); actions.className='lesson-actions';
       var reBtn = document.createElement('button'); reBtn.type='button'; reBtn.className='btn-tiny'; reBtn.textContent = t('reschedule_btn');
       reBtn.addEventListener('click', function(){ startReschedule(l); });
@@ -377,6 +417,9 @@
       caBtn.addEventListener('click', function(){ cancelLesson(l); });
       actions.appendChild(reBtn); actions.appendChild(caBtn);
       row.appendChild(main); row.appendChild(actions);
+      var note = policyNote(l);
+      var noteEl = document.createElement('div'); noteEl.className='lesson-policy-note'+(note.warn?' warn':''); noteEl.textContent = note.text;
+      row.appendChild(noteEl);
       list.appendChild(row);
     });
   }
@@ -399,7 +442,7 @@
       var dateStr = dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',year:'numeric'});
       var status = l.status==='cancelled' ? 'cancelled' : 'completed';
       row.innerHTML = '<span>'+dateStr+', '+String(dt.getHours()).padStart(2,'0')+':00</span>'+
-        '<span><span class="badge">'+t('type_'+l.type)+'</span> <span class="badge status-'+status+'">'+t('status_'+status)+'</span></span>';
+        '<span><span class="badge type-'+l.type+'">'+t('type_'+l.type)+'</span> <span class="badge status-'+status+'">'+t('status_'+status)+'</span></span>';
       list.appendChild(row);
     });
   }
@@ -439,9 +482,11 @@
       if(p.label){ var nick = document.createElement('span'); nick.className='pkg-nick'; nick.textContent = p.label; left.appendChild(nick); }
       var btn = document.createElement('button'); btn.className='btn-sm'; btn.textContent = t('buy');
       btn.addEventListener('click', function(){
-        s.creditBalance += p.lessons;
-        db.payments = db.payments || [];
-        db.payments.push({ id:AKKDemo.uid(), studentId:s.id, datetime:new Date().toISOString(), lessons:p.lessons, price:p.price });
+        AKKDemo.withLog(db, t('log_purchase')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' ('+p.price+' zł)', function(){
+          s.creditBalance += p.lessons;
+          db.payments = db.payments || [];
+          db.payments.push({ id:AKKDemo.uid(), studentId:s.id, datetime:new Date().toISOString(), lessons:p.lessons, price:p.price });
+        });
         persist();
         renderPackage();
         renderPaymentHistory();
@@ -483,17 +528,22 @@
     });
 
     var now = new Date();
+    var showNowMarker = (now>=weekStart && now<new Date(weekStart.getTime()+7*86400000)) && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
+    var nowHour = now.getHours();
     HOURS.forEach(function(h){
+      var isNowRow = showNowMarker && h===nowHour;
       var lbl = document.createElement('div'); lbl.className='hr-label'; lbl.textContent = h+':00';
+      if(isNowRow) lbl.classList.add('now-row');
       grid.appendChild(lbl);
       for(var d=0; d<7; d++){
         var cellDate = new Date(weekStart); cellDate.setDate(cellDate.getDate()+d); cellDate.setHours(h,0,0,0);
         var l = byCell[d+'_'+h];
         var cell = document.createElement('button'); cell.type='button'; cell.className='cell';
+        if(isNowRow) cell.classList.add('now-row');
         if(cellDate <= now){
           cell.classList.add('is-past');
         } else if(l && l.studentId===s.id){
-          cell.classList.add('is-mine'); cell.textContent = t('type_'+l.type);
+          cell.classList.add('is-mine'); cell.classList.add('type-'+l.type); cell.textContent = t('type_'+l.type);
         } else if(l){
           cell.classList.add('is-busy');
         } else {
@@ -509,8 +559,10 @@
   function bookSlot(dt){
     var s = currentStudent();
     if(s.creditBalance <= 0){ alert(t('need_credit')); return; }
-    db.lessons.push({ id:AKKDemo.uid(), studentId:s.id, datetime:dt.toISOString(), type:'oneoff', status:'booked' });
-    s.creditBalance -= 1;
+    AKKDemo.withLog(db, t('log_booked')+': '+s.name, function(){
+      db.lessons.push({ id:AKKDemo.uid(), studentId:s.id, datetime:dt.toISOString(), type:'oneoff', status:'booked' });
+      s.creditBalance -= 1;
+    });
     persist();
     alert(t('booked_ok'));
     renderPortal();
