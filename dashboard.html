@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel nauczyciela — Angielski z Kristiną</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF5EC; --surface:#FFFFFF; --surface-alt:#FFF1DE;
+    --ink:#2B3A38; --ink-soft:#5C6D69;
+    --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
+    --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
+    --danger:#B4483A; --busy:#D8CDBA;
+    --type-trial:#C68F32; --type-oneoff:#3E7C74; --type-weekly:#6C8FB0; --type-daily:#B0616C;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1B2422; --surface:#223330; --surface-alt:#2B3A30;
+      --ink:#F2EEE4; --ink-soft:#BFCCC7;
+      --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
+      --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0; --busy:#3A4A43;
+      --type-trial:#E0B45C; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#D693A0;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;line-height:1.6;}
+  body.lang-pending{visibility:hidden;}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 90px;}
+  a{color:var(--accent-dark);}
+  .topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .back{font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);}
+  .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .top-actions a, .top-actions button{font-size:.82rem;font-weight:700;color:var(--accent-dark);background:transparent;border:1.5px solid var(--border);border-radius:999px;padding:7px 14px;cursor:pointer;text-decoration:none;}
+  h1{font-family:'Baloo 2';font-size:clamp(1.4rem,3.6vw,1.9rem);margin:0 0 4px;}
+  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:24px;}
+  .banner{background:var(--accent-tint);border-radius:14px;padding:14px 18px;font-size:.86rem;margin-bottom:28px;}
+  section{margin-bottom:38px;}
+  h2{font-family:'Baloo 2';font-size:1.15rem;margin:0 0 14px;color:var(--accent-dark);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 22px rgb(var(--shadow)/.06);}
+
+  .week-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .week-nav button{border:1.5px solid var(--border);background:var(--surface);border-radius:999px;width:32px;height:32px;cursor:pointer;color:var(--accent-dark);font-weight:700;}
+  .week-grid{display:grid;grid-template-columns:52px repeat(7,1fr);gap:4px;font-size:.78rem;}
+  .week-grid .hr-label{color:var(--ink-soft);text-align:right;padding-right:4px;font-size:.72rem;}
+  .day-head{font-weight:700;text-align:center;padding:6px 0;font-size:.78rem;color:var(--ink-soft);}
+  .cell{border-radius:6px;min-height:30px;background:var(--surface-alt);}
+  .cell.busy{cursor:default;}
+  .lesson-chip{border-radius:6px;padding:3px 5px;font-size:.68rem;font-weight:700;color:#fff;line-height:1.25;height:100%;display:flex;flex-direction:column;justify-content:center;}
+  .type-trial{background:var(--type-trial);} .type-oneoff{background:var(--type-oneoff);}
+  .type-weekly{background:var(--type-weekly);} .type-daily{background:var(--type-daily);}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;margin-top:10px;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  table{width:100%;border-collapse:collapse;font-size:.86rem;}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--border);}
+  th{color:var(--ink-soft);font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;}
+  select,input[type=text],input[type=number],input[type=date],input[type=time]{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 9px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:700;color:#fff;}
+  .status-booked{background:var(--accent);} .status-completed{background:var(--ink-soft);} .status-cancelled{background:var(--danger);}
+
+  .student-card{border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+  .student-card h3{font-family:'Baloo 2';font-size:1.02rem;margin:0 0 2px;}
+  .student-meta{color:var(--ink-soft);font-size:.82rem;margin-bottom:10px;}
+  .price-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.86rem;}
+  .price-row input{width:80px;}
+  .pkg-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.84rem;}
+  .pkg-row input[type=text]{flex:1;min-width:0;}
+  .pkg-row input[type=number]{width:70px;}
+  .icon-btn{border:none;background:transparent;color:var(--danger);cursor:pointer;font-size:.85rem;font-weight:700;}
+  .add-pkg{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .btn-sm{background:var(--accent);color:#fff;border:none;border-radius:999px;padding:7px 14px;font-weight:700;font-size:.8rem;cursor:pointer;}
+  .btn-ghost-sm{background:transparent;border:1.5px solid var(--border);color:var(--accent-dark);border-radius:999px;padding:7px 14px;font-weight:700;font-size:.8rem;cursor:pointer;}
+
+  form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;}
+  form.grid-form label{display:flex;flex-direction:column;gap:5px;font-size:.78rem;color:var(--ink-soft);font-weight:600;}
+</style>
+</head>
+<body class="lang-pending">
+<script>setTimeout(function(){ document.body.classList.remove('lang-pending'); }, 1500);</script>
+
+<div id="gate" class="wrap" style="max-width:360px;margin-top:14vh;text-align:center;">
+  <h1 data-i18n="gate_h1">Panel nauczyciela</h1>
+  <p class="sub" data-i18n="gate_sub">Tylko dla Kristiny. Podaj hasło.</p>
+  <input type="password" id="pw" data-i18n-placeholder="gate_ph" placeholder="Hasło" autocomplete="off" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:1rem;margin:16px 0;">
+  <div id="pwErr" style="color:var(--danger);font-size:.85rem;min-height:1.2em;margin-bottom:6px;"></div>
+  <button class="btn-sm" id="pwGo" data-i18n="gate_go" style="padding:12px 22px;">Wejdź</button>
+</div>
+
+<div id="panel" class="wrap" style="display:none;">
+  <div class="topbar">
+    <a class="back" href="./" data-i18n="back">← Strona główna</a>
+    <div class="top-actions">
+      <button id="langToggle" type="button" data-i18n="lang_toggle">EN</button>
+      <a href="panel.html" data-i18n="help_link">Pomoc / jak to działa</a>
+      <button id="resetDemo" type="button" data-i18n="reset_demo">Zresetuj dane demo</button>
+    </div>
+  </div>
+  <h1 data-i18n="h1">Cześć, Kristina 👋</h1>
+  <p class="sub" data-i18n="sub">Pełny widok Twoich lekcji, uczniów i cen.</p>
+
+  <div class="banner" data-i18n="banner">Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce. Realne, bezpieczne dane (i prawdziwa prywatność rodzin) ruszą po podłączeniu bazy danych — patrz wiadomość od Maćka.</div>
+
+  <section>
+    <h2 data-i18n="week_h2">Twój tydzień</h2>
+    <div class="card">
+      <div class="week-nav">
+        <button id="wPrev">‹</button>
+        <span id="wLabel" style="font-weight:700;font-size:.86rem;"></span>
+        <button id="wNext">›</button>
+      </div>
+      <div id="weekGrid" class="week-grid"></div>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--type-trial)"></i><span data-i18n="type_trial">Próbna</span></span>
+        <span><i class="dot" style="background:var(--type-oneoff)"></i><span data-i18n="type_oneoff">Jednorazowa</span></span>
+        <span><i class="dot" style="background:var(--type-weekly)"></i><span data-i18n="type_weekly">Cotygodniowa</span></span>
+        <span><i class="dot" style="background:var(--type-daily)"></i><span data-i18n="type_daily">Codzienna</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="all_h2">Wszystkie rezerwacje</h2>
+    <div class="card" style="overflow-x:auto;">
+      <table>
+        <thead><tr>
+          <th data-i18n="col_date">Data</th><th data-i18n="col_time">Godzina</th>
+          <th data-i18n="col_student">Uczeń</th><th data-i18n="col_type">Typ</th>
+          <th data-i18n="col_status">Status</th>
+        </tr></thead>
+        <tbody id="allBookingsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="students_h2">Uczniowie i cennik</h2>
+    <div id="studentsList"></div>
+    <div class="card">
+      <h2 data-i18n="add_student_h2" style="font-size:1rem;">Dodaj ucznia</h2>
+      <form class="grid-form" id="addStudentForm">
+        <label><span data-i18n="f_student_name">Imię ucznia</span><input type="text" id="nsName" required></label>
+        <label><span data-i18n="f_parent_name">Imię rodzica</span><input type="text" id="nsParent" required></label>
+        <label><span data-i18n="f_contact">Kontakt</span><input type="text" id="nsContact"></label>
+        <label><span data-i18n="f_price">Cena/lekcję (zł)</span><input type="number" id="nsPrice" value="30" min="0"></label>
+        <button class="btn-sm" type="submit" data-i18n="f_add">Dodaj</button>
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="add_lesson_h2">Dodaj lekcję</h2>
+    <div class="card">
+      <form class="grid-form" id="addLessonForm">
+        <label><span data-i18n="f_pick_student">Uczeń</span><select id="alStudent"></select></label>
+        <label><span data-i18n="f_date">Data</span><input type="date" id="alDate" required></label>
+        <label><span data-i18n="f_time">Godzina</span><input type="time" id="alTime" value="17:00" required></label>
+        <label><span data-i18n="f_type">Typ</span><select id="alType">
+          <option value="trial" data-i18n="type_trial">Próbna</option>
+          <option value="oneoff" data-i18n="type_oneoff">Jednorazowa</option>
+          <option value="weekly" data-i18n="type_weekly">Cotygodniowa</option>
+          <option value="daily" data-i18n="type_daily">Codzienna</option>
+        </select></label>
+        <button class="btn-sm" type="submit" data-i18n="f_add">Dodaj</button>
+      </form>
+      <p class="sub" data-i18n="add_lesson_note" style="margin-top:12px;margin-bottom:0;">„Cotygodniowa" doda 8 kolejnych tygodni, „Codzienna" doda 5 najbliższych dni roboczych.</p>
+    </div>
+  </section>
+</div>
+
+<script src="demo-db.js"></script>
+<script>
+(function(){
+  var dict = {
+    gate_h1:{pl:"Panel nauczyciela",en:"Teacher dashboard"},
+    gate_sub:{pl:"Tylko dla Kristiny. Podaj hasło.",en:"For Kristina only. Enter the password."},
+    gate_go:{pl:"Wejdź",en:"Enter"},
+    gate_ph:{pl:"Hasło",en:"Password"},
+    back:{pl:"← Strona główna",en:"← Home"},
+    lang_toggle:{pl:"EN",en:"PL"},
+    help_link:{pl:"Pomoc / jak to działa",en:"Help / how it works"},
+    reset_demo:{pl:"Zresetuj dane demo",en:"Reset demo data"},
+    h1:{pl:"Cześć, Kristina 👋",en:"Hi Kristina 👋"},
+    sub:{pl:"Pełny widok Twoich lekcji, uczniów i cen.",en:"Full view of your lessons, students and pricing."},
+    banner:{pl:"Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce. Realne, bezpieczne dane (i prawdziwa prywatność rodzin) ruszą po podłączeniu bazy danych — patrz wiadomość od Maćka.",en:"Demo mode: the data here is sample data saved only in this browser. Real, secure data (with real family privacy) goes live once the database is connected — see Maciek's message."},
+    week_h2:{pl:"Twój tydzień",en:"Your week"},
+    type_trial:{pl:"Próbna",en:"Trial"},
+    type_oneoff:{pl:"Jednorazowa",en:"One-off"},
+    type_weekly:{pl:"Cotygodniowa",en:"Weekly"},
+    type_daily:{pl:"Codzienna",en:"Daily"},
+    all_h2:{pl:"Wszystkie rezerwacje",en:"All bookings"},
+    col_date:{pl:"Data",en:"Date"}, col_time:{pl:"Godzina",en:"Time"},
+    col_student:{pl:"Uczeń",en:"Student"}, col_type:{pl:"Typ",en:"Type"}, col_status:{pl:"Status",en:"Status"},
+    students_h2:{pl:"Uczniowie i cennik",en:"Students & pricing"},
+    add_student_h2:{pl:"Dodaj ucznia",en:"Add student"},
+    f_student_name:{pl:"Imię ucznia",en:"Student name"},
+    f_parent_name:{pl:"Imię rodzica",en:"Parent name"},
+    f_contact:{pl:"Kontakt",en:"Contact"},
+    f_price:{pl:"Cena/lekcję (zł)",en:"Price/lesson (zł)"},
+    f_add:{pl:"Dodaj",en:"Add"},
+    add_lesson_h2:{pl:"Dodaj lekcję",en:"Add lesson"},
+    f_pick_student:{pl:"Uczeń",en:"Student"},
+    f_date:{pl:"Data",en:"Date"}, f_time:{pl:"Godzina",en:"Time"}, f_type:{pl:"Typ",en:"Type"},
+    add_lesson_note:{pl:"„Cotygodniowa” doda 8 kolejnych tygodni, „Codzienna” doda 5 najbliższych dni roboczych.",en:"“Weekly” adds the next 8 weeks, “Daily” adds the next 5 business days."},
+    pkg_lessons:{pl:"lekcji",en:"lessons"},
+    pkg_price:{pl:"cena (zł)",en:"price (zł)"},
+    pkg_label:{pl:"nazwa pakietu",en:"package name"},
+    pkg_add:{pl:"+ Pakiet",en:"+ Package"},
+    pkg_delete:{pl:"Usuń",en:"Delete"},
+    credit_balance:{pl:"pozostałe lekcje",en:"lessons left"},
+    status_booked:{pl:"Zarezerwowana",en:"Booked"},
+    status_completed:{pl:"Odbyta",en:"Completed"},
+    status_cancelled:{pl:"Odwołana",en:"Cancelled"},
+    day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"}
+  };
+  var currentLang = 'pl';
+  function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
+
+  function detectLang(){
+    var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
+    return /^pl\b/i.test(primary) ? 'pl' : 'en';
+  }
+  function applyStaticI18n(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n')];
+      if(entry) el.textContent = entry[currentLang];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n-placeholder')];
+      if(entry) el.placeholder = entry[currentLang];
+    });
+  }
+  function setLang(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    applyStaticI18n();
+    try{ localStorage.setItem('akk_lang', lang); }catch(e){}
+    renderAll();
+  }
+  document.getElementById('langToggle').addEventListener('click', function(){ setLang(currentLang==='pl'?'en':'pl'); });
+
+  var PASSWORD = "Kristina50";
+  var GATE_KEY = "akk_panel_ok";
+  function unlock(){ document.getElementById('gate').style.display='none'; document.getElementById('panel').style.display='block'; }
+  document.getElementById('pwGo').addEventListener('click', tryPw);
+  document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPw(); });
+  function tryPw(){
+    if(document.getElementById('pw').value === PASSWORD){ try{localStorage.setItem(GATE_KEY,'1');}catch(e){} unlock(); }
+    else document.getElementById('pwErr').textContent = currentLang==='en' ? 'Wrong password, try again.' : 'Złe hasło, spróbuj jeszcze raz.';
+  }
+
+  var db = AKKDemo.load();
+  function persist(){ AKKDemo.save(db); }
+
+  document.getElementById('resetDemo').addEventListener('click', function(){
+    db = AKKDemo.reset();
+    renderAll();
+  });
+
+  function studentName(id){ var s = db.students.find(function(x){return x.id===id;}); return s ? s.name : '?'; }
+
+  // ---------- Week grid ----------
+  var weekOffset = 0;
+  var HOURS = [9,10,11,12,13,14,15,16,17,18,19,20];
+  var DAY_KEYS = ['day0','day1','day2','day3','day4','day5','day6'];
+  function startOfDay(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+
+  function renderWeekGrid(){
+    var grid = document.getElementById('weekGrid');
+    grid.innerHTML = '';
+    var today = startOfDay(new Date());
+    var weekStart = new Date(today); weekStart.setDate(weekStart.getDate() + weekOffset*7 - today.getDay());
+    document.getElementById('wLabel').textContent = weekStart.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short'});
+
+    grid.appendChild(document.createElement('div'));
+    for(var d=0; d<7; d++){
+      var head = document.createElement('div'); head.className='day-head';
+      var dayDate = new Date(weekStart); dayDate.setDate(dayDate.getDate()+d);
+      head.textContent = t(DAY_KEYS[dayDate.getDay()]) + ' ' + dayDate.getDate();
+      grid.appendChild(head);
+    }
+
+    var byCell = {};
+    db.lessons.forEach(function(l){
+      if(l.status==='cancelled') return;
+      var dt = new Date(l.datetime);
+      var offsetDays = Math.round((startOfDay(dt)-weekStart)/86400000);
+      if(offsetDays<0 || offsetDays>6) return;
+      var key = offsetDays+'_'+dt.getHours();
+      byCell[key] = l;
+    });
+
+    HOURS.forEach(function(h){
+      var lbl = document.createElement('div'); lbl.className='hr-label'; lbl.textContent = h+':00';
+      grid.appendChild(lbl);
+      for(var d=0; d<7; d++){
+        var cell = document.createElement('div'); cell.className='cell';
+        var l = byCell[d+'_'+h];
+        if(l){
+          cell.classList.add('busy');
+          var chip = document.createElement('div');
+          chip.className = 'lesson-chip type-'+l.type;
+          chip.innerHTML = '<span>'+studentName(l.studentId)+'</span><span>'+String(h).padStart(2,'0')+':00</span>';
+          cell.appendChild(chip);
+        }
+        grid.appendChild(cell);
+      }
+    });
+  }
+  document.getElementById('wPrev').addEventListener('click', function(){ weekOffset--; renderWeekGrid(); });
+  document.getElementById('wNext').addEventListener('click', function(){ weekOffset++; renderWeekGrid(); });
+
+  // ---------- All bookings table ----------
+  function renderTable(){
+    var body = document.getElementById('allBookingsBody');
+    body.innerHTML = '';
+    var sorted = db.lessons.slice().sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
+    sorted.forEach(function(l){
+      var dt = new Date(l.datetime);
+      var tr = document.createElement('tr');
+      var dateStr = dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',year:'numeric'});
+      var timeStr = String(dt.getHours()).padStart(2,'0')+':00';
+      var statusSel = document.createElement('select');
+      ['booked','completed','cancelled'].forEach(function(s){
+        var o = document.createElement('option'); o.value=s; o.textContent=t('status_'+s);
+        if(s===l.status) o.selected = true;
+        statusSel.appendChild(o);
+      });
+      statusSel.addEventListener('change', function(){ l.status = statusSel.value; persist(); renderWeekGrid(); });
+      tr.innerHTML = '<td>'+dateStr+'</td><td>'+timeStr+'</td><td>'+studentName(l.studentId)+'</td><td><span class="badge type-'+l.type+'">'+t('type_'+l.type)+'</span></td>';
+      var statusTd = document.createElement('td');
+      statusTd.appendChild(statusSel);
+      tr.appendChild(statusTd);
+      body.appendChild(tr);
+    });
+  }
+
+  // ---------- Students & pricing ----------
+  function renderStudents(){
+    var list = document.getElementById('studentsList');
+    list.innerHTML = '';
+    db.students.forEach(function(s){
+      var card = document.createElement('div'); card.className='student-card';
+      card.innerHTML = '<h3>'+s.name+'</h3><div class="student-meta">'+s.parentName+(s.contact?' · '+s.contact:'')+' · '+s.creditBalance+' '+t('credit_balance')+'</div>';
+
+      var priceRow = document.createElement('div'); priceRow.className='price-row';
+      var priceLabel = document.createElement('span'); priceLabel.textContent = t('f_price')+':';
+      var priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min=0; priceInput.value = s.pricePerLesson;
+      priceInput.addEventListener('change', function(){ s.pricePerLesson = Number(priceInput.value)||0; persist(); });
+      priceRow.appendChild(priceLabel); priceRow.appendChild(priceInput); priceRow.appendChild(document.createTextNode('zł'));
+      card.appendChild(priceRow);
+
+      s.packages.forEach(function(p){
+        var row = document.createElement('div'); row.className='pkg-row';
+        var labelIn = document.createElement('input'); labelIn.type='text'; labelIn.value=p.label;
+        labelIn.addEventListener('change', function(){ p.label = labelIn.value; persist(); });
+        var lessonsIn = document.createElement('input'); lessonsIn.type='number'; lessonsIn.min=1; lessonsIn.value=p.lessons; lessonsIn.title=t('pkg_lessons');
+        lessonsIn.addEventListener('change', function(){ p.lessons = Number(lessonsIn.value)||1; persist(); });
+        var priceIn = document.createElement('input'); priceIn.type='number'; priceIn.min=0; priceIn.value=p.price; priceIn.title=t('pkg_price');
+        priceIn.addEventListener('change', function(){ p.price = Number(priceIn.value)||0; persist(); });
+        var delBtn = document.createElement('button'); delBtn.className='icon-btn'; delBtn.textContent='✕ '+t('pkg_delete');
+        delBtn.addEventListener('click', function(){ s.packages = s.packages.filter(function(x){return x.id!==p.id;}); persist(); renderStudents(); });
+        row.appendChild(labelIn); row.appendChild(lessonsIn); row.appendChild(document.createTextNode(t('pkg_lessons'))); row.appendChild(priceIn); row.appendChild(document.createTextNode('zł')); row.appendChild(delBtn);
+        card.appendChild(row);
+      });
+
+      var addRow = document.createElement('div'); addRow.className='add-pkg';
+      var newLabel = document.createElement('input'); newLabel.type='text'; newLabel.placeholder=t('pkg_label'); newLabel.style.flex='1'; newLabel.style.minWidth='120px';
+      var newLessons = document.createElement('input'); newLessons.type='number'; newLessons.min=1; newLessons.value=4; newLessons.style.width='70px';
+      var newPrice = document.createElement('input'); newPrice.type='number'; newPrice.min=0; newPrice.value=100; newPrice.style.width='80px';
+      var addBtn = document.createElement('button'); addBtn.className='btn-ghost-sm'; addBtn.type='button'; addBtn.textContent=t('pkg_add');
+      addBtn.addEventListener('click', function(){
+        s.packages.push({ id:AKKDemo.uid(), label:newLabel.value||(newLessons.value+' '+t('pkg_lessons')), lessons:Number(newLessons.value)||1, price:Number(newPrice.value)||0 });
+        persist(); renderStudents();
+      });
+      addRow.appendChild(newLabel); addRow.appendChild(newLessons); addRow.appendChild(newPrice); addRow.appendChild(addBtn);
+      card.appendChild(addRow);
+
+      list.appendChild(card);
+    });
+  }
+
+  document.getElementById('addStudentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    db.students.push({
+      id: AKKDemo.uid(),
+      name: document.getElementById('nsName').value,
+      parentName: document.getElementById('nsParent').value,
+      contact: document.getElementById('nsContact').value,
+      pricePerLesson: Number(document.getElementById('nsPrice').value)||30,
+      creditBalance: 0,
+      packages: []
+    });
+    persist();
+    e.target.reset();
+    document.getElementById('nsPrice').value = 30;
+    renderStudents(); renderAddLessonOptions();
+  });
+
+  // ---------- Add lesson ----------
+  function renderAddLessonOptions(){
+    var sel = document.getElementById('alStudent');
+    var prev = sel.value;
+    sel.innerHTML = '';
+    db.students.forEach(function(s){
+      var o = document.createElement('option'); o.value = s.id; o.textContent = s.name;
+      sel.appendChild(o);
+    });
+    if(prev) sel.value = prev;
+  }
+  document.getElementById('addLessonForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var studentId = document.getElementById('alStudent').value;
+    var dateVal = document.getElementById('alDate').value;
+    var timeVal = document.getElementById('alTime').value;
+    var type = document.getElementById('alType').value;
+    if(!studentId || !dateVal || !timeVal) return;
+    var hh = Number(timeVal.split(':')[0]);
+    var base = new Date(dateVal+'T00:00:00'); base.setHours(hh,0,0,0);
+    var seriesId = AKKDemo.uid();
+    var occurrences = [base];
+    if(type==='weekly'){
+      for(var i=1;i<8;i++){ var d=new Date(base); d.setDate(d.getDate()+i*7); occurrences.push(d); }
+    } else if(type==='daily'){
+      var d2 = new Date(base), added=0;
+      occurrences = [];
+      while(added<5){
+        if(d2.getDay()!==0 && d2.getDay()!==6){ occurrences.push(new Date(d2)); added++; }
+        d2.setDate(d2.getDate()+1);
+      }
+    }
+    occurrences.forEach(function(dt){
+      db.lessons.push({ id:AKKDemo.uid(), studentId:studentId, datetime:dt.toISOString(), type:type, seriesId: (type==='weekly'||type==='daily')?seriesId:undefined, status:'booked' });
+    });
+    persist();
+    renderWeekGrid(); renderTable();
+  });
+
+  function renderAll(){
+    renderWeekGrid();
+    renderTable();
+    renderStudents();
+    renderAddLessonOptions();
+  }
+
+  if(localStorage.getItem(GATE_KEY) === '1'){ unlock(); }
+
+  var saved = null;
+  try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
+  currentLang = saved || detectLang();
+  document.documentElement.lang = currentLang;
+  applyStaticI18n();
+  renderAll();
+  document.body.classList.remove('lang-pending');
+})();
+</script>
+</body>
+</html>

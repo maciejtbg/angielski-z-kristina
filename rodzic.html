@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel rodzica — Angielski z Kristiną</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF5EC; --surface:#FFFFFF; --surface-alt:#FFF1DE;
+    --ink:#2B3A38; --ink-soft:#5C6D69;
+    --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
+    --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
+    --danger:#B4483A; --free:#DCEAE6; --busy:#D8CDBA; --mine:#3E7C74;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1B2422; --surface:#223330; --surface-alt:#2B3A30;
+      --ink:#F2EEE4; --ink-soft:#BFCCC7;
+      --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
+      --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0;
+      --free:#2E4842; --busy:#3A4A43; --mine:#7FC6B4;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;line-height:1.6;}
+  body.lang-pending{visibility:hidden;}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 90px;}
+  a{color:var(--accent-dark);}
+  .topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .back{font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);}
+  .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .top-actions button{font-size:.82rem;font-weight:700;color:var(--accent-dark);background:transparent;border:1.5px solid var(--border);border-radius:999px;padding:7px 14px;cursor:pointer;}
+  h1{font-family:'Baloo 2';font-size:clamp(1.4rem,3.6vw,1.9rem);margin:0 0 4px;}
+  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:24px;}
+  .banner{background:var(--accent-tint);border-radius:14px;padding:14px 18px;font-size:.86rem;margin-bottom:28px;}
+  section{margin-bottom:32px;}
+  h2{font-family:'Baloo 2';font-size:1.1rem;margin:0 0 14px;color:var(--accent-dark);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 22px rgb(var(--shadow)/.06);}
+
+  .fam-pick{display:flex;gap:10px;flex-wrap:wrap;}
+  .fam-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);flex:1;min-width:160px;}
+  .fam-btn:hover{border-color:var(--accent);}
+  .fam-btn strong{display:block;font-family:'Baloo 2';margin-bottom:2px;}
+  .fam-btn span{font-size:.8rem;color:var(--ink-soft);}
+
+  .lesson-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem;}
+  .lesson-item:last-child{border-bottom:none;}
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.72rem;font-weight:700;background:var(--accent-tint);color:var(--accent-dark);}
+
+  .balance{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .balance .num{font-family:'Baloo 2';font-size:1.6rem;color:var(--accent-dark);}
+  .pkg-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem;}
+  .pkg-item:last-child{border-bottom:none;}
+  .btn-sm{background:var(--accent-warm);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-weight:700;font-size:.82rem;cursor:pointer;}
+  details{margin-top:14px;font-size:.82rem;color:var(--ink-soft);}
+  pre{background:var(--surface-alt);border-radius:10px;padding:12px;overflow-x:auto;font-size:.75rem;}
+
+  .week-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .week-nav button{border:1.5px solid var(--border);background:var(--surface);border-radius:999px;width:32px;height:32px;cursor:pointer;color:var(--accent-dark);font-weight:700;}
+  .week-grid{display:grid;grid-template-columns:52px repeat(7,1fr);gap:4px;font-size:.76rem;}
+  .week-grid .hr-label{color:var(--ink-soft);text-align:right;padding-right:4px;font-size:.7rem;}
+  .day-head{font-weight:700;text-align:center;padding:6px 0;font-size:.76rem;color:var(--ink-soft);}
+  .cell{border-radius:6px;min-height:30px;background:var(--free);cursor:pointer;border:none;padding:0;}
+  .cell.is-busy{background:var(--busy);cursor:default;}
+  .cell.is-mine{background:var(--mine);color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:default;}
+  .cell.is-past{opacity:.35;cursor:default;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;margin-top:10px;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+</style>
+</head>
+<body class="lang-pending">
+<script>setTimeout(function(){ document.body.classList.remove('lang-pending'); }, 1500);</script>
+
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="./" data-i18n="back">← Strona główna</a>
+    <div class="top-actions">
+      <button id="langToggle" type="button">EN</button>
+      <button id="logoutBtn" type="button" data-i18n="logout" style="display:none;">Zmień rodzinę</button>
+    </div>
+  </div>
+
+  <div id="picker">
+    <h1 data-i18n="pick_h1">Panel rodzica — demo</h1>
+    <p class="sub" data-i18n="pick_sub">To jest demo: zaloguj się jako jedna z przykładowych rodzin, żeby zobaczyć dokładnie to, co widziałby prawdziwy rodzic — wyłącznie własne rezerwacje, nigdy dane innych rodzin.</p>
+    <div class="fam-pick" id="famPick"></div>
+  </div>
+
+  <div id="portal" style="display:none;">
+    <h1 id="hello"></h1>
+    <p class="sub" data-i18n="portal_sub">Twoje lekcje, pakiet i wolne terminy.</p>
+    <div class="banner" data-i18n="banner">Tryb demo — logowanie i płatności są symulowane. Prawdziwe konta rodziców i prawdziwe płatności Paddle ruszą po podłączeniu bazy danych.</div>
+
+    <section>
+      <h2 data-i18n="upcoming_h2">Twoje najbliższe lekcje</h2>
+      <div class="card"><div id="upcomingList"></div></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="pkg_h2">Twój pakiet</h2>
+      <div class="card">
+        <div class="balance">
+          <span data-i18n="credit_label">Pozostałe lekcje</span>
+          <span class="num" id="creditNum">0</span>
+        </div>
+        <div id="pkgList"></div>
+        <details>
+          <summary data-i18n="paddle_summary">Jak to będzie wyglądać z prawdziwą płatnością (Paddle)</summary>
+          <p data-i18n="paddle_note">Po podłączeniu konta Paddle przycisk „Kup" otworzy prawdziwe okno płatności zamiast symulacji:</p>
+          <pre>Paddle.Checkout.open({
+  items: [{ priceId: 'pri_xxx', quantity: 1 }],
+  customer: { email: rodzicEmail }
+});</pre>
+        </details>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="slots_h2">Wolne terminy</h2>
+      <div class="card">
+        <div class="week-nav">
+          <button id="wPrev">‹</button>
+          <span id="wLabel" style="font-weight:700;font-size:.86rem;"></span>
+          <button id="wNext">›</button>
+        </div>
+        <div id="weekGrid" class="week-grid"></div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--free)"></i><span data-i18n="leg_free">wolne</span></span>
+          <span><i class="dot" style="background:var(--busy)"></i><span data-i18n="leg_busy">zajęte (inna rodzina)</span></span>
+          <span><i class="dot" style="background:var(--mine)"></i><span data-i18n="leg_mine">Twoja lekcja</span></span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="demo-db.js"></script>
+<script>
+(function(){
+  var dict = {
+    back:{pl:"← Strona główna",en:"← Home"},
+    logout:{pl:"Zmień rodzinę",en:"Switch family"},
+    pick_h1:{pl:"Panel rodzica — demo",en:"Parent portal — demo"},
+    pick_sub:{pl:"To jest demo: zaloguj się jako jedna z przykładowych rodzin, żeby zobaczyć dokładnie to, co widziałby prawdziwy rodzic — wyłącznie własne rezerwacje, nigdy dane innych rodzin.",en:"This is a demo: log in as one of the sample families to see exactly what a real parent would see — only your own bookings, never other families' data."},
+    portal_sub:{pl:"Twoje lekcje, pakiet i wolne terminy.",en:"Your lessons, package and open slots."},
+    banner:{pl:"Tryb demo — logowanie i płatności są symulowane. Prawdziwe konta rodziców i prawdziwe płatności Paddle ruszą po podłączeniu bazy danych.",en:"Demo mode — login and payment are simulated. Real parent accounts and real Paddle payments go live once the database is connected."},
+    upcoming_h2:{pl:"Twoje najbliższe lekcje",en:"Your upcoming lessons"},
+    none_upcoming:{pl:"Brak nadchodzących lekcji.",en:"No upcoming lessons."},
+    pkg_h2:{pl:"Twój pakiet",en:"Your package"},
+    credit_label:{pl:"Pozostałe lekcje",en:"Lessons left"},
+    paddle_summary:{pl:"Jak to będzie wyglądać z prawdziwą płatnością (Paddle)",en:"How this will work with real payment (Paddle)"},
+    paddle_note:{pl:"Po podłączeniu konta Paddle przycisk „Kup” otworzy prawdziwe okno płatności zamiast symulacji:",en:"Once the Paddle account is connected, the “Buy” button will open a real checkout instead of the simulation:"},
+    slots_h2:{pl:"Wolne terminy",en:"Open slots"},
+    leg_free:{pl:"wolne",en:"free"},
+    leg_busy:{pl:"zajęte (inna rodzina)",en:"taken (another family)"},
+    leg_mine:{pl:"Twoja lekcja",en:"Your lesson"},
+    buy:{pl:"Kup",en:"Buy"},
+    bought:{pl:"Kupiono! Doliczono lekcje.",en:"Purchased! Lessons added."},
+    need_credit:{pl:"Najpierw kup pakiet, żeby zarezerwować termin.",en:"Buy a package first to book a slot."},
+    booked_ok:{pl:"Zarezerwowano!",en:"Booked!"},
+    hello_prefix:{pl:"Cześć, ",en:"Hi, "},
+    day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
+    type_trial:{pl:"Próbna",en:"Trial"}, type_oneoff:{pl:"Jednorazowa",en:"One-off"}, type_weekly:{pl:"Cotygodniowa",en:"Weekly"}, type_daily:{pl:"Codzienna",en:"Daily"}
+  };
+  var currentLang = 'pl';
+  function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
+  function detectLang(){
+    var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
+    return /^pl\b/i.test(primary) ? 'pl' : 'en';
+  }
+  function applyStaticI18n(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n')];
+      if(entry) el.textContent = entry[currentLang];
+    });
+  }
+  function setLang(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    applyStaticI18n();
+    try{ localStorage.setItem('akk_lang', lang); }catch(e){}
+    renderPortalIfActive();
+  }
+  document.getElementById('langToggle').addEventListener('click', function(){ setLang(currentLang==='pl'?'en':'pl'); });
+
+  var db = AKKDemo.load();
+  function persist(){ AKKDemo.save(db); }
+
+  var SESSION_KEY = 'akk_demo_family';
+  var currentStudentId = null;
+  try{ currentStudentId = sessionStorage.getItem(SESSION_KEY); }catch(e){}
+
+  function renderFamilyPicker(){
+    var wrap = document.getElementById('famPick');
+    wrap.innerHTML = '';
+    db.students.forEach(function(s){
+      var btn = document.createElement('button');
+      btn.className = 'fam-btn';
+      btn.innerHTML = '<strong>'+s.parentName+'</strong><span>'+s.name+'</span>';
+      btn.addEventListener('click', function(){
+        currentStudentId = s.id;
+        try{ sessionStorage.setItem(SESSION_KEY, s.id); }catch(e){}
+        showPortal();
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function currentStudent(){ return db.students.find(function(s){ return s.id===currentStudentId; }); }
+
+  function showPortal(){
+    document.getElementById('picker').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+    renderPortal();
+  }
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    currentStudentId = null;
+    try{ sessionStorage.removeItem(SESSION_KEY); }catch(e){}
+    document.getElementById('portal').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'none';
+    document.getElementById('picker').style.display = 'block';
+  });
+
+  function renderPortalIfActive(){
+    applyStaticI18n();
+    if(currentStudentId && currentStudent()) renderPortal(); else renderFamilyPicker();
+  }
+
+  function renderUpcoming(){
+    var s = currentStudent();
+    var list = document.getElementById('upcomingList');
+    var now = new Date();
+    var mine = db.lessons.filter(function(l){ return l.studentId===s.id && l.status==='booked' && new Date(l.datetime)>=now; })
+      .sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
+    list.innerHTML = '';
+    if(mine.length===0){
+      var p = document.createElement('p'); p.className='sub'; p.style.margin='0'; p.textContent = t('none_upcoming');
+      list.appendChild(p); return;
+    }
+    mine.forEach(function(l){
+      var dt = new Date(l.datetime);
+      var row = document.createElement('div'); row.className='lesson-item';
+      var dateStr = dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{weekday:'short',day:'numeric',month:'short'});
+      row.innerHTML = '<span>'+dateStr+', '+String(dt.getHours()).padStart(2,'0')+':00</span><span class="badge">'+t('type_'+l.type)+'</span>';
+      list.appendChild(row);
+    });
+  }
+
+  function renderPackage(){
+    var s = currentStudent();
+    document.getElementById('creditNum').textContent = s.creditBalance;
+    var list = document.getElementById('pkgList');
+    list.innerHTML = '';
+    s.packages.forEach(function(p){
+      var row = document.createElement('div'); row.className='pkg-item';
+      var left = document.createElement('span'); left.textContent = p.label+' — '+p.price+' zł';
+      var btn = document.createElement('button'); btn.className='btn-sm'; btn.textContent = t('buy');
+      btn.addEventListener('click', function(){
+        s.creditBalance += p.lessons;
+        persist();
+        renderPackage();
+        alert(t('bought'));
+      });
+      row.appendChild(left); row.appendChild(btn);
+      list.appendChild(row);
+    });
+  }
+
+  var weekOffset = 0;
+  var HOURS = [9,10,11,12,13,14,15,16,17,18,19,20];
+  var DAY_KEYS = ['day0','day1','day2','day3','day4','day5','day6'];
+  function startOfDay(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+
+  function renderWeekGrid(){
+    var grid = document.getElementById('weekGrid');
+    grid.innerHTML = '';
+    var s = currentStudent();
+    var today = startOfDay(new Date());
+    var weekStart = new Date(today); weekStart.setDate(weekStart.getDate() + weekOffset*7 - today.getDay());
+    document.getElementById('wLabel').textContent = weekStart.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short'});
+
+    grid.appendChild(document.createElement('div'));
+    for(var d=0; d<7; d++){
+      var head = document.createElement('div'); head.className='day-head';
+      var dayDate = new Date(weekStart); dayDate.setDate(dayDate.getDate()+d);
+      head.textContent = t(DAY_KEYS[dayDate.getDay()]) + ' ' + dayDate.getDate();
+      grid.appendChild(head);
+    }
+
+    var byCell = {};
+    db.lessons.forEach(function(l){
+      if(l.status==='cancelled') return;
+      var dt = new Date(l.datetime);
+      var offsetDays = Math.round((startOfDay(dt)-weekStart)/86400000);
+      if(offsetDays<0 || offsetDays>6) return;
+      byCell[offsetDays+'_'+dt.getHours()] = l;
+    });
+
+    var now = new Date();
+    HOURS.forEach(function(h){
+      var lbl = document.createElement('div'); lbl.className='hr-label'; lbl.textContent = h+':00';
+      grid.appendChild(lbl);
+      for(var d=0; d<7; d++){
+        var cellDate = new Date(weekStart); cellDate.setDate(cellDate.getDate()+d); cellDate.setHours(h,0,0,0);
+        var l = byCell[d+'_'+h];
+        var cell = document.createElement('button'); cell.type='button'; cell.className='cell';
+        if(cellDate <= now){
+          cell.classList.add('is-past');
+        } else if(l && l.studentId===s.id){
+          cell.classList.add('is-mine'); cell.textContent = t('type_'+l.type);
+        } else if(l){
+          cell.classList.add('is-busy');
+        } else {
+          cell.addEventListener('click', function(dt){ return function(){ bookSlot(dt); }; }(cellDate));
+        }
+        grid.appendChild(cell);
+      }
+    });
+  }
+  document.getElementById('wPrev').addEventListener('click', function(){ weekOffset--; renderWeekGrid(); });
+  document.getElementById('wNext').addEventListener('click', function(){ weekOffset++; renderWeekGrid(); });
+
+  function bookSlot(dt){
+    var s = currentStudent();
+    if(s.creditBalance <= 0){ alert(t('need_credit')); return; }
+    db.lessons.push({ id:AKKDemo.uid(), studentId:s.id, datetime:dt.toISOString(), type:'oneoff', status:'booked' });
+    s.creditBalance -= 1;
+    persist();
+    alert(t('booked_ok'));
+    renderPortal();
+  }
+
+  function renderPortal(){
+    var s = currentStudent();
+    if(!s){ renderFamilyPicker(); return; }
+    document.getElementById('hello').textContent = t('hello_prefix') + s.parentName + ' 👋';
+    renderUpcoming();
+    renderPackage();
+    renderWeekGrid();
+  }
+
+  var saved = null;
+  try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
+  currentLang = saved || detectLang();
+  document.documentElement.lang = currentLang;
+  applyStaticI18n();
+  if(currentStudentId && currentStudent()) showPortal(); else renderFamilyPicker();
+  document.body.classList.remove('lang-pending');
+})();
+</script>
+</body>
+</html>

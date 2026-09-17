@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Panel nauczyciela — Angielski z Kristiną</title>
+<title>Pomoc — panel nauczyciela — Angielski z Kristiną</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FBF5EC; --surface:#FFFFFF; --surface-alt:#FFF1DE;
+    --bg:#FBF5EC; --surface:#FFFFFF; --surface-alt:#FBEAD4;
     --ink:#2B3A38; --ink-soft:#5C6D69;
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
-    --danger:#B4483A;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -30,102 +29,57 @@
   a{color:var(--accent-dark);}
   .back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);margin-bottom:26px;}
   h1{font-family:'Baloo 2';font-size:clamp(1.5rem,4vw,2rem);margin:0 0 6px;}
-  .sub{color:var(--ink-soft);font-size:.95rem;margin-bottom:34px;}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px 24px;margin-bottom:20px;box-shadow:0 10px 26px rgb(var(--shadow)/.08);}
-  .card h2{font-family:'Baloo 2';font-size:1.1rem;margin:0 0 10px;color:var(--accent-dark);}
-  .card p{margin:0 0 12px;}
-  .card ol,.card ul{margin:0 0 12px;padding-left:20px;}
-  .card li{margin-bottom:7px;}
-  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent-warm);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:.95rem;border:none;cursor:pointer;box-shadow:0 8px 20px rgb(var(--shadow)/.2);}
-  .btn-outline{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:700;font-size:.92rem;color:var(--accent-dark);border:2px solid var(--accent-tint);background:transparent;text-decoration:none;cursor:pointer;}
-  .note{background:var(--accent-tint);border-radius:12px;padding:12px 16px;font-size:.86rem;margin-top:6px;}
-  .warn{background:#F7E2DC;color:var(--danger);border-radius:12px;padding:12px 16px;font-size:.86rem;}
-  @media (prefers-color-scheme: dark){ .warn{background:#3A2420;color:#F0A794;} }
+  .sub{color:var(--ink-soft);font-size:.95rem;margin-bottom:24px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent-warm);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:.95rem;box-shadow:0 8px 20px rgb(var(--shadow)/.2);margin-bottom:34px;}
+  details{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:12px;}
+  summary{font-weight:700;cursor:pointer;font-size:.95rem;}
+  details p{margin:12px 0 0;font-size:.9rem;color:var(--ink);}
+  details ul{margin:10px 0 0;padding-left:20px;font-size:.9rem;}
+  details li{margin-bottom:6px;}
   code{background:var(--surface-alt);padding:2px 6px;border-radius:6px;font-size:.88em;}
-
-  #gate{max-width:360px;margin:14vh auto 0;text-align:center;}
-  #gate input{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:1rem;margin:16px 0;}
-  #gate .err{color:var(--danger);font-size:.85rem;min-height:1.2em;margin-bottom:6px;}
-  #panel{display:none;}
 </style>
 </head>
 <body>
-
-<div id="gate" class="wrap">
-  <h1>Panel nauczyciela</h1>
-  <p class="sub">Ta strona jest tylko dla Kristiny. Podaj hasło, które dostałaś od Maćka.</p>
-  <input type="password" id="pw" placeholder="Hasło" autocomplete="off">
-  <div class="err" id="pwErr"></div>
-  <button class="btn" id="pwGo">Wejdź</button>
-</div>
-
-<div id="panel" class="wrap">
+<div class="wrap">
   <a class="back" href="./">← Wróć na stronę główną</a>
-  <h1>Cześć, Kristina 👋</h1>
-  <p class="sub">Tu znajdziesz swój kalendarz lekcji i instrukcje, jak nim zarządzać.</p>
+  <h1>Pomoc: jak korzystać z systemu</h1>
+  <p class="sub">Krótkie odpowiedzi. Twój prawdziwy panel (kalendarz, uczniowie, ceny) jest tutaj:</p>
+  <a class="btn" href="dashboard.html">Otwórz dashboard nauczyciela →</a>
 
-  <div class="card">
-    <h2>Twój kalendarz</h2>
-    <p>Wszystkie zarezerwowane lekcje — kto, kiedy i jaki to typ lekcji — widzisz w swoim Google Kalendarzu. To Twoje prywatne konto Google, więc nikt poza Tobą tego nie zobaczy.</p>
-    <a class="btn" href="https://calendar.google.com/calendar/u/0/r" target="_blank" rel="noopener">Otwórz mój kalendarz →</a>
-    <div class="note">Wskazówka: przełącz widok kalendarza na „Plan dnia" (Schedule) w lewym górnym rogu Google Kalendarza — wtedy zobaczysz czytelną, pełną listę: godzina, imię rodzica/dziecka, typ lekcji, dane kontaktowe z formularza rezerwacji.</div>
-  </div>
+  <details open>
+    <summary>Czy muszę coś kupować / zakładać osobne konto Google?</summary>
+    <p>Nie. Kalendarz, lista uczniów i ceny są częścią tej strony — nie potrzebujesz Google Calendar ani żadnej płatnej subskrypcji do samego zarządzania lekcjami. Jedyna opłata w całym systemie to prowizja Paddle liczona tylko od faktycznej płatności rodzica (patrz sekcja o płatnościach niżej).</p>
+  </details>
 
-  <div class="card">
-    <h2>Jak ustawić terminy do rezerwacji (jednorazowe, tygodniowe, codzienne)</h2>
-    <p>Rodzice rezerwują lekcje przez „Harmonogram spotkań" (Appointment schedule) w Twoim Google Kalendarzu. Musisz to skonfigurować raz — potem działa samo.</p>
-    <ol>
-      <li>Wejdź na <a href="https://calendar.google.com/calendar/u/0/r" target="_blank" rel="noopener">calendar.google.com</a> i kliknij <strong>+ Utwórz</strong> → <strong>Harmonogram spotkań</strong>.</li>
-      <li>Ustaw godziny, w których jesteś dostępna (np. codziennie 15:00–20:00).</li>
-      <li>W ustawieniach czasu trwania wybierz <strong>50 minut</strong> (zgodnie z ceną na stronie).</li>
-      <li>Stwórz <strong>3 osobne harmonogramy</strong>, każdy z inną nazwą, żeby rozróżnić typy lekcji:
-        <ul>
-          <li><em>Lekcja próbna / jednorazowa</em> — pojedyncze wolne terminy</li>
-          <li><em>Lekcja cotygodniowa</em> — ten sam dzień i godzina co tydzień</li>
-          <li><em>Lekcje codzienne (kurs intensywny)</em> — bloki dzień po dniu, np. na tydzień wakacyjny</li>
-        </ul>
-      </li>
-      <li>Skopiuj link „Udostępnij stronę rezerwacji" dla każdego z 3 harmonogramów i <strong>wyślij je Maćkowi</strong> — on wstawi je jako przyciski rezerwacji na stronie głównej.</li>
-    </ol>
-    <div class="warn">Ważne dla prywatności: przy tworzeniu harmonogramu upewnij się, że widoczność wydarzeń jest ustawiona na „Prywatne" (Private), a nie „Publiczne". Wtedy rodzice rezerwujący termin widzą tylko wolne/zajęte godziny — nigdy imion innych rodzin.</div>
-  </div>
+  <details>
+    <summary>Jak dodać nowego ucznia i ustawić mu cenę?</summary>
+    <p>W dashboardzie, sekcja „Uczniowie i cennik" → formularz „Dodaj ucznia" na dole listy. Każdy uczeń ma własną cenę za lekcję i własne pakiety (np. „8 lekcji za 224 zł") — możesz je dowolnie edytować w dowolnym momencie, zmiana zapisuje się od razu.</p>
+  </details>
 
-  <div class="card">
-    <h2>Ile harmonogramów możesz mieć za darmo?</h2>
-    <p>Zwykłe, darmowe konto Google pozwala na <strong>1 stronę rezerwacji</strong>. Żeby mieć wszystkie 3 typy lekcji (próbna, cotygodniowa, codzienna) naraz, potrzebne jest jedno z:</p>
+  <details>
+    <summary>Jak dodać lekcję cotygodniową albo codzienną (kurs intensywny)?</summary>
+    <p>Sekcja „Dodaj lekcję" w dashboardzie. Wybierz ucznia, datę pierwszej lekcji, godzinę i typ:</p>
     <ul>
-      <li><strong>Google One Premium</strong> (subskrypcja osobista, ok. 20 zł–40 zł/mies., dzielona z rodziną) — odblokowuje wiele harmonogramów na zwykłym Gmailu.</li>
-      <li><strong>Google Workspace Individual</strong> (ok. 35–45 zł/mies.) — to samo + własna domena e-mail, jeśli kiedyś zechcesz <code>kontakt@angielskizkristina.pl</code>.</li>
+      <li><strong>Jednorazowa / próbna</strong> — tylko wskazany termin.</li>
+      <li><strong>Cotygodniowa</strong> — automatycznie doda tę samą godzinę przez 8 kolejnych tygodni.</li>
+      <li><strong>Codzienna</strong> — automatycznie doda 5 najbliższych dni roboczych (np. tydzień wakacyjny).</li>
     </ul>
-    <p>To jedyny stały koszt tej części systemu — reszta (strona, rezerwacje, kalendarz) jest darmowa.</p>
-  </div>
+  </details>
 
-  <div class="card">
-    <h2>Co dalej</h2>
-    <p>Jak wyślesz 3 linki do harmonogramów (patrz wyżej), Maciek podepnie je pod prawdziwe przyciski „Zarezerwuj lekcję" na stronie głównej — zamiast obecnego przykładowego widżetu. Rodzic po rezerwacji dostanie zaproszenie e-mail, które sam doda do swojego kalendarza (Google, Apple, Outlook — wszystkie to obsługują).</p>
-  </div>
+  <details>
+    <summary>Skąd wiem, kto i kiedy zarezerwował lekcję?</summary>
+    <p>Sekcja „Wszystkie rezerwacje" w dashboardzie — pełna lista: data, godzina, uczeń, typ lekcji, status. Możesz też zerknąć na widok tygodnia z kolorowymi blokami dla każdego typu lekcji.</p>
+  </details>
+
+  <details>
+    <summary>Co widzi rodzic?</summary>
+    <p>Rodzic loguje się do osobnego panelu i widzi wyłącznie: swoje własne zarezerwowane lekcje, swój pakiet/liczbę pozostałych lekcji oraz siatkę wolne/zajęte do rezerwacji nowego terminu. Nigdy nie widzi imion ani danych innych rodzin — zajęte godziny pokazują się jako neutralne „zajęte", bez żadnych szczegółów.</p>
+  </details>
+
+  <details>
+    <summary>Dlaczego widzę "tryb demo"?</summary>
+    <p>Obecna wersja dashboardu i panelu rodzica działa na przykładowych danych zapisanych tylko w Twojej przeglądarce — to demo do przetestowania wyglądu i działania, zanim podłączymy prawdziwą, bezpieczną bazę danych (Maciek się tym zajmuje). Nic z demo nie trzeba przepisywać ręcznie — po podłączeniu bazy interfejs zostaje ten sam, tylko dane staną się prawdziwe i trwałe.</p>
+  </details>
 </div>
-
-<script>
-(function(){
-  var PASSWORD = "Kristina50";
-  var KEY = "akk_panel_ok";
-  var gate = document.getElementById('gate');
-  var panel = document.getElementById('panel');
-  function unlock(){ gate.style.display='none'; panel.style.display='block'; }
-  if(localStorage.getItem(KEY) === '1'){ unlock(); }
-  document.getElementById('pwGo').addEventListener('click', tryPw);
-  document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPw(); });
-  function tryPw(){
-    var val = document.getElementById('pw').value;
-    if(val === PASSWORD){
-      localStorage.setItem(KEY,'1');
-      unlock();
-    } else {
-      document.getElementById('pwErr').textContent = 'Złe hasło, spróbuj jeszcze raz.';
-    }
-  }
-})();
-</script>
 </body>
 </html>
