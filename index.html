@@ -315,6 +315,7 @@
   @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth;} }
   html{overflow-x:hidden;}
   body{background:var(--bg);color:var(--ink);font-family:'Karla', system-ui, sans-serif;font-size:1.05rem;line-height:1.65;overflow-x:hidden;max-width:100vw;}
+  body.lang-pending{visibility:hidden;}
   h1,h2,h3{font-family:'Baloo 2', system-ui, sans-serif;font-weight:700;text-wrap:balance;color:var(--ink);margin:0;}
   p{margin:0;}
   img{display:block;}
@@ -546,7 +547,8 @@
   .theme-swatch.is-active{box-shadow:0 0 0 1px var(--border), 0 0 0 3px var(--ink);}
 </style>
 </head>
-<body>
+<body class="lang-pending">
+<script>setTimeout(function(){ document.body.classList.remove('lang-pending'); }, 1500);</script>
 
 <div class="wrap">
   <div class="nav">
@@ -1005,9 +1007,14 @@
   document.getElementById('weekPrev').addEventListener('click', function(){ if(weekOffset>0){ weekOffset--; renderWeek(); } });
   document.getElementById('weekNext').addEventListener('click', function(){ if(weekOffset<3){ weekOffset++; renderWeek(); } });
 
-  var saved = 'pl';
-  try{ saved = localStorage.getItem('akk_lang') || 'pl'; }catch(e){}
-  setLang(saved);
+  function detectLang(){
+    var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || navigator.userLanguage || 'en');
+    return /^pl\b/i.test(primary) ? 'pl' : 'en';
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
+  setLang(saved || detectLang());
+  document.body.classList.remove('lang-pending');
 
   var themeNames = {
     classic:{pl:"Klasyczny",en:"Classic"},
