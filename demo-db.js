@@ -1,8 +1,9 @@
 /*
   Demo data layer — localStorage only, simulates the future real backend.
   Same shape this will have once wired to a real database (students,
-  lessons, packages, credit balances). Swap load()/save() for real API
-  calls later; the rest of dashboard.html / rodzic.html doesn't need to change.
+  lessons, packages, credit balances, payments, settings). Swap
+  load()/save() for real API calls later; the rest of dashboard.html /
+  rodzic.html doesn't need to change.
 */
 window.AKKDemo = (function(){
   var KEY = 'akk_demo_db_v2';
@@ -16,20 +17,20 @@ window.AKKDemo = (function(){
       { id:'demo-zofia', name:'Zofia (demo)', parentName:'Anna Kowalska', contact:'+48 600 111 222',
         pricePerLesson:30, creditBalance:3,
         packages:[
-          {id:uid(), label:'4 lekcje', lessons:4, price:116},
-          {id:uid(), label:'8 lekcji', lessons:8, price:224}
+          {id:uid(), label:'', lessons:4, price:116},
+          {id:uid(), label:'', lessons:8, price:224}
         ]
       },
       { id:'demo-kuba', name:'Kuba (demo)', parentName:'Marek Nowak', contact:'+48 600 333 444',
         pricePerLesson:26, creditBalance:1,
         packages:[
-          {id:uid(), label:'12 lekcji', lessons:12, price:312}
+          {id:uid(), label:'', lessons:12, price:312}
         ]
       },
       { id:'demo-julia', name:'Julia (demo)', parentName:'Ola Wiśniewska', contact:'+48 600 555 666',
         pricePerLesson:30, creditBalance:0,
         packages:[
-          {id:uid(), label:'4 lekcje', lessons:4, price:116}
+          {id:uid(), label:'', lessons:4, price:116}
         ]
       }
     ];
@@ -40,15 +41,27 @@ window.AKKDemo = (function(){
       { id:uid(), studentId:'demo-julia', datetime: at(0,19), type:'trial', status:'booked' },
       { id:uid(), studentId:'demo-kuba', datetime: at(-3,18), type:'weekly', seriesId:'s2', status:'completed' }
     ];
-    var db = { students: students, lessons: lessons };
+    var payments = [
+      { id:uid(), studentId:'demo-zofia', datetime: at(-10,9), lessons:4, price:116 },
+      { id:uid(), studentId:'demo-kuba', datetime: at(-20,9), lessons:12, price:312 }
+    ];
+    var settings = { cancellationWindowHours: 2 };
+    var db = { students: students, lessons: lessons, payments: payments, settings: settings };
     save(db);
+    return db;
+  }
+
+  function migrate(db){
+    if(!db.payments) db.payments = [];
+    if(!db.settings) db.settings = { cancellationWindowHours: 2 };
+    if(typeof db.settings.cancellationWindowHours !== 'number') db.settings.cancellationWindowHours = 2;
     return db;
   }
 
   function load(){
     try{
       var raw = localStorage.getItem(KEY);
-      if(raw) return JSON.parse(raw);
+      if(raw) return migrate(JSON.parse(raw));
     }catch(e){}
     return seed();
   }

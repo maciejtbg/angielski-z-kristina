@@ -35,6 +35,15 @@
   .back{font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);}
   .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
   .top-actions a, .top-actions button{font-size:.82rem;font-weight:700;color:var(--accent-dark);background:transparent;border:1.5px solid var(--border);border-radius:999px;padding:7px 14px;cursor:pointer;text-decoration:none;}
+  .lang-toggle{background:none;border:none;cursor:pointer;padding:0;width:36px;height:36px;border-radius:50%;position:relative;flex:none;transition:transform .18s ease;}
+  .lang-toggle:hover{transform:scale(1.07);}
+  .lang-toggle:active{transform:scale(.95);}
+  .lang-toggle svg{width:36px;height:36px;display:block;border-radius:50%;box-shadow:0 4px 12px rgb(var(--shadow)/.24);}
+  .lang-toggle .flag-ring{fill:none;stroke:var(--surface);stroke-width:2.5;}
+  .lang-toggle .flag-half{transition:opacity .22s ease, filter .22s ease;}
+  .lang-toggle[aria-checked="false"] .flag-half-en{opacity:.4;filter:grayscale(.4);}
+  .lang-toggle[aria-checked="true"] .flag-half-pl{opacity:.4;filter:grayscale(.4);}
+  .pkg-calc{color:var(--ink-soft);font-size:.78rem;white-space:nowrap;}
   h1{font-family:'Baloo 2';font-size:clamp(1.4rem,3.6vw,1.9rem);margin:0 0 4px;}
   .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:24px;}
   .banner{background:var(--accent-tint);border-radius:14px;padding:14px 18px;font-size:.86rem;margin-bottom:28px;}
@@ -95,9 +104,29 @@
   <div class="topbar">
     <a class="back" href="./" data-i18n="back">← Strona główna</a>
     <div class="top-actions">
-      <button id="langToggle" type="button" data-i18n="lang_toggle">EN</button>
       <a href="panel.html" data-i18n="help_link">Pomoc / jak to działa</a>
       <button id="resetDemo" type="button" data-i18n="reset_demo">Zresetuj dane demo</button>
+      <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Przełącz język / Switch language">
+        <svg viewBox="0 0 44 44">
+          <clipPath id="flagClipD"><circle cx="22" cy="22" r="20"/></clipPath>
+          <g clip-path="url(#flagClipD)">
+            <g class="flag-half flag-half-pl">
+              <rect x="0" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
+            </g>
+            <g class="flag-half flag-half-en">
+              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
+              <path d="M22 0L44 44M44 0L22 44" stroke="#fff" stroke-width="6"/>
+              <path d="M22 0L44 44M44 0L22 44" stroke="#CF142B" stroke-width="2.4"/>
+              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
+              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
+              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
+              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+            </g>
+          </g>
+          <circle class="flag-ring" cx="22" cy="22" r="20"/>
+        </svg>
+      </button>
     </div>
   </div>
   <h1 data-i18n="h1">Cześć, Kristina 👋</h1>
@@ -138,6 +167,19 @@
   </section>
 
   <section>
+    <h2 data-i18n="payments_h2">Wpłaty</h2>
+    <div class="card" style="overflow-x:auto;">
+      <table>
+        <thead><tr>
+          <th data-i18n="col_date">Data</th><th data-i18n="col_student">Uczeń</th>
+          <th data-i18n="col_lessons">Lekcje</th><th data-i18n="col_amount">Kwota</th>
+        </tr></thead>
+        <tbody id="paymentsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <h2 data-i18n="students_h2">Uczniowie i cennik</h2>
     <div id="studentsList"></div>
     <div class="card">
@@ -170,6 +212,17 @@
       <p class="sub" data-i18n="add_lesson_note" style="margin-top:12px;margin-bottom:0;">„Cotygodniowa" doda 8 kolejnych tygodni, „Codzienna" doda 5 najbliższych dni roboczych.</p>
     </div>
   </section>
+
+  <section>
+    <h2 data-i18n="policy_h2">Polityka odwołań i przesunięć</h2>
+    <div class="card">
+      <label style="display:flex;flex-direction:column;gap:5px;font-size:.86rem;max-width:320px;">
+        <span data-i18n="policy_window_label">Bezpłatne odwołanie/przesunięcie, jeśli zgłoszone co najmniej (godzin przed lekcją):</span>
+        <input type="number" id="policyWindow" min="0" style="width:100px;">
+      </label>
+      <p class="sub" data-i18n="policy_note" style="margin:12px 0 0;">Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).</p>
+    </div>
+  </section>
 </div>
 
 <script src="demo-db.js"></script>
@@ -181,7 +234,6 @@
     gate_go:{pl:"Wejdź",en:"Enter"},
     gate_ph:{pl:"Hasło",en:"Password"},
     back:{pl:"← Strona główna",en:"← Home"},
-    lang_toggle:{pl:"EN",en:"PL"},
     help_link:{pl:"Pomoc / jak to działa",en:"Help / how it works"},
     reset_demo:{pl:"Zresetuj dane demo",en:"Reset demo data"},
     h1:{pl:"Cześć, Kristina 👋",en:"Hi Kristina 👋"},
@@ -207,16 +259,29 @@
     f_date:{pl:"Data",en:"Date"}, f_time:{pl:"Godzina",en:"Time"}, f_type:{pl:"Typ",en:"Type"},
     add_lesson_note:{pl:"„Cotygodniowa” doda 8 kolejnych tygodni, „Codzienna” doda 5 najbliższych dni roboczych.",en:"“Weekly” adds the next 8 weeks, “Daily” adds the next 5 business days."},
     pkg_lessons:{pl:"lekcji",en:"lessons"},
+    pkg_per_lesson:{pl:"lekcję",en:"lesson"},
     pkg_price:{pl:"cena (zł)",en:"price (zł)"},
-    pkg_label:{pl:"nazwa pakietu",en:"package name"},
+    pkg_label:{pl:"własna nazwa (opcjonalnie)",en:"custom name (optional)"},
     pkg_add:{pl:"+ Pakiet",en:"+ Package"},
     pkg_delete:{pl:"Usuń",en:"Delete"},
     credit_balance:{pl:"pozostałe lekcje",en:"lessons left"},
     status_booked:{pl:"Zarezerwowana",en:"Booked"},
     status_completed:{pl:"Odbyta",en:"Completed"},
     status_cancelled:{pl:"Odwołana",en:"Cancelled"},
+    payments_h2:{pl:"Wpłaty",en:"Payments"},
+    col_lessons:{pl:"Lekcje",en:"Lessons"},
+    col_amount:{pl:"Kwota",en:"Amount"},
+    no_payments:{pl:"Brak wpłat.",en:"No payments yet."},
+    policy_h2:{pl:"Polityka odwołań i przesunięć",en:"Cancellation & reschedule policy"},
+    policy_window_label:{pl:"Bezpłatne odwołanie/przesunięcie, jeśli zgłoszone co najmniej (godzin przed lekcją):",en:"Free cancellation/reschedule if requested at least this many hours before the lesson:"},
+    policy_note:{pl:"Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).",en:"After that window, cancelling does not refund the lesson to the parent's balance; rescheduling within that window costs an extra lesson from the package (if available)."},
     day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"}
   };
+  function perLessonStr(price, lessons){
+    if(!lessons) return '0';
+    var v = Math.round((price/lessons)*100)/100;
+    return (v % 1 === 0) ? String(v) : v.toFixed(2);
+  }
   var currentLang = 'pl';
   function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
 
@@ -238,6 +303,7 @@
     currentLang = lang;
     document.documentElement.lang = lang;
     applyStaticI18n();
+    document.getElementById('langToggle').setAttribute('aria-checked', lang==='en');
     try{ localStorage.setItem('akk_lang', lang); }catch(e){}
     renderAll();
   }
@@ -339,6 +405,25 @@
     });
   }
 
+  // ---------- Payments ----------
+  function renderPayments(){
+    var body = document.getElementById('paymentsBody');
+    body.innerHTML = '';
+    var sorted = (db.payments||[]).slice().sort(function(a,b){ return new Date(b.datetime)-new Date(a.datetime); });
+    if(sorted.length===0){
+      var tr = document.createElement('tr');
+      var td = document.createElement('td'); td.colSpan=4; td.className='sub'; td.style.padding='10px 0'; td.textContent = t('no_payments');
+      tr.appendChild(td); body.appendChild(tr); return;
+    }
+    sorted.forEach(function(p){
+      var dt = new Date(p.datetime);
+      var dateStr = dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',year:'numeric'});
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>'+dateStr+'</td><td>'+studentName(p.studentId)+'</td><td>'+p.lessons+'</td><td>'+p.price+' zł</td>';
+      body.appendChild(tr);
+    });
+  }
+
   // ---------- Students & pricing ----------
   function renderStudents(){
     var list = document.getElementById('studentsList');
@@ -356,28 +441,33 @@
 
       s.packages.forEach(function(p){
         var row = document.createElement('div'); row.className='pkg-row';
-        var labelIn = document.createElement('input'); labelIn.type='text'; labelIn.value=p.label;
-        labelIn.addEventListener('change', function(){ p.label = labelIn.value; persist(); });
-        var lessonsIn = document.createElement('input'); lessonsIn.type='number'; lessonsIn.min=1; lessonsIn.value=p.lessons; lessonsIn.title=t('pkg_lessons');
+        var lessonsIn = document.createElement('input'); lessonsIn.type='number'; lessonsIn.min=1; lessonsIn.value=p.lessons; lessonsIn.title=t('pkg_lessons'); lessonsIn.style.width='60px';
+        var priceIn = document.createElement('input'); priceIn.type='number'; priceIn.min=0; priceIn.value=p.price; priceIn.title=t('pkg_price'); priceIn.style.width='75px';
+        var calc = document.createElement('span'); calc.className='pkg-calc';
+        function updateCalc(){ calc.textContent = '('+perLessonStr(Number(priceIn.value)||0, Number(lessonsIn.value)||1)+' zł/'+t('pkg_per_lesson')+')'; }
+        updateCalc();
+        lessonsIn.addEventListener('input', updateCalc);
+        priceIn.addEventListener('input', updateCalc);
         lessonsIn.addEventListener('change', function(){ p.lessons = Number(lessonsIn.value)||1; persist(); });
-        var priceIn = document.createElement('input'); priceIn.type='number'; priceIn.min=0; priceIn.value=p.price; priceIn.title=t('pkg_price');
         priceIn.addEventListener('change', function(){ p.price = Number(priceIn.value)||0; persist(); });
+        var labelIn = document.createElement('input'); labelIn.type='text'; labelIn.value=p.label; labelIn.placeholder=t('pkg_label'); labelIn.style.flex='1'; labelIn.style.minWidth='100px';
+        labelIn.addEventListener('change', function(){ p.label = labelIn.value; persist(); });
         var delBtn = document.createElement('button'); delBtn.className='icon-btn'; delBtn.textContent='✕ '+t('pkg_delete');
         delBtn.addEventListener('click', function(){ s.packages = s.packages.filter(function(x){return x.id!==p.id;}); persist(); renderStudents(); });
-        row.appendChild(labelIn); row.appendChild(lessonsIn); row.appendChild(document.createTextNode(t('pkg_lessons'))); row.appendChild(priceIn); row.appendChild(document.createTextNode('zł')); row.appendChild(delBtn);
+        row.appendChild(lessonsIn); row.appendChild(document.createTextNode(t('pkg_lessons'))); row.appendChild(priceIn); row.appendChild(document.createTextNode('zł')); row.appendChild(calc); row.appendChild(labelIn); row.appendChild(delBtn);
         card.appendChild(row);
       });
 
       var addRow = document.createElement('div'); addRow.className='add-pkg';
-      var newLabel = document.createElement('input'); newLabel.type='text'; newLabel.placeholder=t('pkg_label'); newLabel.style.flex='1'; newLabel.style.minWidth='120px';
       var newLessons = document.createElement('input'); newLessons.type='number'; newLessons.min=1; newLessons.value=4; newLessons.style.width='70px';
       var newPrice = document.createElement('input'); newPrice.type='number'; newPrice.min=0; newPrice.value=100; newPrice.style.width='80px';
+      var newLabel = document.createElement('input'); newLabel.type='text'; newLabel.placeholder=t('pkg_label'); newLabel.style.flex='1'; newLabel.style.minWidth='120px';
       var addBtn = document.createElement('button'); addBtn.className='btn-ghost-sm'; addBtn.type='button'; addBtn.textContent=t('pkg_add');
       addBtn.addEventListener('click', function(){
-        s.packages.push({ id:AKKDemo.uid(), label:newLabel.value||(newLessons.value+' '+t('pkg_lessons')), lessons:Number(newLessons.value)||1, price:Number(newPrice.value)||0 });
+        s.packages.push({ id:AKKDemo.uid(), label:newLabel.value||'', lessons:Number(newLessons.value)||1, price:Number(newPrice.value)||0 });
         persist(); renderStudents();
       });
-      addRow.appendChild(newLabel); addRow.appendChild(newLessons); addRow.appendChild(newPrice); addRow.appendChild(addBtn);
+      addRow.appendChild(newLessons); addRow.appendChild(newPrice); addRow.appendChild(newLabel); addRow.appendChild(addBtn);
       card.appendChild(addRow);
 
       list.appendChild(card);
@@ -440,11 +530,19 @@
     renderWeekGrid(); renderTable();
   });
 
+  var policyInput = document.getElementById('policyWindow');
+  policyInput.addEventListener('change', function(){
+    db.settings.cancellationWindowHours = Number(policyInput.value)||0;
+    persist();
+  });
+
   function renderAll(){
     renderWeekGrid();
     renderTable();
+    renderPayments();
     renderStudents();
     renderAddLessonOptions();
+    policyInput.value = db.settings.cancellationWindowHours;
   }
 
   if(localStorage.getItem(GATE_KEY) === '1'){ unlock(); }

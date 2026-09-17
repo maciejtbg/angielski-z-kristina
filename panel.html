@@ -25,9 +25,19 @@
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;line-height:1.65;}
+  body.lang-pending{visibility:hidden;}
   .wrap{max-width:680px;margin:0 auto;padding:48px 22px 80px;}
   a{color:var(--accent-dark);}
-  .back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);margin-bottom:26px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;}
+  .back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);}
+  .lang-toggle{background:none;border:none;cursor:pointer;padding:0;width:36px;height:36px;border-radius:50%;position:relative;flex:none;transition:transform .18s ease;}
+  .lang-toggle:hover{transform:scale(1.07);}
+  .lang-toggle:active{transform:scale(.95);}
+  .lang-toggle svg{width:36px;height:36px;display:block;border-radius:50%;box-shadow:0 4px 12px rgb(var(--shadow)/.24);}
+  .lang-toggle .flag-ring{fill:none;stroke:var(--surface);stroke-width:2.5;}
+  .lang-toggle .flag-half{transition:opacity .22s ease, filter .22s ease;}
+  .lang-toggle[aria-checked="false"] .flag-half-en{opacity:.4;filter:grayscale(.4);}
+  .lang-toggle[aria-checked="true"] .flag-half-pl{opacity:.4;filter:grayscale(.4);}
   h1{font-family:'Baloo 2';font-size:clamp(1.5rem,4vw,2rem);margin:0 0 6px;}
   .sub{color:var(--ink-soft);font-size:.95rem;margin-bottom:24px;}
   .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent-warm);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:.95rem;box-shadow:0 8px 20px rgb(var(--shadow)/.2);margin-bottom:34px;}
@@ -39,47 +49,128 @@
   code{background:var(--surface-alt);padding:2px 6px;border-radius:6px;font-size:.88em;}
 </style>
 </head>
-<body>
+<body class="lang-pending">
+<script>setTimeout(function(){ document.body.classList.remove('lang-pending'); }, 1500);</script>
 <div class="wrap">
-  <a class="back" href="./">← Wróć na stronę główną</a>
-  <h1>Pomoc: jak korzystać z systemu</h1>
-  <p class="sub">Krótkie odpowiedzi. Twój prawdziwy panel (kalendarz, uczniowie, ceny) jest tutaj:</p>
-  <a class="btn" href="dashboard.html">Otwórz dashboard nauczyciela →</a>
+  <div class="topbar">
+    <a class="back" href="./" data-i18n="back">← Wróć na stronę główną</a>
+    <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Przełącz język / Switch language">
+      <svg viewBox="0 0 44 44">
+        <clipPath id="flagClipP"><circle cx="22" cy="22" r="20"/></clipPath>
+        <g clip-path="url(#flagClipP)">
+          <g class="flag-half flag-half-pl">
+            <rect x="0" y="0" width="22" height="44" fill="#fff"/>
+            <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
+          </g>
+          <g class="flag-half flag-half-en">
+            <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
+            <path d="M22 0L44 44M44 0L22 44" stroke="#fff" stroke-width="6"/>
+            <path d="M22 0L44 44M44 0L22 44" stroke="#CF142B" stroke-width="2.4"/>
+            <rect x="30" y="0" width="8" height="44" fill="#fff"/>
+            <rect x="22" y="18" width="22" height="8" fill="#fff"/>
+            <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
+            <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+          </g>
+        </g>
+        <circle class="flag-ring" cx="22" cy="22" r="20"/>
+      </svg>
+    </button>
+  </div>
+
+  <h1 data-i18n="h1">Pomoc: jak korzystać z systemu</h1>
+  <p class="sub" data-i18n="sub">Krótkie odpowiedzi. Twój prawdziwy panel (kalendarz, uczniowie, ceny) jest tutaj:</p>
+  <a class="btn" href="dashboard.html" data-i18n="open_dashboard">Otwórz dashboard nauczyciela →</a>
 
   <details open>
-    <summary>Czy muszę coś kupować / zakładać osobne konto Google?</summary>
-    <p>Nie. Kalendarz, lista uczniów i ceny są częścią tej strony — nie potrzebujesz Google Calendar ani żadnej płatnej subskrypcji do samego zarządzania lekcjami. Jedyna opłata w całym systemie to prowizja Paddle liczona tylko od faktycznej płatności rodzica (patrz sekcja o płatnościach niżej).</p>
+    <summary data-i18n="q1">Czy muszę coś kupować / zakładać osobne konto Google?</summary>
+    <p data-i18n="a1">Nie. Kalendarz, lista uczniów i ceny są częścią tej strony — nie potrzebujesz Google Calendar ani żadnej płatnej subskrypcji do samego zarządzania lekcjami. Jedyna opłata w całym systemie to prowizja Paddle liczona tylko od faktycznej płatności rodzica (patrz sekcja o płatnościach niżej).</p>
   </details>
 
   <details>
-    <summary>Jak dodać nowego ucznia i ustawić mu cenę?</summary>
-    <p>W dashboardzie, sekcja „Uczniowie i cennik" → formularz „Dodaj ucznia" na dole listy. Każdy uczeń ma własną cenę za lekcję i własne pakiety (np. „8 lekcji za 224 zł") — możesz je dowolnie edytować w dowolnym momencie, zmiana zapisuje się od razu.</p>
+    <summary data-i18n="q2">Jak dodać nowego ucznia i ustawić mu cenę?</summary>
+    <p data-i18n="a2">W dashboardzie, sekcja „Uczniowie i cennik" → formularz „Dodaj ucznia" na dole listy. Każdy uczeń ma własną cenę za lekcję i własne pakiety — cena za lekcję w pakiecie zawsze liczy się i pokazuje automatycznie, więc rodzic zawsze widzi realną stawkę.</p>
   </details>
 
   <details>
-    <summary>Jak dodać lekcję cotygodniową albo codzienną (kurs intensywny)?</summary>
-    <p>Sekcja „Dodaj lekcję" w dashboardzie. Wybierz ucznia, datę pierwszej lekcji, godzinę i typ:</p>
+    <summary data-i18n="q3">Jak dodać lekcję cotygodniową albo codzienną (kurs intensywny)?</summary>
+    <p data-i18n="a3">Sekcja „Dodaj lekcję" w dashboardzie. Wybierz ucznia, datę pierwszej lekcji, godzinę i typ:</p>
     <ul>
-      <li><strong>Jednorazowa / próbna</strong> — tylko wskazany termin.</li>
-      <li><strong>Cotygodniowa</strong> — automatycznie doda tę samą godzinę przez 8 kolejnych tygodni.</li>
-      <li><strong>Codzienna</strong> — automatycznie doda 5 najbliższych dni roboczych (np. tydzień wakacyjny).</li>
+      <li data-i18n="a3_li1"><strong>Jednorazowa / próbna</strong> — tylko wskazany termin.</li>
+      <li data-i18n="a3_li2"><strong>Cotygodniowa</strong> — automatycznie doda tę samą godzinę przez 8 kolejnych tygodni.</li>
+      <li data-i18n="a3_li3"><strong>Codzienna</strong> — automatycznie doda 5 najbliższych dni roboczych (np. tydzień wakacyjny).</li>
     </ul>
   </details>
 
   <details>
-    <summary>Skąd wiem, kto i kiedy zarezerwował lekcję?</summary>
-    <p>Sekcja „Wszystkie rezerwacje" w dashboardzie — pełna lista: data, godzina, uczeń, typ lekcji, status. Możesz też zerknąć na widok tygodnia z kolorowymi blokami dla każdego typu lekcji.</p>
+    <summary data-i18n="q4">Skąd wiem, kto i kiedy zarezerwował lekcję?</summary>
+    <p data-i18n="a4">Sekcja „Wszystkie rezerwacje" w dashboardzie — pełna lista: data, godzina, uczeń, typ lekcji, status. Możesz też zerknąć na widok tygodnia z kolorowymi blokami dla każdego typu lekcji.</p>
   </details>
 
   <details>
-    <summary>Co widzi rodzic?</summary>
-    <p>Rodzic loguje się do osobnego panelu i widzi wyłącznie: swoje własne zarezerwowane lekcje, swój pakiet/liczbę pozostałych lekcji oraz siatkę wolne/zajęte do rezerwacji nowego terminu. Nigdy nie widzi imion ani danych innych rodzin — zajęte godziny pokazują się jako neutralne „zajęte", bez żadnych szczegółów.</p>
+    <summary data-i18n="q5">Co widzi rodzic?</summary>
+    <p data-i18n="a5">Rodzic loguje się do osobnego panelu i widzi wyłącznie: swoje własne zarezerwowane lekcje, swój pakiet/liczbę pozostałych lekcji, pełną historię swoich lekcji i wpłat oraz siatkę wolne/zajęte do rezerwacji nowego terminu. Nigdy nie widzi imion ani danych innych rodzin — zajęte godziny pokazują się jako neutralne „zajęte", bez żadnych szczegółów.</p>
   </details>
 
   <details>
-    <summary>Dlaczego widzę "tryb demo"?</summary>
-    <p>Obecna wersja dashboardu i panelu rodzica działa na przykładowych danych zapisanych tylko w Twojej przeglądarce — to demo do przetestowania wyglądu i działania, zanim podłączymy prawdziwą, bezpieczną bazę danych (Maciek się tym zajmuje). Nic z demo nie trzeba przepisywać ręcznie — po podłączeniu bazy interfejs zostaje ten sam, tylko dane staną się prawdziwe i trwałe.</p>
+    <summary data-i18n="q6">Jak działa odwołanie i przesunięcie lekcji przez rodzica?</summary>
+    <p data-i18n="a6">Rodzic ma przy każdej nadchodzącej lekcji przyciski „Odwołaj" i „Przełóż". Sekcja „Polityka odwołań i przesunięć" w dashboardzie pozwala Ci ustawić, ile godzin przed lekcją odwołanie/przesunięcie jest bezpłatne. Po tym czasie odwołanie nie oddaje lekcji na saldo, a przesunięcie pobiera dodatkową lekcję z pakietu (jeśli rodzic ją ma).</p>
+  </details>
+
+  <details>
+    <summary data-i18n="q7">Dlaczego widzę "tryb demo"?</summary>
+    <p data-i18n="a7">Obecna wersja dashboardu i panelu rodzica działa na przykładowych danych zapisanych tylko w Twojej przeglądarce — to demo do przetestowania wyglądu i działania, zanim podłączymy prawdziwą, bezpieczną bazę danych (Maciek się tym zajmuje). Nic z demo nie trzeba przepisywać ręcznie — po podłączeniu bazy interfejs zostaje ten sam, tylko dane staną się prawdziwe i trwałe.</p>
   </details>
 </div>
+<script>
+(function(){
+  var dict = {
+    back:{pl:"← Wróć na stronę główną",en:"← Back to the homepage"},
+    h1:{pl:"Pomoc: jak korzystać z systemu",en:"Help: how to use the system"},
+    sub:{pl:"Krótkie odpowiedzi. Twój prawdziwy panel (kalendarz, uczniowie, ceny) jest tutaj:",en:"Quick answers. Your real dashboard (calendar, students, pricing) is here:"},
+    open_dashboard:{pl:"Otwórz dashboard nauczyciela →",en:"Open the teacher dashboard →"},
+    q1:{pl:"Czy muszę coś kupować / zakładać osobne konto Google?",en:"Do I need to buy anything or set up a separate Google account?"},
+    a1:{pl:"Nie. Kalendarz, lista uczniów i ceny są częścią tej strony — nie potrzebujesz Google Calendar ani żadnej płatnej subskrypcji do samego zarządzania lekcjami. Jedyna opłata w całym systemie to prowizja Paddle liczona tylko od faktycznej płatności rodzica (patrz sekcja o płatnościach niżej).",en:"No. The calendar, student list and pricing are part of this website — you don't need Google Calendar or any paid subscription just to manage lessons. The only fee anywhere in the system is Paddle's commission, charged only on an actual parent payment (see the payments section below)."},
+    q2:{pl:"Jak dodać nowego ucznia i ustawić mu cenę?",en:"How do I add a new student and set their price?"},
+    a2:{pl:"W dashboardzie, sekcja „Uczniowie i cennik” → formularz „Dodaj ucznia” na dole listy. Każdy uczeń ma własną cenę za lekcję i własne pakiety — cena za lekcję w pakiecie zawsze liczy się i pokazuje automatycznie, więc rodzic zawsze widzi realną stawkę.",en:"In the dashboard, “Students & pricing” section → the “Add student” form at the bottom of the list. Each student has their own price per lesson and their own packages — the per-lesson price inside a package is always calculated and shown automatically, so the parent always sees the real rate."},
+    q3:{pl:"Jak dodać lekcję cotygodniową albo codzienną (kurs intensywny)?",en:"How do I add a weekly or daily (intensive course) lesson?"},
+    a3:{pl:"Sekcja „Dodaj lekcję” w dashboardzie. Wybierz ucznia, datę pierwszej lekcji, godzinę i typ:",en:"The “Add lesson” section in the dashboard. Pick a student, the first lesson's date, the time, and the type:"},
+    a3_li1:{pl:"<strong>Jednorazowa / próbna</strong> — tylko wskazany termin.",en:"<strong>One-off / trial</strong> — only the chosen date."},
+    a3_li2:{pl:"<strong>Cotygodniowa</strong> — automatycznie doda tę samą godzinę przez 8 kolejnych tygodni.",en:"<strong>Weekly</strong> — automatically adds the same time for the next 8 weeks."},
+    a3_li3:{pl:"<strong>Codzienna</strong> — automatycznie doda 5 najbliższych dni roboczych (np. tydzień wakacyjny).",en:"<strong>Daily</strong> — automatically adds the next 5 business days (e.g. a holiday-week course)."},
+    q4:{pl:"Skąd wiem, kto i kiedy zarezerwował lekcję?",en:"How do I know who booked a lesson, and when?"},
+    a4:{pl:"Sekcja „Wszystkie rezerwacje” w dashboardzie — pełna lista: data, godzina, uczeń, typ lekcji, status. Możesz też zerknąć na widok tygodnia z kolorowymi blokami dla każdego typu lekcji.",en:"The “All bookings” section in the dashboard — a full list: date, time, student, lesson type, status. You can also glance at the week view with colour-coded blocks for each lesson type."},
+    q5:{pl:"Co widzi rodzic?",en:"What does a parent see?"},
+    a5:{pl:"Rodzic loguje się do osobnego panelu i widzi wyłącznie: swoje własne zarezerwowane lekcje, swój pakiet/liczbę pozostałych lekcji, pełną historię swoich lekcji i wpłat oraz siatkę wolne/zajęte do rezerwacji nowego terminu. Nigdy nie widzi imion ani danych innych rodzin — zajęte godziny pokazują się jako neutralne „zajęte”, bez żadnych szczegółów.",en:"A parent logs into a separate portal and sees only: their own booked lessons, their package/remaining lesson count, a full history of their own lessons and payments, and a free/busy grid to book a new slot. They never see other families' names or data — taken slots show as a neutral “taken”, with no details."},
+    q6:{pl:"Jak działa odwołanie i przesunięcie lekcji przez rodzica?",en:"How does a parent's cancel and reschedule work?"},
+    a6:{pl:"Rodzic ma przy każdej nadchodzącej lekcji przyciski „Odwołaj” i „Przełóż”. Sekcja „Polityka odwołań i przesunięć” w dashboardzie pozwala Ci ustawić, ile godzin przed lekcją odwołanie/przesunięcie jest bezpłatne. Po tym czasie odwołanie nie oddaje lekcji na saldo, a przesunięcie pobiera dodatkową lekcję z pakietu (jeśli rodzic ją ma).",en:"Every upcoming lesson has “Cancel” and “Reschedule” buttons for the parent. The “Cancellation & reschedule policy” section in the dashboard lets you set how many hours before a lesson a cancel/reschedule is free. After that window, cancelling does not return the lesson to the balance, and rescheduling takes an extra lesson from the package (if the parent has one)."},
+    q7:{pl:"Dlaczego widzę \"tryb demo\"?",en:"Why do I see \"demo mode\"?"},
+    a7:{pl:"Obecna wersja dashboardu i panelu rodzica działa na przykładowych danych zapisanych tylko w Twojej przeglądarce — to demo do przetestowania wyglądu i działania, zanim podłączymy prawdziwą, bezpieczną bazę danych (Maciek się tym zajmuje). Nic z demo nie trzeba przepisywać ręcznie — po podłączeniu bazy interfejs zostaje ten sam, tylko dane staną się prawdziwe i trwałe.",en:"The current dashboard and parent portal run on sample data saved only in your browser — a demo to test the look and behaviour before we connect a real, secure database (Maciek is handling that). Nothing from the demo needs retyping — once the database is connected the interface stays the same, only the data becomes real and permanent."}
+  };
+  var currentLang = 'pl';
+  function detectLang(){
+    var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
+    return /^pl\b/i.test(primary) ? 'pl' : 'en';
+  }
+  function applyStaticI18n(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n')];
+      if(entry) el.innerHTML = entry[currentLang];
+    });
+  }
+  function setLang(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    applyStaticI18n();
+    document.getElementById('langToggle').setAttribute('aria-checked', lang==='en');
+    try{ localStorage.setItem('akk_lang', lang); }catch(e){}
+  }
+  document.getElementById('langToggle').addEventListener('click', function(){ setLang(currentLang==='pl'?'en':'pl'); });
+
+  var saved = null;
+  try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
+  setLang(saved || detectLang());
+  document.body.classList.remove('lang-pending');
+})();
+</script>
 </body>
 </html>
