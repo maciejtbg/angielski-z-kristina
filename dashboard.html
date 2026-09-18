@@ -127,8 +127,6 @@
             </g>
             <g class="flag-half flag-half-en">
               <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
-              <path d="M22 0L44 44M44 0L22 44" stroke="#fff" stroke-width="6"/>
-              <path d="M22 0L44 44M44 0L22 44" stroke="#CF142B" stroke-width="2.4"/>
               <rect x="30" y="0" width="8" height="44" fill="#fff"/>
               <rect x="22" y="18" width="22" height="8" fill="#fff"/>
               <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
@@ -232,6 +230,11 @@
         <input type="number" id="policyWindow" min="0" style="width:100px;">
       </label>
       <p class="sub" data-i18n="policy_note" style="margin:12px 0 0;">Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).</p>
+      <label style="display:flex;flex-direction:column;gap:5px;font-size:.86rem;max-width:320px;margin-top:18px;">
+        <span data-i18n="lead_window_label">Minimalny czas przed lekcją, żeby rodzic mógł ją jeszcze zarezerwować (godzin):</span>
+        <input type="number" id="leadWindow" min="0" step="0.5" style="width:100px;">
+      </label>
+      <p class="sub" data-i18n="lead_note" style="margin:12px 0 0;">Chroni Cię przed rezerwacją „na już" — np. o 19:09 nikt nie zarezerwuje lekcji na 19:00 ani nawet na 19:30, jeśli bufor to 1 godzina.</p>
     </div>
   </section>
 
@@ -292,6 +295,9 @@
     policy_h2:{pl:"Polityka odwołań i przesunięć",en:"Cancellation & reschedule policy"},
     policy_window_label:{pl:"Bezpłatne odwołanie/przesunięcie, jeśli zgłoszone co najmniej (godzin przed lekcją):",en:"Free cancellation/reschedule if requested at least this many hours before the lesson:"},
     policy_note:{pl:"Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).",en:"After that window, cancelling does not refund the lesson to the parent's balance; rescheduling within that window costs an extra lesson from the package (if available)."},
+    lead_window_label:{pl:"Minimalny czas przed lekcją, żeby rodzic mógł ją jeszcze zarezerwować (godzin):",en:"Minimum time before a lesson for a parent to still be able to book it (hours):"},
+    lead_note:{pl:"Chroni Cię przed rezerwacją „na już” — np. o 19:09 nikt nie zarezerwuje lekcji na 19:00 ani nawet na 19:30, jeśli bufor to 1 godzina.",en:"Protects you from last-minute bookings — e.g. at 19:09 nobody can book a 19:00 or even a 19:30 slot if the buffer is 1 hour."},
+    log_lead_change:{pl:"Zmieniono minimalny czas rezerwacji",en:"Changed minimum booking lead time"},
     day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
     log_h2:{pl:"Historia zmian",en:"Change history"},
     log_sub:{pl:"Każda zmiana na stronie (Twoja i rodziców) zapisuje się tutaj. Tylko najnowszą zmianę można cofnąć.",en:"Every change on the site (yours and the parents') is recorded here. Only the most recent change can be undone."},
@@ -317,6 +323,7 @@
   }
   var currentLang = 'pl';
   function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
+  function dlog(){ try{ console.log.apply(console, ['[dashboard]'].concat(Array.prototype.slice.call(arguments))); }catch(e){} }
 
   function detectLang(){
     var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
@@ -340,7 +347,7 @@
     try{ localStorage.setItem('akk_lang', lang); }catch(e){}
     renderAll();
   }
-  document.getElementById('langToggle').addEventListener('click', function(){ setLang(currentLang==='pl'?'en':'pl'); });
+  document.getElementById('langToggle').addEventListener('click', function(){ dlog('click:langToggle', currentLang==='pl'?'->en':'->pl'); setLang(currentLang==='pl'?'en':'pl'); });
 
   var PASSWORD = "Kristina50";
   var GATE_KEY = "akk_panel_ok";
@@ -348,16 +355,19 @@
   document.getElementById('pwGo').addEventListener('click', tryPw);
   document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPw(); });
   function tryPw(){
-    if(document.getElementById('pw').value === PASSWORD){ try{localStorage.setItem(GATE_KEY,'1');}catch(e){} unlock(); }
-    else document.getElementById('pwErr').textContent = currentLang==='en' ? 'Wrong password, try again.' : 'Złe hasło, spróbuj jeszcze raz.';
+    dlog('click:gateSubmit');
+    if(document.getElementById('pw').value === PASSWORD){ dlog('gate:unlocked'); try{localStorage.setItem(GATE_KEY,'1');}catch(e){} unlock(); }
+    else { dlog('gate:wrong-password'); document.getElementById('pwErr').textContent = currentLang==='en' ? 'Wrong password, try again.' : 'Złe hasło, spróbuj jeszcze raz.'; }
   }
 
   var db = AKKDemo.load();
   function persist(){ AKKDemo.save(db); }
 
   document.getElementById('resetDemo').addEventListener('click', function(){
-    if(!confirm(currentLang==='en' ? 'Reset all demo data? This cannot be undone.' : 'Zresetować wszystkie dane demo? Tego nie da się cofnąć.')) return;
+    dlog('click:resetDemo');
+    if(!confirm(currentLang==='en' ? 'Reset all demo data? This cannot be undone.' : 'Zresetować wszystkie dane demo? Tego nie da się cofnąć.')) { dlog('resetDemo:aborted'); return; }
     db = AKKDemo.reset();
+    dlog('resetDemo:done');
     renderAll();
   });
 
@@ -395,7 +405,8 @@
     });
 
     var now = new Date();
-    var showNowMarker = (now>=weekStart && now<new Date(weekStart.getTime()+7*86400000)) && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
+    var todayOffset = Math.round((today-weekStart)/86400000);
+    var showNowMarker = todayOffset>=0 && todayOffset<=6 && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
     var nowHour = now.getHours();
 
     HOURS.forEach(function(h){
@@ -405,7 +416,7 @@
       grid.appendChild(lbl);
       for(var d=0; d<7; d++){
         var cell = document.createElement('div'); cell.className='cell';
-        if(isNowRow) cell.classList.add('now-row');
+        if(isNowRow && d===todayOffset) cell.classList.add('now-row');
         var l = byCell[d+'_'+h];
         if(l){
           cell.classList.add('busy');
@@ -418,8 +429,8 @@
       }
     });
   }
-  document.getElementById('wPrev').addEventListener('click', function(){ weekOffset--; renderWeekGrid(); });
-  document.getElementById('wNext').addEventListener('click', function(){ weekOffset++; renderWeekGrid(); });
+  document.getElementById('wPrev').addEventListener('click', function(){ dlog('click:weekPrev'); weekOffset--; renderWeekGrid(); });
+  document.getElementById('wNext').addEventListener('click', function(){ dlog('click:weekNext'); weekOffset++; renderWeekGrid(); });
 
   // ---------- All bookings table ----------
   function renderTable(){
@@ -439,6 +450,7 @@
       });
       statusSel.addEventListener('change', function(){
         var newVal = statusSel.value;
+        dlog('change:lessonStatus', {lessonId:l.id, from:l.status, to:newVal});
         AKKDemo.withLog(db, t('log_status_change')+': '+studentName(l.studentId)+' → '+t('status_'+newVal), function(){ l.status = newVal; });
         persist(); renderWeekGrid(); renderActivityLog();
       });
@@ -482,6 +494,7 @@
       var priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min=0; priceInput.value = s.pricePerLesson;
       priceInput.addEventListener('change', function(){
         var newVal = Number(priceInput.value)||0;
+        dlog('change:studentPrice', {studentId:s.id, from:s.pricePerLesson, to:newVal});
         AKKDemo.withLog(db, t('log_price_change')+': '+s.name+' → '+newVal+' zł', function(){ s.pricePerLesson = newVal; });
         persist(); renderActivityLog();
       });
@@ -503,7 +516,9 @@
         priceIn.addEventListener('input', updateCalc);
         lessonsIn.addEventListener('change', function(){
           var newVal = Number(lessonsIn.value)||1;
+          dlog('change:packageLessons:attempt', {studentId:s.id, packageId:p.id, from:p.lessons, to:newVal});
           if(packageLessonsConflict(newVal, p.id)){
+            dlog('change:packageLessons:rejected-duplicate', {studentId:s.id, lessons:newVal});
             alert(t('dup_package_error'));
             lessonsIn.value = p.lessons;
             updateCalc();
@@ -514,17 +529,20 @@
         });
         priceIn.addEventListener('change', function(){
           var newVal = Number(priceIn.value)||0;
+          dlog('change:packagePrice', {studentId:s.id, packageId:p.id, from:p.price, to:newVal});
           AKKDemo.withLog(db, t('log_pkg_edit')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' → '+newVal+' zł', function(){ p.price = newVal; });
           persist(); renderActivityLog();
         });
         var labelIn = document.createElement('input'); labelIn.type='text'; labelIn.value=p.label; labelIn.placeholder=t('pkg_label'); labelIn.style.flex='1'; labelIn.style.minWidth='100px';
         labelIn.addEventListener('change', function(){
+          dlog('change:packageLabel', {studentId:s.id, packageId:p.id, to:labelIn.value});
           AKKDemo.withLog(db, t('log_pkg_label_edit')+': '+s.name, function(){ p.label = labelIn.value; });
           persist(); renderActivityLog();
         });
         var delBtn = document.createElement('button'); delBtn.className='icon-btn'; delBtn.textContent='✕ '+t('pkg_delete');
         delBtn.addEventListener('click', function(){
-          if(!confirm(t('confirm_delete_package'))) return;
+          dlog('click:deletePackage', {studentId:s.id, packageId:p.id, lessons:p.lessons, price:p.price});
+          if(!confirm(t('confirm_delete_package'))) { dlog('deletePackage:aborted'); return; }
           AKKDemo.withLog(db, t('log_pkg_delete')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' ('+p.price+' zł)', function(){
             s.packages = s.packages.filter(function(x){return x.id!==p.id;});
           });
@@ -541,7 +559,9 @@
       var addBtn = document.createElement('button'); addBtn.className='btn-ghost-sm'; addBtn.type='button'; addBtn.textContent=t('pkg_add');
       addBtn.addEventListener('click', function(){
         var lessonsVal = Number(newLessons.value)||1;
+        dlog('click:addPackage:attempt', {studentId:s.id, lessons:lessonsVal});
         if(packageLessonsConflict(lessonsVal, null)){
+          dlog('click:addPackage:rejected-duplicate', {studentId:s.id, lessons:lessonsVal});
           alert(t('dup_package_error'));
           return;
         }
@@ -561,6 +581,7 @@
   document.getElementById('addStudentForm').addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('nsName').value;
+    dlog('submit:addStudent', {name:name});
     AKKDemo.withLog(db, t('log_add_student')+': '+name, function(){
       db.students.push({
         id: AKKDemo.uid(),
@@ -595,7 +616,8 @@
     var dateVal = document.getElementById('alDate').value;
     var timeVal = document.getElementById('alTime').value;
     var type = document.getElementById('alType').value;
-    if(!studentId || !dateVal || !timeVal) return;
+    dlog('submit:addLesson', {studentId:studentId, date:dateVal, time:timeVal, type:type});
+    if(!studentId || !dateVal || !timeVal) { dlog('submit:addLesson:missing-fields'); return; }
     var hh = Number(timeVal.split(':')[0]);
     var base = new Date(dateVal+'T00:00:00'); base.setHours(hh,0,0,0);
     var seriesId = AKKDemo.uid();
@@ -623,7 +645,16 @@
   var policyInput = document.getElementById('policyWindow');
   policyInput.addEventListener('change', function(){
     var newVal = Number(policyInput.value)||0;
+    dlog('change:policyWindow', newVal);
     AKKDemo.withLog(db, t('log_policy_change')+': '+newVal+'h', function(){ db.settings.cancellationWindowHours = newVal; });
+    persist(); renderActivityLog();
+  });
+
+  var leadInput = document.getElementById('leadWindow');
+  leadInput.addEventListener('change', function(){
+    var newVal = Number(leadInput.value)||0;
+    dlog('change:leadWindow', newVal);
+    AKKDemo.withLog(db, t('log_lead_change')+': '+newVal+'h', function(){ db.settings.minBookingLeadHours = newVal; });
     persist(); renderActivityLog();
   });
 
@@ -651,7 +682,9 @@
       if(canUndo){
         var undoBtn = document.createElement('button'); undoBtn.className='btn-undo'; undoBtn.type='button'; undoBtn.textContent = t('undo_btn');
         undoBtn.addEventListener('click', function(){
+          dlog('click:undo', {top:entry.description});
           var undone = AKKDemo.undoTop(db);
+          dlog('undo:result', undone);
           if(!undone) return;
           persist();
           renderAll();
@@ -670,13 +703,16 @@
     renderAddLessonOptions();
     renderActivityLog();
     policyInput.value = db.settings.cancellationWindowHours;
+    leadInput.value = db.settings.minBookingLeadHours;
   }
 
-  if(localStorage.getItem(GATE_KEY) === '1'){ unlock(); }
+  dlog('init:loaded', {students:db.students.length, lessons:db.lessons.length, logEntries:(db.activityLog||[]).length});
+  if(localStorage.getItem(GATE_KEY) === '1'){ dlog('init:already-unlocked'); unlock(); }
 
   var saved = null;
   try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
   currentLang = saved || detectLang();
+  dlog('init:lang', currentLang);
   document.documentElement.lang = currentLang;
   applyStaticI18n();
   renderAll();

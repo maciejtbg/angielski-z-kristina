@@ -45,7 +45,7 @@ window.AKKDemo = (function(){
       { id:uid(), studentId:'demo-zofia', datetime: at(-10,9), lessons:4, price:116 },
       { id:uid(), studentId:'demo-kuba', datetime: at(-20,9), lessons:12, price:312 }
     ];
-    var settings = { cancellationWindowHours: 2 };
+    var settings = { cancellationWindowHours: 2, minBookingLeadHours: 1 };
     var db = { students: students, lessons: lessons, payments: payments, settings: settings, activityLog: [] };
     save(db);
     return db;
@@ -53,8 +53,9 @@ window.AKKDemo = (function(){
 
   function migrate(db){
     if(!db.payments) db.payments = [];
-    if(!db.settings) db.settings = { cancellationWindowHours: 2 };
+    if(!db.settings) db.settings = { cancellationWindowHours: 2, minBookingLeadHours: 1 };
     if(typeof db.settings.cancellationWindowHours !== 'number') db.settings.cancellationWindowHours = 2;
+    if(typeof db.settings.minBookingLeadHours !== 'number') db.settings.minBookingLeadHours = 1;
     if(!db.activityLog) db.activityLog = [];
     return db;
   }

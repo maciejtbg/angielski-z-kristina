@@ -101,6 +101,13 @@
   .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;margin-top:10px;color:var(--ink-soft);}
   .legend span{display:inline-flex;align-items:center;gap:5px;}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(20,15,10,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
+  .modal-box{background:var(--surface);border-radius:16px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+  .modal-box h3{font-family:'Baloo 2';margin:0 0 10px;font-size:1.15rem;color:var(--danger);}
+  .modal-box p{margin:0 0 18px;font-size:.9rem;line-height:1.55;color:var(--ink);}
+  .modal-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+  .modal-actions .btn-tiny{padding:9px 15px;font-size:.82rem;text-decoration:none;}
 </style>
 </head>
 <body class="lang-pending">
@@ -121,8 +128,6 @@
             </g>
             <g class="flag-half flag-half-en">
               <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
-              <path d="M22 0L44 44M44 0L22 44" stroke="#fff" stroke-width="6"/>
-              <path d="M22 0L44 44M44 0L22 44" stroke="#CF142B" stroke-width="2.4"/>
               <rect x="30" y="0" width="8" height="44" fill="#fff"/>
               <rect x="22" y="18" width="22" height="8" fill="#fff"/>
               <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
@@ -208,6 +213,18 @@
   </div>
 </div>
 
+<div id="modalOverlay" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <p id="modalBody"></p>
+    <div class="modal-actions">
+      <a id="modalWhatsappBtn" class="btn-tiny" target="_blank" rel="noopener" style="display:none;"></a>
+      <button id="modalCancelBtn" type="button" class="btn-tiny"></button>
+      <button id="modalConfirmBtn" type="button" class="btn-tiny danger"></button>
+    </div>
+  </div>
+</div>
+
 <script src="demo-db.js"></script>
 <script>
 (function(){
@@ -258,10 +275,19 @@
     history_h2:{pl:"Historia lekcji",en:"Lesson history"},
     no_history:{pl:"Brak historii lekcji.",en:"No lesson history yet."},
     payhist_h2:{pl:"Kalendarium wpłat",en:"Payment history"},
-    no_payhist:{pl:"Brak wpłat.",en:"No payments yet."}
+    no_payhist:{pl:"Brak wpłat.",en:"No payments yet."},
+    modal_lose_title:{pl:"Stracisz tę lekcję",en:"You'll lose this lesson"},
+    modal_lose_cancel_body:{pl:"Lekcja {time} jest już po czasie na bezpłatne odwołanie. Jeśli odwołasz teraz, ta lekcja przepada — nie wróci na Twoje saldo. Możesz też napisać do Kristiny — czasem da się to jeszcze ustalić inaczej.",en:"The lesson on {time} is already past the free-cancellation window. If you cancel now, this lesson is lost — it will not return to your balance. You can also message Kristina — sometimes there's still another way to work it out."},
+    modal_lose_reschedule_body:{pl:"Lekcja {time} jest już po czasie na bezpłatną zmianę. Jeśli przesuniesz teraz, zostanie pobrana dodatkowa lekcja z Twojego pakietu. Możesz też napisać do Kristiny — czasem da się to jeszcze ustalić inaczej.",en:"The lesson on {time} is already past the free-change window. If you reschedule now, an extra lesson will be taken from your package. You can also message Kristina — sometimes there's still another way to work it out."},
+    modal_confirm_cancel:{pl:"Tak, odwołaj mimo to",en:"Yes, cancel anyway"},
+    modal_confirm_reschedule:{pl:"Tak, przełóż mimo to",en:"Yes, reschedule anyway"},
+    modal_keep:{pl:"Zostaw jak jest",en:"Keep it as is"},
+    modal_whatsapp:{pl:"Napisz do Kristiny",en:"Message Kristina"},
+    slot_too_soon:{pl:"Ten termin jest już za blisko (albo minął) — wybierz inny.",en:"That slot is too soon (or already past) — pick another one."}
   };
   var currentLang = 'pl';
   function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
+  function dlog(){ try{ console.log.apply(console, ['[rodzic]'].concat(Array.prototype.slice.call(arguments))); }catch(e){} }
   function detectLang(){
     var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
     return /^pl\b/i.test(primary) ? 'pl' : 'en';
@@ -285,7 +311,7 @@
     try{ localStorage.setItem('akk_lang', lang); }catch(e){}
     renderPortalIfActive();
   }
-  document.getElementById('langToggle').addEventListener('click', function(){ setLang(currentLang==='pl'?'en':'pl'); });
+  document.getElementById('langToggle').addEventListener('click', function(){ dlog('click:langToggle', currentLang==='pl'?'->en':'->pl'); setLang(currentLang==='pl'?'en':'pl'); });
 
   var db = AKKDemo.load();
   function persist(){ AKKDemo.save(db); }
@@ -302,6 +328,7 @@
       btn.className = 'fam-btn';
       btn.innerHTML = '<strong>'+s.parentName+'</strong><span>'+s.name+'</span>';
       btn.addEventListener('click', function(){
+        dlog('click:familyPicker', {studentId:s.id, name:s.name});
         currentStudentId = s.id;
         try{ sessionStorage.setItem(SESSION_KEY, s.id); }catch(e){}
         showPortal();
@@ -319,6 +346,7 @@
     renderPortal();
   }
   document.getElementById('logoutBtn').addEventListener('click', function(){
+    dlog('click:logout', {studentId:currentStudentId});
     currentStudentId = null;
     reschedulingLessonId = null;
     try{ sessionStorage.removeItem(SESSION_KEY); }catch(e){}
@@ -334,13 +362,48 @@
 
   function hoursUntil(datetime){ return (new Date(datetime) - new Date())/3600000; }
   function withinFreeWindow(datetime){ return hoursUntil(datetime) >= (db.settings.cancellationWindowHours||0); }
+  function minLeadHours(){ return (db.settings && typeof db.settings.minBookingLeadHours==='number') ? db.settings.minBookingLeadHours : 1; }
+  function minLeadCutoff(){ return new Date(Date.now() + minLeadHours()*3600000); }
+
+  function lessonSummary(lesson){
+    var dt = new Date(lesson.datetime);
+    return dt.toLocaleDateString(currentLang==='en'?'en-GB':'pl-PL',{weekday:'short',day:'numeric',month:'short'})+', '+String(dt.getHours()).padStart(2,'0')+':00';
+  }
+  function whatsappHrefFor(lesson, kind){
+    var msg = currentLang==='en'
+      ? 'Hi! I need to '+kind+' my lesson on '+lessonSummary(lesson)+', but it looks like it\'s outside the free-change window. Could you help?'
+      : 'Dzień dobry! Chciał(a)bym '+kind+' lekcję z terminu '+lessonSummary(lesson)+', ale system pokazuje, że to już po czasie na bezpłatną zmianę. Czy mogą mi Państwo pomóc?';
+    return 'https://wa.me/48111222333?text='+encodeURIComponent(msg);
+  }
+
+  function showModal(opts){
+    dlog('modal:open', opts.title);
+    document.getElementById('modalTitle').textContent = opts.title;
+    document.getElementById('modalBody').textContent = opts.body;
+    var confirmBtn = document.getElementById('modalConfirmBtn');
+    confirmBtn.textContent = opts.confirmText;
+    var cancelBtn = document.getElementById('modalCancelBtn');
+    cancelBtn.textContent = opts.cancelText;
+    var waBtn = document.getElementById('modalWhatsappBtn');
+    if(opts.whatsappHref){ waBtn.href = opts.whatsappHref; waBtn.textContent = t('modal_whatsapp'); waBtn.style.display='inline-block'; }
+    else { waBtn.style.display='none'; }
+    var overlay = document.getElementById('modalOverlay');
+    overlay.style.display = 'flex';
+    function close(){ overlay.style.display='none'; confirmBtn.onclick=null; cancelBtn.onclick=null; waBtn.onclick=null; }
+    confirmBtn.onclick = function(){ dlog('modal:confirm', opts.title); close(); opts.onConfirm(); };
+    cancelBtn.onclick = function(){ dlog('modal:cancel', opts.title); close(); if(opts.onCancel) opts.onCancel(); };
+    waBtn.onclick = function(){ dlog('modal:whatsapp', opts.title); close(); };
+  }
+  document.getElementById('modalOverlay').addEventListener('click', function(e){
+    if(e.target===this){ dlog('modal:dismiss-backdrop'); this.style.display='none'; }
+  });
 
   var reschedulingLessonId = null;
 
-  function cancelLesson(lesson){
-    if(!confirm(t('confirm_cancel'))) return;
+  function doCancelLesson(lesson){
     var s = currentStudent();
     var refund = withinFreeWindow(lesson.datetime);
+    dlog('cancelLesson:commit', {lessonId:lesson.id, refund:refund});
     AKKDemo.withLog(db, t('log_cancel')+': '+s.name+(refund?'':' (-1)'), function(){
       lesson.status = 'cancelled';
       if(refund) s.creditBalance += 1;
@@ -349,23 +412,60 @@
     alert(refund ? t('cancel_refunded') : t('cancel_no_refund'));
     renderPortal();
   }
+  function cancelLesson(lesson){
+    dlog('click:cancelLesson', {lessonId:lesson.id, datetime:lesson.datetime});
+    var refund = withinFreeWindow(lesson.datetime);
+    if(refund){
+      if(!confirm(t('confirm_cancel'))) { dlog('cancelLesson:aborted-by-user'); return; }
+      doCancelLesson(lesson);
+      return;
+    }
+    showModal({
+      title: t('modal_lose_title'),
+      body: t('modal_lose_cancel_body').replace('{time}', lessonSummary(lesson)),
+      confirmText: t('modal_confirm_cancel'),
+      cancelText: t('modal_keep'),
+      whatsappHref: whatsappHrefFor(lesson, currentLang==='en'?'cancel':'odwołać'),
+      onConfirm: function(){ doCancelLesson(lesson); }
+    });
+  }
 
   function startReschedule(lesson){
+    dlog('click:startReschedule', {lessonId:lesson.id, datetime:lesson.datetime});
+    var free = withinFreeWindow(lesson.datetime);
+    if(free){
+      armReschedule(lesson);
+      return;
+    }
+    showModal({
+      title: t('modal_lose_title'),
+      body: t('modal_lose_reschedule_body').replace('{time}', lessonSummary(lesson)),
+      confirmText: t('modal_confirm_reschedule'),
+      cancelText: t('modal_keep'),
+      whatsappHref: whatsappHrefFor(lesson, currentLang==='en'?'reschedule':'przełożyć'),
+      onConfirm: function(){ armReschedule(lesson); }
+    });
+  }
+  function armReschedule(lesson){
     reschedulingLessonId = lesson.id;
     document.getElementById('rescheduleBanner').style.display = 'flex';
     document.getElementById('weekGrid').scrollIntoView({behavior:'smooth', block:'center'});
   }
   document.getElementById('rescheduleCancelBtn').addEventListener('click', function(){
+    dlog('click:rescheduleCancelMode');
     reschedulingLessonId = null;
     document.getElementById('rescheduleBanner').style.display = 'none';
   });
 
   function rescheduleTo(newDt){
+    dlog('rescheduleTo:attempt', {target:newDt.toISOString()});
+    if(newDt <= minLeadCutoff()){ dlog('rescheduleTo:rejected-too-soon'); alert(t('slot_too_soon')); renderWeekGrid(); return; }
     var s = currentStudent();
     var lesson = db.lessons.find(function(l){ return l.id===reschedulingLessonId; });
-    if(!lesson) return;
+    if(!lesson){ dlog('rescheduleTo:no-lesson-in-progress'); return; }
     var free = withinFreeWindow(lesson.datetime);
-    if(!free && s.creditBalance <= 0){ alert(t('reschedule_need_credit')); return; }
+    if(!free && s.creditBalance <= 0){ dlog('rescheduleTo:blocked-no-credit'); alert(t('reschedule_need_credit')); return; }
+    dlog('rescheduleTo:commit', {lessonId:lesson.id, from:lesson.datetime, to:newDt.toISOString(), free:free});
     AKKDemo.withLog(db, t('log_reschedule')+': '+s.name+(free?'':' (-1)'), function(){
       if(!free) s.creditBalance -= 1;
       lesson.datetime = newDt.toISOString();
@@ -482,6 +582,7 @@
       if(p.label){ var nick = document.createElement('span'); nick.className='pkg-nick'; nick.textContent = p.label; left.appendChild(nick); }
       var btn = document.createElement('button'); btn.className='btn-sm'; btn.textContent = t('buy');
       btn.addEventListener('click', function(){
+        dlog('click:buyPackage', {studentId:s.id, packageId:p.id, lessons:p.lessons, price:p.price});
         AKKDemo.withLog(db, t('log_purchase')+': '+s.name+' — '+p.lessons+' '+t('pkg_lessons')+' ('+p.price+' zł)', function(){
           s.creditBalance += p.lessons;
           db.payments = db.payments || [];
@@ -528,8 +629,10 @@
     });
 
     var now = new Date();
-    var showNowMarker = (now>=weekStart && now<new Date(weekStart.getTime()+7*86400000)) && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
+    var todayOffset = Math.round((today-weekStart)/86400000);
+    var showNowMarker = todayOffset>=0 && todayOffset<=6 && now.getHours()>=HOURS[0] && now.getHours()<=HOURS[HOURS.length-1];
     var nowHour = now.getHours();
+    var bookCutoff = minLeadCutoff();
     HOURS.forEach(function(h){
       var isNowRow = showNowMarker && h===nowHour;
       var lbl = document.createElement('div'); lbl.className='hr-label'; lbl.textContent = h+':00';
@@ -539,8 +642,8 @@
         var cellDate = new Date(weekStart); cellDate.setDate(cellDate.getDate()+d); cellDate.setHours(h,0,0,0);
         var l = byCell[d+'_'+h];
         var cell = document.createElement('button'); cell.type='button'; cell.className='cell';
-        if(isNowRow) cell.classList.add('now-row');
-        if(cellDate <= now){
+        if(isNowRow && d===todayOffset) cell.classList.add('now-row');
+        if(cellDate <= bookCutoff){
           cell.classList.add('is-past');
         } else if(l && l.studentId===s.id){
           cell.classList.add('is-mine'); cell.classList.add('type-'+l.type); cell.textContent = t('type_'+l.type);
@@ -553,12 +656,15 @@
       }
     });
   }
-  document.getElementById('wPrev').addEventListener('click', function(){ weekOffset--; renderWeekGrid(); });
-  document.getElementById('wNext').addEventListener('click', function(){ weekOffset++; renderWeekGrid(); });
+  document.getElementById('wPrev').addEventListener('click', function(){ dlog('click:weekPrev'); weekOffset--; renderWeekGrid(); });
+  document.getElementById('wNext').addEventListener('click', function(){ dlog('click:weekNext'); weekOffset++; renderWeekGrid(); });
 
   function bookSlot(dt){
+    dlog('bookSlot:attempt', {target:dt.toISOString()});
+    if(dt <= minLeadCutoff()){ dlog('bookSlot:rejected-too-soon'); alert(t('slot_too_soon')); renderWeekGrid(); return; }
     var s = currentStudent();
-    if(s.creditBalance <= 0){ alert(t('need_credit')); return; }
+    if(s.creditBalance <= 0){ dlog('bookSlot:blocked-no-credit'); alert(t('need_credit')); return; }
+    dlog('bookSlot:commit', {studentId:s.id, target:dt.toISOString()});
     AKKDemo.withLog(db, t('log_booked')+': '+s.name, function(){
       db.lessons.push({ id:AKKDemo.uid(), studentId:s.id, datetime:dt.toISOString(), type:'oneoff', status:'booked' });
       s.creditBalance -= 1;
@@ -579,9 +685,11 @@
     renderPaymentHistory();
   }
 
+  dlog('init:loaded', {students:db.students.length, lessons:db.lessons.length, currentFamily:currentStudentId});
   var saved = null;
   try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
   currentLang = saved || detectLang();
+  dlog('init:lang', currentLang);
   document.documentElement.lang = currentLang;
   document.getElementById('langToggle').setAttribute('aria-checked', currentLang==='en');
   applyStaticI18n();
