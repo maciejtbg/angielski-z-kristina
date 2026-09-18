@@ -333,27 +333,26 @@
   .stagger-1{transition-delay:.06s;} .stagger-2{transition-delay:.12s;} .stagger-3{transition-delay:.18s;} .stagger-4{transition-delay:.24s;}
 
   /* ---------- nav ---------- */
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:16px;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:16px;flex-wrap:wrap;row-gap:10px;}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:700;font-size:1.15rem;min-width:0;}
   .brand-lines{display:flex;flex-direction:column;min-width:0;line-height:1.2;}
   .brand-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .brand-tagline{font-family:'Karla';font-weight:600;font-size:.72rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .brand-mark{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--surface);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex:none;}
-  .nav-right{display:flex;align-items:center;gap:16px;flex:none;}
+  .nav-right{display:flex;align-items:center;gap:16px;flex:none;margin-left:auto;}
   @media (max-width:480px){
     .nav{gap:8px;}
     .nav-right{gap:8px;}
     .nav-cta{padding:9px 14px;font-size:.82rem;}
     .lang-toggle, .lang-toggle svg{width:36px;height:36px;}
   }
-  @media (max-width:380px){
+  @media (max-width:340px){
     .brand-text{display:none;}
     .brand-tagline{display:none;}
   }
   .nav-cta{background:var(--accent-warm);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 6px 16px rgb(var(--shadow)/.18);white-space:nowrap;}
   .nav-login{color:var(--accent-dark);font-weight:700;font-size:.88rem;text-decoration:none;white-space:nowrap;}
   .nav-login:hover{text-decoration:underline;}
-  @media (max-width:560px){ .nav-login{display:none;} }
   .nav-cta:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible{outline:3px solid var(--accent-warm); outline-offset:2px;}
 
   .lang-toggle{background:none;border:none;cursor:pointer;padding:0;width:44px;height:44px;border-radius:50%;position:relative;flex:none;transition:transform .18s ease;}
