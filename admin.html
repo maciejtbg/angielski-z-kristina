@@ -15,6 +15,7 @@
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
     --danger:#B4483A; --mine:#3E7C74;
+    --bubble-teacher:#2C5C56; --bubble-admin:#A6552E;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -54,6 +55,15 @@
   .stat-num{font-family:'Baloo 2';font-size:1.5rem;color:var(--accent-dark);}
   .stat-label{font-size:.78rem;color:var(--ink-soft);}
 
+  .overview-table{width:100%;border-collapse:collapse;font-size:.84rem;white-space:nowrap;}
+  .overview-table th,.overview-table td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  .overview-table th{color:var(--ink-soft);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;}
+  .overview-table .fam-name{font-weight:700;}
+  .overview-table .fam-sub{font-size:.76rem;color:var(--ink-soft);font-weight:400;}
+  .discount-tag{color:var(--accent-dark);font-size:.76rem;font-weight:700;margin-left:4px;}
+  .owed-tag{color:var(--danger);font-weight:800;}
+  .owed-zero{color:var(--ink-soft);}
+
   .chat-layout{display:flex;gap:16px;}
   .chat-list{flex:0 0 240px;min-width:0;overflow-y:auto;max-height:520px;border-right:1px solid var(--border);padding-right:12px;}
   .chat-list-item{display:flex;flex-direction:column;gap:2px;padding:9px 8px;border-radius:10px;cursor:pointer;margin-bottom:3px;}
@@ -66,12 +76,20 @@
   .chat-thread-header{font-weight:700;margin-bottom:8px;font-size:.9rem;}
   .chat-messages{flex:1;overflow-y:auto;max-height:360px;min-height:120px;display:flex;flex-direction:column;gap:8px;padding:4px;}
   .chat-bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
-  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);}
-  .chat-bubble.from-teacher{align-self:flex-end;background:var(--accent);color:#fff;}
-  .chat-bubble.from-admin{align-self:flex-end;background:var(--accent-warm);color:#fff;}
-  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
-  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
-  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);color:var(--ink);}
+  .chat-bubble.from-teacher{align-self:flex-end;background:var(--bubble-teacher);color:#fff;}
+  .chat-bubble.from-admin{align-self:flex-end;background:var(--bubble-admin);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.8;margin-top:4px;}
+  .chat-role-switch{display:flex;gap:6px;margin-bottom:8px;}
+  .chat-role-btn{border:1.5px solid var(--border);background:transparent;color:var(--ink-soft);border-radius:999px;padding:5px 12px;font-size:.76rem;font-weight:700;cursor:pointer;}
+  .chat-role-btn.active{background:var(--accent-tint);color:var(--accent-dark);border-color:var(--accent-tint);}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;position:relative;}
+  .chat-composer textarea{flex:1;resize:none;min-height:40px;max-height:140px;overflow-y:auto;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-emoji-btn{border:1.5px solid var(--border);background:var(--surface);border-radius:10px;width:40px;height:40px;font-size:1.1rem;cursor:pointer;flex:none;line-height:1;}
+  .chat-emoji-panel{display:none;position:absolute;bottom:48px;right:44px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px;box-shadow:0 10px 26px rgb(var(--shadow)/.22);grid-template-columns:repeat(6,1fr);gap:2px;z-index:20;}
+  .chat-emoji-panel.open{display:grid;}
+  .chat-emoji-panel button{border:none;background:transparent;font-size:1.15rem;padding:5px;cursor:pointer;border-radius:6px;line-height:1;}
+  .chat-emoji-panel button:hover{background:var(--surface-alt);}
   .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
   .btn-sm{background:var(--accent);color:#fff;border:none;border-radius:999px;padding:9px 18px;font-weight:700;font-size:.82rem;cursor:pointer;flex:none;}
   @media (max-width:640px){
@@ -104,11 +122,12 @@
               <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
             </g>
             <g class="flag-half flag-half-en">
-              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
-              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
-              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
-              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
-              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+              <rect x="22" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="22" y="0" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="12.6" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="25.1" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="37.7" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="0" width="12" height="24" fill="#3C3B6E"/>
             </g>
           </g>
           <circle class="flag-ring" cx="22" cy="22" r="20"/>
@@ -117,15 +136,39 @@
     </div>
   </div>
   <h1 data-i18n="h1">Panel administratora</h1>
-  <p class="sub" data-i18n="sub">Wgląd we wszystkie rozmowy między rodzicami a Kristiną.</p>
+  <p class="sub" data-i18n="sub">Pełny, zagregowany wgląd w uczniów, płatności i rozmowy.</p>
 
   <div class="banner" data-i18n="banner">Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce.</div>
 
   <div class="stat-row">
     <div class="stat-tile"><div class="stat-num" id="statFamilies">0</div><div class="stat-label" data-i18n="stat_families">Rodziny</div></div>
+    <div class="stat-tile"><div class="stat-num" id="statRevenue">0</div><div class="stat-label" data-i18n="stat_revenue">Przychód łącznie</div></div>
+    <div class="stat-tile"><div class="stat-num" id="statBalance">0</div><div class="stat-label" data-i18n="stat_balance">Opłacone, niewykorzystane lekcje</div></div>
+    <div class="stat-tile"><div class="stat-num" id="statOwed">0</div><div class="stat-label" data-i18n="stat_owed">Lekcje bez pokrycia</div></div>
     <div class="stat-tile"><div class="stat-num" id="statMessages">0</div><div class="stat-label" data-i18n="stat_messages">Wiadomości łącznie</div></div>
     <div class="stat-tile"><div class="stat-num" id="statUnread">0</div><div class="stat-label" data-i18n="stat_unread">Nieprzeczytane wątki</div></div>
   </div>
+
+  <section>
+    <h2 data-i18n="overview_h2">Uczniowie — przegląd finansowy</h2>
+    <p class="sub" data-i18n="overview_sub" style="margin-top:-8px;">To, co widzi Kristina w swoim dashboardzie, tylko zebrane w jedną tabelę: ceny, rabaty, salda i wpłaty każdej rodziny.</p>
+    <div class="card" style="overflow-x:auto;">
+      <table class="overview-table">
+        <thead><tr>
+          <th data-i18n="ov_col_family">Rodzina</th>
+          <th data-i18n="ov_col_price">Cena/lekcję</th>
+          <th data-i18n="ov_col_best_package">Najlepszy pakiet</th>
+          <th data-i18n="ov_col_balance">Pozostało</th>
+          <th data-i18n="ov_col_upcoming">Nadchodzące</th>
+          <th data-i18n="ov_col_owed">Zaległość</th>
+          <th data-i18n="ov_col_paid">Zapłacono łącznie</th>
+          <th data-i18n="ov_col_completed">Odbyte lekcje</th>
+        </tr></thead>
+        <tbody id="overviewBody"></tbody>
+      </table>
+    </div>
+    <p class="sub" id="overviewNote" style="margin-top:10px;"></p>
+  </section>
 
   <section>
     <h2 data-i18n="chat_h2">Wszystkie rozmowy</h2>
@@ -134,12 +177,17 @@
         <div class="chat-list" id="chatList"></div>
         <div class="chat-thread">
           <div class="chat-thread-header" id="chatThreadHeader"></div>
+          <div class="chat-role-switch">
+            <button type="button" class="chat-role-btn" id="roleTeacherBtn" data-i18n="role_teacher">Kristina</button>
+            <button type="button" class="chat-role-btn" id="roleAdminBtn" data-i18n="role_admin">Administracja</button>
+          </div>
           <div class="chat-messages" id="chatMessages"></div>
           <div class="chat-composer">
-            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="1"></textarea>
+            <button type="button" class="chat-emoji-btn" id="chatEmojiBtn" aria-label="Emoji">😊</button>
+            <div class="chat-emoji-panel" id="chatEmojiPanel"></div>
             <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
           </div>
-          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
         </div>
       </div>
     </div>
@@ -156,11 +204,26 @@
     gate_ph:{pl:"Hasło",en:"Password"},
     back:{pl:"← Strona główna",en:"← Home"},
     h1:{pl:"Panel administratora",en:"Admin panel"},
-    sub:{pl:"Wgląd we wszystkie rozmowy między rodzicami a Kristiną.",en:"Oversight of every conversation between parents and Kristina."},
+    sub:{pl:"Pełny, zagregowany wgląd w uczniów, płatności i rozmowy.",en:"A full, aggregated view of students, payments and conversations."},
     banner:{pl:"Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce.",en:"Demo mode: the data here is sample data saved only in this browser."},
     stat_families:{pl:"Rodziny",en:"Families"},
     stat_messages:{pl:"Wiadomości łącznie",en:"Total messages"},
     stat_unread:{pl:"Nieprzeczytane wątki",en:"Unread threads"},
+    stat_revenue:{pl:"Przychód łącznie",en:"Total revenue"},
+    stat_balance:{pl:"Opłacone, niewykorzystane lekcje",en:"Paid, unused lessons"},
+    stat_owed:{pl:"Lekcje bez pokrycia",en:"Uncovered lessons"},
+    overview_h2:{pl:"Uczniowie — przegląd finansowy",en:"Students — financial overview"},
+    overview_sub:{pl:"To, co widzi Kristina w swoim dashboardzie, tylko zebrane w jedną tabelę: ceny, rabaty, salda i wpłaty każdej rodziny.",en:"What Kristina sees in her dashboard, gathered into one table: pricing, discounts, balances and payments for every family."},
+    ov_col_family:{pl:"Rodzina",en:"Family"},
+    ov_col_price:{pl:"Cena/lekcję",en:"Price/lesson"},
+    ov_col_best_package:{pl:"Najlepszy pakiet",en:"Best package"},
+    ov_col_balance:{pl:"Pozostało",en:"Left"},
+    ov_col_upcoming:{pl:"Nadchodzące",en:"Upcoming"},
+    ov_col_owed:{pl:"Zaległość",en:"Owed"},
+    ov_col_paid:{pl:"Zapłacono łącznie",en:"Total paid"},
+    ov_col_completed:{pl:"Odbyte lekcje",en:"Completed"},
+    overview_note:{pl:"Rabat liczony względem cennika strony ({price} zł/lekcję). „Zaległość” to lekcje umówione lub odbyte, które przewyższają liczbę opłaconych — np. gdy Kristina ręcznie doda lekcję bez wcześniejszego zakupu pakietu.",en:"Discount is calculated against the site's list price ({price} zł/lesson). “Owed” is booked or completed lessons that exceed how many were actually paid for — e.g. when Kristina manually adds a lesson without a prior package purchase."},
+    ov_no_package:{pl:"brak pakietu",en:"no package"},
     chat_h2:{pl:"Wszystkie rozmowy",en:"All conversations"},
     chat_placeholder:{pl:"Napisz wiadomość...",en:"Write a message..."},
     chat_send:{pl:"Wyślij",en:"Send"},
@@ -169,7 +232,9 @@
     chat_empty:{pl:"Brak wiadomości w tej rozmowie.",en:"No messages in this conversation yet."},
     chat_parent_label:{pl:"Rodzic",en:"Parent"},
     chat_teacher_label:{pl:"Kristina",en:"Kristina"},
-    chat_admin_label:{pl:"Administrator",en:"Admin"}
+    chat_admin_label:{pl:"Administrator",en:"Admin"},
+    role_teacher:{pl:"Kristina",en:"Kristina"},
+    role_admin:{pl:"Administracja",en:"Admin"}
   };
   var currentLang = 'pl';
   function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
@@ -213,6 +278,151 @@
   function persist(){ AKKDemo.save(db); }
 
   var activeChatStudentId = null;
+  var chatSendRole = 'admin';
+  var EMOJI_LIST = ['😊','🙂','😄','😉','😢','🙏','👍','👏','🎉','⭐','❤️','😍','🤔','✅','❌','📚','✏️','🕐','📅','💬','👋','😴','🥳','🙌'];
+
+  function renderRoleSwitch(){
+    var teacherBtn = document.getElementById('roleTeacherBtn');
+    var adminBtn = document.getElementById('roleAdminBtn');
+    if(!teacherBtn || !adminBtn) return;
+    teacherBtn.classList.toggle('active', chatSendRole==='teacher');
+    adminBtn.classList.toggle('active', chatSendRole==='admin');
+  }
+  var roleTeacherBtnEl = document.getElementById('roleTeacherBtn');
+  var roleAdminBtnEl = document.getElementById('roleAdminBtn');
+  if(roleTeacherBtnEl) roleTeacherBtnEl.addEventListener('click', function(){ dlog('click:chatRole', 'teacher'); chatSendRole='teacher'; renderRoleSwitch(); });
+  if(roleAdminBtnEl) roleAdminBtnEl.addEventListener('click', function(){ dlog('click:chatRole', 'admin'); chatSendRole='admin'; renderRoleSwitch(); });
+
+  function renderEmojiPanel(){
+    var panel = document.getElementById('chatEmojiPanel');
+    if(!panel || panel.children.length) return;
+    EMOJI_LIST.forEach(function(em){
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = em;
+      btn.addEventListener('click', function(){
+        var input = document.getElementById('chatInput');
+        var start = input.selectionStart==null ? input.value.length : input.selectionStart;
+        var end = input.selectionEnd==null ? input.value.length : input.selectionEnd;
+        input.value = input.value.slice(0,start) + em + input.value.slice(end);
+        input.focus();
+        input.selectionStart = input.selectionEnd = start + em.length;
+        autoGrowChatInput();
+        panel.classList.remove('open');
+      });
+      panel.appendChild(btn);
+    });
+  }
+  var chatEmojiBtn = document.getElementById('chatEmojiBtn');
+  if(chatEmojiBtn){
+    renderEmojiPanel();
+    chatEmojiBtn.addEventListener('click', function(){
+      dlog('click:chatEmojiToggle');
+      document.getElementById('chatEmojiPanel').classList.toggle('open');
+    });
+    document.addEventListener('click', function(e){
+      var panel = document.getElementById('chatEmojiPanel');
+      if(!panel || !panel.classList.contains('open')) return;
+      if(e.target===chatEmojiBtn || panel.contains(e.target)) return;
+      panel.classList.remove('open');
+    });
+  }
+  function autoGrowChatInput(){
+    var input = document.getElementById('chatInput');
+    if(!input) return;
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+  }
+  var chatInputEl0 = document.getElementById('chatInput');
+  if(chatInputEl0) chatInputEl0.addEventListener('input', autoGrowChatInput);
+
+  var BASE_PRICE = 30;
+
+  function perLessonStr(price, lessons){
+    if(!lessons) return '0';
+    var v = Math.round((price/lessons)*100)/100;
+    return (v % 1 === 0) ? String(v) : v.toFixed(2);
+  }
+
+  // Everything Kristina's own dashboard shows, per family, but aggregated:
+  // price actually charged, best package rate, how many lessons are left,
+  // how many are booked ahead, how many were given without being paid for
+  // ("owed" — see the accounting note in familyOwed), total paid, and a
+  // completed-lesson count.
+  function familyMetrics(s){
+    var lessons = (db.lessons||[]).filter(function(l){ return l.studentId===s.id; });
+    var now = new Date();
+    var upcoming = lessons.filter(function(l){ return l.status==='booked' && new Date(l.datetime)>=now; }).length;
+    var completed = lessons.filter(function(l){ return l.status==='completed'; }).length;
+    var ledgerCount = lessons.filter(function(l){ return l.status==='booked' || l.status==='completed'; }).length;
+    var payments = (db.payments||[]).filter(function(p){ return p.studentId===s.id; });
+    var totalPaid = payments.reduce(function(sum,p){ return sum+p.price; }, 0);
+    var totalPurchasedLessons = payments.reduce(function(sum,p){ return sum+p.lessons; }, 0);
+    // Accounting identity: purchased = current balance + lessons already
+    // drawn down against it. Any ledger lessons beyond that were never
+    // paid for (e.g. a lesson Kristina added by hand) — that gap is "owed".
+    var owed = Math.max(0, ledgerCount - totalPurchasedLessons + s.creditBalance);
+    var bestPackage = null;
+    (s.packages||[]).forEach(function(p){
+      if(!p.lessons) return;
+      if(!bestPackage || (p.price/p.lessons) < (bestPackage.price/bestPackage.lessons)) bestPackage = p;
+    });
+    var priceDiscountPct = BASE_PRICE>0 ? Math.round((1 - s.pricePerLesson/BASE_PRICE)*100) : 0;
+    return {
+      upcoming: upcoming, completed: completed, totalPaid: totalPaid,
+      totalPurchasedLessons: totalPurchasedLessons, owed: owed,
+      bestPackage: bestPackage, priceDiscountPct: priceDiscountPct
+    };
+  }
+
+  function renderOverview(){
+    var body = document.getElementById('overviewBody');
+    if(!body) return;
+    body.innerHTML = '';
+    var totalRevenue = 0, totalBalance = 0, totalOwed = 0;
+    db.students.forEach(function(s){
+      var m = familyMetrics(s);
+      totalRevenue += m.totalPaid;
+      totalBalance += s.creditBalance;
+      totalOwed += m.owed;
+      var tr = document.createElement('tr');
+
+      var famTd = document.createElement('td');
+      famTd.innerHTML = '<div class="fam-name">'+s.parentName+'</div><div class="fam-sub">'+s.name+'</div>';
+      tr.appendChild(famTd);
+
+      var priceTd = document.createElement('td');
+      priceTd.innerHTML = s.pricePerLesson+' zł' + (m.priceDiscountPct>0 ? '<span class="discount-tag">-'+m.priceDiscountPct+'%</span>' : '');
+      tr.appendChild(priceTd);
+
+      var pkgTd = document.createElement('td');
+      if(m.bestPackage){
+        var pkgDiscount = s.pricePerLesson>0 ? Math.round((1 - (m.bestPackage.price/m.bestPackage.lessons)/s.pricePerLesson)*100) : 0;
+        pkgTd.innerHTML = perLessonStr(m.bestPackage.price, m.bestPackage.lessons)+' zł' + (pkgDiscount>0 ? '<span class="discount-tag">-'+pkgDiscount+'%</span>' : '');
+      } else {
+        pkgTd.textContent = t('ov_no_package');
+      }
+      tr.appendChild(pkgTd);
+
+      var balTd = document.createElement('td'); balTd.textContent = s.creditBalance;
+      tr.appendChild(balTd);
+      var upTd = document.createElement('td'); upTd.textContent = m.upcoming;
+      tr.appendChild(upTd);
+      var owedTd = document.createElement('td');
+      owedTd.innerHTML = m.owed>0 ? '<span class="owed-tag">'+m.owed+'</span>' : '<span class="owed-zero">0</span>';
+      tr.appendChild(owedTd);
+      var paidTd = document.createElement('td'); paidTd.textContent = m.totalPaid+' zł';
+      tr.appendChild(paidTd);
+      var compTd = document.createElement('td'); compTd.textContent = m.completed;
+      tr.appendChild(compTd);
+
+      body.appendChild(tr);
+    });
+    document.getElementById('statRevenue').textContent = totalRevenue+' zł';
+    document.getElementById('statBalance').textContent = totalBalance;
+    document.getElementById('statOwed').textContent = totalOwed;
+    var noteEl = document.getElementById('overviewNote');
+    if(noteEl) noteEl.textContent = t('overview_note').replace('{price}', BASE_PRICE);
+  }
 
   function renderStats(){
     document.getElementById('statFamilies').textContent = db.students.length;
@@ -295,12 +505,14 @@
     if(!activeChatStudentId) return;
     var input = document.getElementById('chatInput');
     var raw = input.value;
-    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length});
-    var msg = AKKDemo.postMessage(db, activeChatStudentId, 'admin', 'Administrator', raw);
+    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length, role:chatSendRole});
+    var senderName = chatSendRole==='teacher' ? 'Kristina' : 'Administracja';
+    var msg = AKKDemo.postMessage(db, activeChatStudentId, chatSendRole, senderName, raw);
     if(!msg){ dlog('chatSend:empty-rejected'); return; }
     AKKDemo.markRead(db, 'admin', activeChatStudentId);
     persist();
     input.value = '';
+    autoGrowChatInput();
     renderChatList();
     renderChatThread();
     renderStats();
@@ -311,7 +523,9 @@
   });
 
   function renderAll(){
+    renderRoleSwitch();
     renderStats();
+    renderOverview();
     renderChatList();
     renderChatThread();
   }

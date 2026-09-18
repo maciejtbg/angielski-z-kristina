@@ -15,7 +15,8 @@
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
     --danger:#B4483A; --free:#DCEAE6; --busy:#D8CDBA; --mine:#3E7C74;
-    --type-trial:#6FA79C; --type-oneoff:#2C5C56; --type-weekly:#6C8FB0; --type-daily:#8B6CB0;
+    --type-trial:#3F7A6E; --type-oneoff:#2C5C56; --type-weekly:#3D5F82; --type-daily:#5C4088;
+    --bubble-parent:#2C5C56; --bubble-admin:#A6552E;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -24,7 +25,6 @@
       --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
       --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0;
       --free:#2E4842; --busy:#3A4A43; --mine:#7FC6B4;
-      --type-trial:#A9DED0; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#C3AEE0;
     }
   }
   *{box-sizing:border-box;}
@@ -98,8 +98,8 @@
   .cell.is-mine.type-trial{background:var(--type-trial);} .cell.is-mine.type-oneoff{background:var(--type-oneoff);}
   .cell.is-mine.type-weekly{background:var(--type-weekly);} .cell.is-mine.type-daily{background:var(--type-daily);}
   .cell.is-past{opacity:.35;cursor:default;}
-  .cell.now-row{box-shadow:inset 0 2px 0 var(--accent-warm);}
-  .hr-label.now-row{color:var(--accent-warm);font-weight:800;}
+  .cell.now-row{border-top:4px solid var(--danger);}
+  .hr-label.now-row{color:var(--danger);font-weight:800;}
   .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;margin-top:10px;color:var(--ink-soft);}
   .legend span{display:inline-flex;align-items:center;gap:5px;}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
@@ -107,12 +107,17 @@
   .chat-thread{display:flex;flex-direction:column;}
   .chat-messages{overflow-y:auto;max-height:340px;min-height:100px;display:flex;flex-direction:column;gap:8px;padding:4px;}
   .chat-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
-  .chat-bubble.from-parent{align-self:flex-end;background:var(--mine);color:#fff;}
-  .chat-bubble.from-teacher{align-self:flex-start;background:var(--surface-alt);}
-  .chat-bubble.from-admin{align-self:flex-start;background:var(--accent-warm);color:#fff;}
-  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
-  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
-  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-bubble.from-parent{align-self:flex-end;background:var(--bubble-parent);color:#fff;}
+  .chat-bubble.from-teacher{align-self:flex-start;background:var(--surface-alt);color:var(--ink);}
+  .chat-bubble.from-admin{align-self:flex-start;background:var(--bubble-admin);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.8;margin-top:4px;}
+  .chat-emoji-btn{border:1.5px solid var(--border);background:var(--surface);border-radius:10px;width:40px;height:40px;font-size:1.1rem;cursor:pointer;flex:none;line-height:1;}
+  .chat-emoji-panel{display:none;position:absolute;bottom:48px;right:44px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px;box-shadow:0 10px 26px rgb(var(--shadow)/.22);grid-template-columns:repeat(6,1fr);gap:2px;z-index:20;}
+  .chat-emoji-panel.open{display:grid;}
+  .chat-emoji-panel button{border:none;background:transparent;font-size:1.15rem;padding:5px;cursor:pointer;border-radius:6px;line-height:1;}
+  .chat-emoji-panel button:hover{background:var(--surface-alt);}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;position:relative;}
+  .chat-composer textarea{flex:1;resize:none;min-height:40px;max-height:140px;overflow-y:auto;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
   .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
 
   .modal-overlay{position:fixed;inset:0;background:rgba(20,15,10,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
@@ -140,11 +145,12 @@
               <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
             </g>
             <g class="flag-half flag-half-en">
-              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
-              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
-              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
-              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
-              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+              <rect x="22" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="22" y="0" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="12.6" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="25.1" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="37.7" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="0" width="12" height="24" fill="#3C3B6E"/>
             </g>
           </g>
           <circle class="flag-ring" cx="22" cy="22" r="20"/>
@@ -170,10 +176,11 @@
         <div class="chat-thread">
           <div class="chat-messages" id="chatMessages"></div>
           <div class="chat-composer">
-            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="1"></textarea>
+            <button type="button" class="chat-emoji-btn" id="chatEmojiBtn" aria-label="Emoji">😊</button>
+            <div class="chat-emoji-panel" id="chatEmojiPanel"></div>
             <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
           </div>
-          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
         </div>
       </div>
     </section>
@@ -279,7 +286,7 @@
     hello_prefix:{pl:"Cześć, ",en:"Hi, "},
     day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
     type_trial:{pl:"Próbna",en:"Trial"}, type_oneoff:{pl:"Jednorazowa",en:"One-off"}, type_weekly:{pl:"Cotygodniowa",en:"Weekly"}, type_daily:{pl:"Codzienna",en:"Daily"},
-    status_completed:{pl:"Odbyta",en:"Completed"}, status_cancelled:{pl:"Odwołana",en:"Cancelled"},
+    status_completed:{pl:"Odbyta",en:"Completed"}, status_cancelled:{pl:"Odwołana",en:"Canceled"},
     reschedule_btn:{pl:"Przełóż",en:"Reschedule"},
     cancel_btn:{pl:"Odwołaj",en:"Cancel"},
     confirm_cancel:{pl:"Na pewno odwołać tę lekcję?",en:"Cancel this lesson?"},
@@ -291,7 +298,7 @@
     reschedule_ok_charged:{pl:"Przesunięto lekcję — to za późno na bezpłatną zmianę, więc pobrano dodatkową lekcję z pakietu.",en:"Lesson rescheduled — this was too late for a free change, so an extra lesson was taken from your package."},
     reschedule_need_credit:{pl:"To za późno na bezpłatne przesunięcie, a nie masz już lekcji na saldzie, żeby za nie zapłacić.",en:"It's too late for a free reschedule, and you have no lessons left on your balance to cover it."},
     free_until:{pl:"Bezpłatna zmiana jeszcze przez",en:"Free change for another"},
-    charge_note:{pl:"Za późno na bezpłatną zmianę — odwołanie nie zwróci lekcji, przesunięcie kosztuje dodatkową lekcję",en:"Too late for a free change — cancelling won't refund this lesson, rescheduling costs an extra lesson"},
+    charge_note:{pl:"Za późno na bezpłatną zmianę — odwołanie nie zwróci lekcji, przesunięcie kosztuje dodatkową lekcję",en:"Too late for a free change — canceling won't refund this lesson, rescheduling costs an extra lesson"},
     days_short:{pl:"d",en:"d"}, hours_short:{pl:"godz.",en:"h"}, min_short:{pl:"min",en:"min"},
     log_cancel:{pl:"Odwołano lekcję",en:"Cancelled lesson"},
     log_reschedule:{pl:"Przesunięto lekcję",en:"Rescheduled lesson"},
@@ -598,12 +605,56 @@
     if(!msg){ dlog('chatSend:empty-rejected'); return; }
     persist();
     input.value = '';
+    autoGrowChatInput();
     renderChat();
   }
   document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
   document.getElementById('chatInput').addEventListener('keydown', function(e){
     if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); sendChatMessage(); }
   });
+
+  var EMOJI_LIST = ['😊','🙂','😄','😉','😢','🙏','👍','👏','🎉','⭐','❤️','😍','🤔','✅','❌','📚','✏️','🕐','📅','💬','👋','😴','🥳','🙌'];
+  function renderEmojiPanel(){
+    var panel = document.getElementById('chatEmojiPanel');
+    if(!panel || panel.children.length) return;
+    EMOJI_LIST.forEach(function(em){
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = em;
+      btn.addEventListener('click', function(){
+        var input = document.getElementById('chatInput');
+        var start = input.selectionStart==null ? input.value.length : input.selectionStart;
+        var end = input.selectionEnd==null ? input.value.length : input.selectionEnd;
+        input.value = input.value.slice(0,start) + em + input.value.slice(end);
+        input.focus();
+        input.selectionStart = input.selectionEnd = start + em.length;
+        autoGrowChatInput();
+        panel.classList.remove('open');
+      });
+      panel.appendChild(btn);
+    });
+  }
+  var chatEmojiBtn = document.getElementById('chatEmojiBtn');
+  if(chatEmojiBtn){
+    renderEmojiPanel();
+    chatEmojiBtn.addEventListener('click', function(){
+      dlog('click:chatEmojiToggle');
+      document.getElementById('chatEmojiPanel').classList.toggle('open');
+    });
+    document.addEventListener('click', function(e){
+      var panel = document.getElementById('chatEmojiPanel');
+      if(!panel || !panel.classList.contains('open')) return;
+      if(e.target===chatEmojiBtn || panel.contains(e.target)) return;
+      panel.classList.remove('open');
+    });
+  }
+  function autoGrowChatInput(){
+    var input = document.getElementById('chatInput');
+    if(!input) return;
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+  }
+  var chatInputEl0 = document.getElementById('chatInput');
+  if(chatInputEl0) chatInputEl0.addEventListener('input', autoGrowChatInput);
 
   function renderHistory(){
     var s = currentStudent();

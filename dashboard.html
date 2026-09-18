@@ -15,7 +15,8 @@
     --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
     --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
     --danger:#B4483A; --busy:#D8CDBA;
-    --type-trial:#6FA79C; --type-oneoff:#2C5C56; --type-weekly:#6C8FB0; --type-daily:#8B6CB0;
+    --type-trial:#3F7A6E; --type-oneoff:#2C5C56; --type-weekly:#3D5F82; --type-daily:#5C4088;
+    --bubble-teacher:#2C5C56; --bubble-admin:#A6552E;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -23,7 +24,6 @@
       --ink:#F2EEE4; --ink-soft:#BFCCC7;
       --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
       --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0; --busy:#3A4A43;
-      --type-trial:#A9DED0; --type-oneoff:#7FC6B4; --type-weekly:#9BB8D6; --type-daily:#C3AEE0;
     }
   }
   *{box-sizing:border-box;}
@@ -102,20 +102,28 @@
   .chat-thread-header{font-weight:700;margin-bottom:8px;font-size:.9rem;}
   .chat-messages{flex:1;overflow-y:auto;max-height:320px;min-height:120px;display:flex;flex-direction:column;gap:8px;padding:4px;}
   .chat-bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
-  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);}
-  .chat-bubble.from-teacher{align-self:flex-end;background:var(--accent);color:#fff;}
-  .chat-bubble.from-admin{align-self:flex-end;background:var(--accent-warm);color:#fff;}
-  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
-  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
-  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);color:var(--ink);}
+  .chat-bubble.from-teacher{align-self:flex-end;background:var(--bubble-teacher);color:#fff;}
+  .chat-bubble.from-admin{align-self:flex-end;background:var(--bubble-admin);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.8;margin-top:4px;}
+  .chat-role-switch{display:flex;gap:6px;margin-bottom:8px;}
+  .chat-role-btn{border:1.5px solid var(--border);background:transparent;color:var(--ink-soft);border-radius:999px;padding:5px 12px;font-size:.76rem;font-weight:700;cursor:pointer;}
+  .chat-role-btn.active{background:var(--accent-tint);color:var(--accent-dark);border-color:var(--accent-tint);}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;position:relative;}
+  .chat-composer textarea{flex:1;resize:none;min-height:40px;max-height:140px;overflow-y:auto;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-emoji-btn{border:1.5px solid var(--border);background:var(--surface);border-radius:10px;width:40px;height:40px;font-size:1.1rem;cursor:pointer;flex:none;line-height:1;}
+  .chat-emoji-panel{display:none;position:absolute;bottom:48px;right:44px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px;box-shadow:0 10px 26px rgb(var(--shadow)/.22);grid-template-columns:repeat(6,1fr);gap:2px;z-index:20;}
+  .chat-emoji-panel.open{display:grid;}
+  .chat-emoji-panel button{border:none;background:transparent;font-size:1.15rem;padding:5px;cursor:pointer;border-radius:6px;line-height:1;}
+  .chat-emoji-panel button:hover{background:var(--surface-alt);}
   .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
   @media (max-width:640px){
     .chat-layout{flex-direction:column;}
     .chat-list{flex:none;max-height:180px;border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:8px;margin-bottom:8px;}
   }
 
-  .cell.now-row{box-shadow:inset 0 2px 0 var(--accent-warm);}
-  .hr-label.now-row{color:var(--accent-warm);font-weight:800;}
+  .cell.now-row{border-top:4px solid var(--danger);}
+  .hr-label.now-row{color:var(--danger);font-weight:800;}
 
   .log-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.84rem;}
   .log-item:last-child{border-bottom:none;}
@@ -152,11 +160,12 @@
               <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
             </g>
             <g class="flag-half flag-half-en">
-              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
-              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
-              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
-              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
-              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+              <rect x="22" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="22" y="0" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="12.6" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="25.1" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="37.7" width="22" height="6.3" fill="#B22234"/>
+              <rect x="22" y="0" width="12" height="24" fill="#3C3B6E"/>
             </g>
           </g>
           <circle class="flag-ring" cx="22" cy="22" r="20"/>
@@ -176,12 +185,17 @@
         <div class="chat-list" id="chatList"></div>
         <div class="chat-thread">
           <div class="chat-thread-header" id="chatThreadHeader"></div>
+          <div class="chat-role-switch">
+            <button type="button" class="chat-role-btn" id="roleTeacherBtn" data-i18n="role_teacher">Kristina</button>
+            <button type="button" class="chat-role-btn" id="roleAdminBtn" data-i18n="role_admin">Administracja</button>
+          </div>
           <div class="chat-messages" id="chatMessages"></div>
           <div class="chat-composer">
-            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="1"></textarea>
+            <button type="button" class="chat-emoji-btn" id="chatEmojiBtn" aria-label="Emoji">😊</button>
+            <div class="chat-emoji-panel" id="chatEmojiPanel"></div>
             <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
           </div>
-          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
         </div>
       </div>
     </div>
@@ -331,14 +345,14 @@
     credit_balance:{pl:"pozostałe lekcje",en:"lessons left"},
     status_booked:{pl:"Zarezerwowana",en:"Booked"},
     status_completed:{pl:"Odbyta",en:"Completed"},
-    status_cancelled:{pl:"Odwołana",en:"Cancelled"},
+    status_cancelled:{pl:"Odwołana",en:"Canceled"},
     payments_h2:{pl:"Wpłaty",en:"Payments"},
     col_lessons:{pl:"Lekcje",en:"Lessons"},
     col_amount:{pl:"Kwota",en:"Amount"},
     no_payments:{pl:"Brak wpłat.",en:"No payments yet."},
     policy_h2:{pl:"Polityka odwołań i przesunięć",en:"Cancellation & reschedule policy"},
     policy_window_label:{pl:"Bezpłatne odwołanie/przesunięcie, jeśli zgłoszone co najmniej (godzin przed lekcją):",en:"Free cancellation/reschedule if requested at least this many hours before the lesson:"},
-    policy_note:{pl:"Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).",en:"After that window, cancelling does not refund the lesson to the parent's balance; rescheduling within that window costs an extra lesson from the package (if available)."},
+    policy_note:{pl:"Po tym czasie odwołanie nie zwraca lekcji na saldo rodzica; przesunięcie w tym czasie kosztuje dodatkową lekcję z pakietu (jeśli dostępna).",en:"After that window, canceling does not refund the lesson to the parent's balance; rescheduling within that window costs an extra lesson from the package (if available)."},
     lead_window_label:{pl:"Minimalny czas przed lekcją, żeby rodzic mógł ją jeszcze zarezerwować (godzin):",en:"Minimum time before a lesson for a parent to still be able to book it (hours):"},
     lead_note:{pl:"Chroni Cię przed rezerwacją „na już” — np. o 19:09 nikt nie zarezerwuje lekcji na 19:00 ani nawet na 19:30, jeśli bufor to 1 godzina.",en:"Protects you from last-minute bookings — e.g. at 19:09 nobody can book a 19:00 or even a 19:30 slot if the buffer is 1 hour."},
     log_lead_change:{pl:"Zmieniono minimalny czas rezerwacji",en:"Changed minimum booking lead time"},
@@ -351,6 +365,8 @@
     chat_parent_label:{pl:"Rodzic",en:"Parent"},
     chat_teacher_label:{pl:"Kristina",en:"Kristina"},
     chat_admin_label:{pl:"Administrator",en:"Admin"},
+    role_teacher:{pl:"Kristina",en:"Kristina"},
+    role_admin:{pl:"Administracja",en:"Admin"},
     day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
     log_h2:{pl:"Historia zmian",en:"Change history"},
     log_sub:{pl:"Każda zmiana na stronie (Twoja i rodziców) zapisuje się tutaj. Tylko najnowszą zmianę można cofnąć.",en:"Every change on the site (yours and the parents') is recorded here. Only the most recent change can be undone."},
@@ -428,6 +444,62 @@
 
   // ---------- Chat ----------
   var activeChatStudentId = null;
+  var chatSendRole = 'teacher';
+  var EMOJI_LIST = ['😊','🙂','😄','😉','😢','🙏','👍','👏','🎉','⭐','❤️','😍','🤔','✅','❌','📚','✏️','🕐','📅','💬','👋','😴','🥳','🙌'];
+
+  function renderRoleSwitch(){
+    var teacherBtn = document.getElementById('roleTeacherBtn');
+    var adminBtn = document.getElementById('roleAdminBtn');
+    if(!teacherBtn || !adminBtn) return;
+    teacherBtn.classList.toggle('active', chatSendRole==='teacher');
+    adminBtn.classList.toggle('active', chatSendRole==='admin');
+  }
+  var roleTeacherBtnEl = document.getElementById('roleTeacherBtn');
+  var roleAdminBtnEl = document.getElementById('roleAdminBtn');
+  if(roleTeacherBtnEl) roleTeacherBtnEl.addEventListener('click', function(){ dlog('click:chatRole', 'teacher'); chatSendRole='teacher'; renderRoleSwitch(); });
+  if(roleAdminBtnEl) roleAdminBtnEl.addEventListener('click', function(){ dlog('click:chatRole', 'admin'); chatSendRole='admin'; renderRoleSwitch(); });
+
+  function renderEmojiPanel(){
+    var panel = document.getElementById('chatEmojiPanel');
+    if(!panel || panel.children.length) return;
+    EMOJI_LIST.forEach(function(em){
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = em;
+      btn.addEventListener('click', function(){
+        var input = document.getElementById('chatInput');
+        var start = input.selectionStart==null ? input.value.length : input.selectionStart;
+        var end = input.selectionEnd==null ? input.value.length : input.selectionEnd;
+        input.value = input.value.slice(0,start) + em + input.value.slice(end);
+        input.focus();
+        input.selectionStart = input.selectionEnd = start + em.length;
+        autoGrowChatInput();
+        panel.classList.remove('open');
+      });
+      panel.appendChild(btn);
+    });
+  }
+  var chatEmojiBtn = document.getElementById('chatEmojiBtn');
+  if(chatEmojiBtn){
+    renderEmojiPanel();
+    chatEmojiBtn.addEventListener('click', function(){
+      dlog('click:chatEmojiToggle');
+      document.getElementById('chatEmojiPanel').classList.toggle('open');
+    });
+    document.addEventListener('click', function(e){
+      var panel = document.getElementById('chatEmojiPanel');
+      if(!panel || !panel.classList.contains('open')) return;
+      if(e.target===chatEmojiBtn || panel.contains(e.target)) return;
+      panel.classList.remove('open');
+    });
+  }
+  function autoGrowChatInput(){
+    var input = document.getElementById('chatInput');
+    if(!input) return;
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+  }
+  var chatInputEl0 = document.getElementById('chatInput');
+  if(chatInputEl0) chatInputEl0.addEventListener('input', autoGrowChatInput);
 
   function renderChatList(){
     var list = document.getElementById('chatList');
@@ -502,12 +574,14 @@
     if(!activeChatStudentId) return;
     var input = document.getElementById('chatInput');
     var raw = input.value;
-    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length});
-    var msg = AKKDemo.postMessage(db, activeChatStudentId, 'teacher', 'Kristina', raw);
+    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length, role:chatSendRole});
+    var senderName = chatSendRole==='admin' ? 'Administracja' : 'Kristina';
+    var msg = AKKDemo.postMessage(db, activeChatStudentId, chatSendRole, senderName, raw);
     if(!msg){ dlog('chatSend:empty-rejected'); return; }
     AKKDemo.markRead(db, 'teacher', activeChatStudentId);
     persist();
     input.value = '';
+    autoGrowChatInput();
     renderChatList();
     renderChatThread();
   }
@@ -839,6 +913,7 @@
   }
 
   function renderAll(){
+    renderRoleSwitch();
     renderChatList();
     renderChatThread();
     renderWeekGrid();
