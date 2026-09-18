@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel administratora — Angielski z Kristiną</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF5EC; --surface:#FFFFFF; --surface-alt:#FFF1DE;
+    --ink:#2B3A38; --ink-soft:#5C6D69;
+    --accent:#3E7C74; --accent-dark:#2C5C56; --accent-tint:#DCEAE6;
+    --accent-warm:#E8935C; --border:#E9DEC9; --shadow: 36 42 34;
+    --danger:#B4483A; --mine:#3E7C74;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1B2422; --surface:#223330; --surface-alt:#2B3A30;
+      --ink:#F2EEE4; --ink-soft:#BFCCC7;
+      --accent:#7FC6B4; --accent-dark:#9BD8C8; --accent-tint:#2E4842;
+      --accent-warm:#F2A56D; --border:#3A4A43; --shadow:0 0 0; --mine:#7FC6B4;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{overflow-x:hidden;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;line-height:1.6;overflow-x:hidden;max-width:100vw;}
+  body.lang-pending{visibility:hidden;}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 90px;}
+  a{color:var(--accent-dark);}
+  .topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:22px;}
+  .back{font-weight:700;font-size:.88rem;text-decoration:none;color:var(--accent-dark);}
+  .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .top-actions button:not(.lang-toggle){font-size:.82rem;font-weight:700;color:var(--accent-dark);background:transparent;border:1.5px solid var(--border);border-radius:999px;padding:7px 14px;cursor:pointer;}
+  .lang-toggle{background:none;border:none;cursor:pointer;padding:0;width:36px;height:36px;border-radius:50%;position:relative;flex:none;transition:transform .18s ease;}
+  .lang-toggle:hover{transform:scale(1.07);}
+  .lang-toggle:active{transform:scale(.95);}
+  .lang-toggle svg{width:36px;height:36px;display:block;border-radius:50%;box-shadow:0 4px 12px rgb(var(--shadow)/.24);}
+  .lang-toggle .flag-ring{fill:none;stroke:var(--surface);stroke-width:2.5;}
+  .lang-toggle .flag-half{transition:opacity .22s ease, filter .22s ease;}
+  .lang-toggle[aria-checked="false"] .flag-half-en{opacity:.4;filter:grayscale(.4);}
+  .lang-toggle[aria-checked="true"] .flag-half-pl{opacity:.4;filter:grayscale(.4);}
+  h1{font-family:'Baloo 2';font-size:clamp(1.4rem,3.6vw,1.9rem);margin:0 0 4px;}
+  .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:24px;}
+  .banner{background:var(--accent-tint);border-radius:14px;padding:14px 18px;font-size:.86rem;margin-bottom:28px;}
+  section{margin-bottom:38px;}
+  h2{font-family:'Baloo 2';font-size:1.15rem;margin:0 0 14px;color:var(--accent-dark);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 22px rgb(var(--shadow)/.06);}
+
+  .stat-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+  .stat-tile{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;}
+  .stat-num{font-family:'Baloo 2';font-size:1.5rem;color:var(--accent-dark);}
+  .stat-label{font-size:.78rem;color:var(--ink-soft);}
+
+  .chat-layout{display:flex;gap:16px;}
+  .chat-list{flex:0 0 240px;min-width:0;overflow-y:auto;max-height:520px;border-right:1px solid var(--border);padding-right:12px;}
+  .chat-list-item{display:flex;flex-direction:column;gap:2px;padding:9px 8px;border-radius:10px;cursor:pointer;margin-bottom:3px;}
+  .chat-list-item:hover{background:var(--surface-alt);}
+  .chat-list-item.active{background:var(--accent-tint);}
+  .chat-list-name{font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:6px;}
+  .chat-list-preview{font-size:.74rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-warm);flex:none;}
+  .chat-thread{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .chat-thread-header{font-weight:700;margin-bottom:8px;font-size:.9rem;}
+  .chat-messages{flex:1;overflow-y:auto;max-height:360px;min-height:120px;display:flex;flex-direction:column;gap:8px;padding:4px;}
+  .chat-bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
+  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);}
+  .chat-bubble.from-teacher{align-self:flex-end;background:var(--accent);color:#fff;}
+  .chat-bubble.from-admin{align-self:flex-end;background:var(--accent-warm);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
+  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
+  .btn-sm{background:var(--accent);color:#fff;border:none;border-radius:999px;padding:9px 18px;font-weight:700;font-size:.82rem;cursor:pointer;flex:none;}
+  @media (max-width:640px){
+    .chat-layout{flex-direction:column;}
+    .chat-list{flex:none;max-height:200px;border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:8px;margin-bottom:8px;}
+  }
+</style>
+</head>
+<body class="lang-pending">
+<script>setTimeout(function(){ document.body.classList.remove('lang-pending'); }, 1500);</script>
+
+<div id="gate" class="wrap" style="max-width:360px;margin-top:14vh;text-align:center;">
+  <h1 data-i18n="gate_h1">Panel administratora</h1>
+  <p class="sub" data-i18n="gate_sub">Tylko dla administracji. Podaj hasło.</p>
+  <input type="password" id="pw" data-i18n-placeholder="gate_ph" placeholder="Hasło" autocomplete="off" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:1rem;margin:16px 0;">
+  <div id="pwErr" style="color:var(--danger);font-size:.85rem;min-height:1.2em;margin-bottom:6px;"></div>
+  <button class="btn-sm" id="pwGo" data-i18n="gate_go" style="padding:12px 22px;">Wejdź</button>
+</div>
+
+<div id="panel" class="wrap" style="display:none;">
+  <div class="topbar">
+    <a class="back" href="./" data-i18n="back">← Strona główna</a>
+    <div class="top-actions">
+      <button class="lang-toggle" id="langToggle" role="switch" aria-checked="false" aria-label="Przełącz język / Switch language">
+        <svg viewBox="0 0 44 44">
+          <clipPath id="flagClipA"><circle cx="22" cy="22" r="20"/></clipPath>
+          <g clip-path="url(#flagClipA)">
+            <g class="flag-half flag-half-pl">
+              <rect x="0" y="0" width="22" height="44" fill="#fff"/>
+              <rect x="0" y="22" width="22" height="22" fill="#DC143C"/>
+            </g>
+            <g class="flag-half flag-half-en">
+              <rect x="22" y="0" width="22" height="44" fill="#00247D"/>
+              <rect x="30" y="0" width="8" height="44" fill="#fff"/>
+              <rect x="22" y="18" width="22" height="8" fill="#fff"/>
+              <rect x="32.5" y="0" width="3" height="44" fill="#CF142B"/>
+              <rect x="22" y="20.5" width="22" height="3" fill="#CF142B"/>
+            </g>
+          </g>
+          <circle class="flag-ring" cx="22" cy="22" r="20"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <h1 data-i18n="h1">Panel administratora</h1>
+  <p class="sub" data-i18n="sub">Wgląd we wszystkie rozmowy między rodzicami a Kristiną.</p>
+
+  <div class="banner" data-i18n="banner">Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce.</div>
+
+  <div class="stat-row">
+    <div class="stat-tile"><div class="stat-num" id="statFamilies">0</div><div class="stat-label" data-i18n="stat_families">Rodziny</div></div>
+    <div class="stat-tile"><div class="stat-num" id="statMessages">0</div><div class="stat-label" data-i18n="stat_messages">Wiadomości łącznie</div></div>
+    <div class="stat-tile"><div class="stat-num" id="statUnread">0</div><div class="stat-label" data-i18n="stat_unread">Nieprzeczytane wątki</div></div>
+  </div>
+
+  <section>
+    <h2 data-i18n="chat_h2">Wszystkie rozmowy</h2>
+    <div class="card chat-card">
+      <div class="chat-layout">
+        <div class="chat-list" id="chatList"></div>
+        <div class="chat-thread">
+          <div class="chat-thread-header" id="chatThreadHeader"></div>
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-composer">
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
+          </div>
+          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="demo-db.js"></script>
+<script>
+(function(){
+  var dict = {
+    gate_h1:{pl:"Panel administratora",en:"Admin panel"},
+    gate_sub:{pl:"Tylko dla administracji. Podaj hasło.",en:"For administration only. Enter the password."},
+    gate_go:{pl:"Wejdź",en:"Enter"},
+    gate_ph:{pl:"Hasło",en:"Password"},
+    back:{pl:"← Strona główna",en:"← Home"},
+    h1:{pl:"Panel administratora",en:"Admin panel"},
+    sub:{pl:"Wgląd we wszystkie rozmowy między rodzicami a Kristiną.",en:"Oversight of every conversation between parents and Kristina."},
+    banner:{pl:"Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce.",en:"Demo mode: the data here is sample data saved only in this browser."},
+    stat_families:{pl:"Rodziny",en:"Families"},
+    stat_messages:{pl:"Wiadomości łącznie",en:"Total messages"},
+    stat_unread:{pl:"Nieprzeczytane wątki",en:"Unread threads"},
+    chat_h2:{pl:"Wszystkie rozmowy",en:"All conversations"},
+    chat_placeholder:{pl:"Napisz wiadomość...",en:"Write a message..."},
+    chat_send:{pl:"Wyślij",en:"Send"},
+    chat_note:{pl:"Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.",en:"Text and emoji only — no photos, videos or GIFs."},
+    chat_no_messages:{pl:"Brak wiadomości",en:"No messages"},
+    chat_empty:{pl:"Brak wiadomości w tej rozmowie.",en:"No messages in this conversation yet."},
+    chat_parent_label:{pl:"Rodzic",en:"Parent"},
+    chat_teacher_label:{pl:"Kristina",en:"Kristina"},
+    chat_admin_label:{pl:"Administrator",en:"Admin"}
+  };
+  var currentLang = 'pl';
+  function t(key){ return (dict[key] && dict[key][currentLang]) || key; }
+  function dlog(){ try{ console.log.apply(console, ['[admin]'].concat(Array.prototype.slice.call(arguments))); }catch(e){} }
+  function detectLang(){
+    var primary = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : (navigator.language || 'en');
+    return /^pl\b/i.test(primary) ? 'pl' : 'en';
+  }
+  function applyStaticI18n(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n')];
+      if(entry) el.textContent = entry[currentLang];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n-placeholder')];
+      if(entry) el.placeholder = entry[currentLang];
+    });
+  }
+  function setLang(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    applyStaticI18n();
+    document.getElementById('langToggle').setAttribute('aria-checked', lang==='en');
+    try{ localStorage.setItem('akk_lang', lang); }catch(e){}
+    renderAll();
+  }
+  document.getElementById('langToggle').addEventListener('click', function(){ dlog('click:langToggle', currentLang==='pl'?'->en':'->pl'); setLang(currentLang==='pl'?'en':'pl'); });
+
+  var PASSWORD = "Admin2026";
+  var GATE_KEY = "akk_admin_ok";
+  function unlock(){ document.getElementById('gate').style.display='none'; document.getElementById('panel').style.display='block'; }
+  document.getElementById('pwGo').addEventListener('click', tryPw);
+  document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPw(); });
+  function tryPw(){
+    dlog('click:gateSubmit');
+    if(document.getElementById('pw').value === PASSWORD){ dlog('gate:unlocked'); try{localStorage.setItem(GATE_KEY,'1');}catch(e){} unlock(); }
+    else { dlog('gate:wrong-password'); document.getElementById('pwErr').textContent = currentLang==='en' ? 'Wrong password, try again.' : 'Złe hasło, spróbuj jeszcze raz.'; }
+  }
+
+  var db = AKKDemo.load();
+  function persist(){ AKKDemo.save(db); }
+
+  var activeChatStudentId = null;
+
+  function renderStats(){
+    document.getElementById('statFamilies').textContent = db.students.length;
+    document.getElementById('statMessages').textContent = (db.messages||[]).length;
+    var unread = db.students.filter(function(s){ return AKKDemo.hasUnread(db, 'admin', s.id); }).length;
+    document.getElementById('statUnread').textContent = unread;
+  }
+
+  function renderChatList(){
+    var list = document.getElementById('chatList');
+    if(!list) return;
+    list.innerHTML = '';
+    var entries = db.students.map(function(s){
+      var msgs = (db.messages||[]).filter(function(m){ return m.studentId===s.id; });
+      return { s:s, last: msgs.length ? msgs[msgs.length-1] : null };
+    });
+    entries.sort(function(a,b){
+      if(a.last && b.last) return new Date(b.last.timestamp)-new Date(a.last.timestamp);
+      if(a.last) return -1;
+      if(b.last) return 1;
+      return a.s.name.localeCompare(b.s.name);
+    });
+    if(!activeChatStudentId && entries.length) activeChatStudentId = entries[0].s.id;
+    entries.forEach(function(entry){
+      var s = entry.s, last = entry.last;
+      var item = document.createElement('div');
+      item.className = 'chat-list-item' + (s.id===activeChatStudentId ? ' active' : '');
+      var nameRow = document.createElement('div'); nameRow.className = 'chat-list-name';
+      var nameText = document.createElement('span'); nameText.textContent = s.parentName + ' · ' + s.name;
+      nameRow.appendChild(nameText);
+      if(AKKDemo.hasUnread(db, 'admin', s.id)){
+        var dot = document.createElement('span'); dot.className = 'chat-unread-dot';
+        nameRow.appendChild(dot);
+      }
+      var preview = document.createElement('div'); preview.className = 'chat-list-preview';
+      preview.textContent = last ? last.text : t('chat_no_messages');
+      item.appendChild(nameRow); item.appendChild(preview);
+      item.addEventListener('click', function(){ dlog('click:chatSelect', {studentId:s.id}); openChat(s.id); });
+      list.appendChild(item);
+    });
+  }
+
+  function openChat(studentId){
+    activeChatStudentId = studentId;
+    AKKDemo.markRead(db, 'admin', studentId);
+    persist();
+    renderChatList();
+    renderChatThread();
+    renderStats();
+  }
+
+  function renderChatThread(){
+    var header = document.getElementById('chatThreadHeader');
+    var messagesEl = document.getElementById('chatMessages');
+    if(!header || !messagesEl) return;
+    messagesEl.innerHTML = '';
+    var s = db.students.find(function(x){ return x.id===activeChatStudentId; });
+    if(!s){ header.textContent = ''; return; }
+    header.textContent = s.parentName + ' · ' + s.name;
+    var msgs = (db.messages||[]).filter(function(m){ return m.studentId===activeChatStudentId; });
+    if(msgs.length===0){
+      var empty = document.createElement('p'); empty.className = 'chat-empty'; empty.textContent = t('chat_empty');
+      messagesEl.appendChild(empty);
+    }
+    msgs.forEach(function(m){
+      var bubble = document.createElement('div');
+      bubble.className = 'chat-bubble from-' + m.sender;
+      var textEl = document.createElement('div'); textEl.textContent = m.text;
+      var metaEl = document.createElement('div'); metaEl.className = 'chat-bubble-meta';
+      var who = m.sender==='parent' ? (m.senderName || t('chat_parent_label')) : (m.sender==='admin' ? t('chat_admin_label') : t('chat_teacher_label'));
+      var dt = new Date(m.timestamp);
+      metaEl.textContent = who + ' · ' + dt.toLocaleString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+      bubble.appendChild(textEl); bubble.appendChild(metaEl);
+      messagesEl.appendChild(bubble);
+    });
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function sendChatMessage(){
+    if(!activeChatStudentId) return;
+    var input = document.getElementById('chatInput');
+    var raw = input.value;
+    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length});
+    var msg = AKKDemo.postMessage(db, activeChatStudentId, 'admin', 'Administrator', raw);
+    if(!msg){ dlog('chatSend:empty-rejected'); return; }
+    AKKDemo.markRead(db, 'admin', activeChatStudentId);
+    persist();
+    input.value = '';
+    renderChatList();
+    renderChatThread();
+    renderStats();
+  }
+  document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
+  document.getElementById('chatInput').addEventListener('keydown', function(e){
+    if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); sendChatMessage(); }
+  });
+
+  function renderAll(){
+    renderStats();
+    renderChatList();
+    renderChatThread();
+  }
+
+  if(localStorage.getItem(GATE_KEY) === '1'){ dlog('init:already-unlocked'); unlock(); }
+
+  var saved = null;
+  try{ saved = localStorage.getItem('akk_lang'); }catch(e){}
+  currentLang = saved || detectLang();
+  dlog('init:loaded', {students:db.students.length, messages:(db.messages||[]).length});
+  document.documentElement.lang = currentLang;
+  document.getElementById('langToggle').setAttribute('aria-checked', currentLang==='en');
+  applyStaticI18n();
+  renderAll();
+  document.body.classList.remove('lang-pending');
+})();
+</script>
+</body>
+</html>

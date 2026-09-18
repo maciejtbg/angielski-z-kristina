@@ -90,6 +90,30 @@
   form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;}
   form.grid-form label{display:flex;flex-direction:column;gap:5px;font-size:.78rem;color:var(--ink-soft);font-weight:600;}
 
+  .chat-layout{display:flex;gap:16px;}
+  .chat-list{flex:0 0 220px;min-width:0;overflow-y:auto;max-height:480px;border-right:1px solid var(--border);padding-right:12px;}
+  .chat-list-item{display:flex;flex-direction:column;gap:2px;padding:9px 8px;border-radius:10px;cursor:pointer;margin-bottom:3px;}
+  .chat-list-item:hover{background:var(--surface-alt);}
+  .chat-list-item.active{background:var(--accent-tint);}
+  .chat-list-name{font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:6px;}
+  .chat-list-preview{font-size:.74rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-warm);flex:none;}
+  .chat-thread{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .chat-thread-header{font-weight:700;margin-bottom:8px;font-size:.9rem;}
+  .chat-messages{flex:1;overflow-y:auto;max-height:320px;min-height:120px;display:flex;flex-direction:column;gap:8px;padding:4px;}
+  .chat-bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
+  .chat-bubble.from-parent{align-self:flex-start;background:var(--surface-alt);}
+  .chat-bubble.from-teacher{align-self:flex-end;background:var(--accent);color:#fff;}
+  .chat-bubble.from-admin{align-self:flex-end;background:var(--accent-warm);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
+  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
+  @media (max-width:640px){
+    .chat-layout{flex-direction:column;}
+    .chat-list{flex:none;max-height:180px;border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:8px;margin-bottom:8px;}
+  }
+
   .cell.now-row{box-shadow:inset 0 2px 0 var(--accent-warm);}
   .hr-label.now-row{color:var(--accent-warm);font-weight:800;}
 
@@ -144,6 +168,24 @@
   <p class="sub" data-i18n="sub">Pełny widok Twoich lekcji, uczniów i cen.</p>
 
   <div class="banner" data-i18n="banner">Tryb demo: dane widoczne tu są przykładowe i zapisane tylko w tej przeglądarce. Realne, bezpieczne dane (i prawdziwa prywatność rodzin) ruszą po podłączeniu bazy danych — patrz wiadomość od Maćka.</div>
+
+  <section>
+    <h2 data-i18n="chat_h2">Czat z rodzicami</h2>
+    <div class="card chat-card">
+      <div class="chat-layout">
+        <div class="chat-list" id="chatList"></div>
+        <div class="chat-thread">
+          <div class="chat-thread-header" id="chatThreadHeader"></div>
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-composer">
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
+          </div>
+          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section>
     <h2 data-i18n="week_h2">Twój tydzień</h2>
@@ -300,6 +342,15 @@
     lead_window_label:{pl:"Minimalny czas przed lekcją, żeby rodzic mógł ją jeszcze zarezerwować (godzin):",en:"Minimum time before a lesson for a parent to still be able to book it (hours):"},
     lead_note:{pl:"Chroni Cię przed rezerwacją „na już” — np. o 19:09 nikt nie zarezerwuje lekcji na 19:00 ani nawet na 19:30, jeśli bufor to 1 godzina.",en:"Protects you from last-minute bookings — e.g. at 19:09 nobody can book a 19:00 or even a 19:30 slot if the buffer is 1 hour."},
     log_lead_change:{pl:"Zmieniono minimalny czas rezerwacji",en:"Changed minimum booking lead time"},
+    chat_h2:{pl:"Czat z rodzicami",en:"Chat with parents"},
+    chat_placeholder:{pl:"Napisz wiadomość...",en:"Write a message..."},
+    chat_send:{pl:"Wyślij",en:"Send"},
+    chat_note:{pl:"Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.",en:"Text and emoji only — no photos, videos or GIFs."},
+    chat_no_messages:{pl:"Brak wiadomości",en:"No messages"},
+    chat_empty:{pl:"Napisz pierwszą wiadomość do tej rodziny.",en:"Send the first message to this family."},
+    chat_parent_label:{pl:"Rodzic",en:"Parent"},
+    chat_teacher_label:{pl:"Kristina",en:"Kristina"},
+    chat_admin_label:{pl:"Administrator",en:"Admin"},
     day0:{pl:"Nd",en:"Sun"},day1:{pl:"Pn",en:"Mon"},day2:{pl:"Wt",en:"Tue"},day3:{pl:"Śr",en:"Wed"},day4:{pl:"Cz",en:"Thu"},day5:{pl:"Pt",en:"Fri"},day6:{pl:"So",en:"Sat"},
     log_h2:{pl:"Historia zmian",en:"Change history"},
     log_sub:{pl:"Każda zmiana na stronie (Twoja i rodziców) zapisuje się tutaj. Tylko najnowszą zmianę można cofnąć.",en:"Every change on the site (yours and the parents') is recorded here. Only the most recent change can be undone."},
@@ -374,6 +425,96 @@
   });
 
   function studentName(id){ var s = db.students.find(function(x){return x.id===id;}); return s ? s.name : '?'; }
+
+  // ---------- Chat ----------
+  var activeChatStudentId = null;
+
+  function renderChatList(){
+    var list = document.getElementById('chatList');
+    if(!list) return;
+    list.innerHTML = '';
+    var entries = db.students.map(function(s){
+      var msgs = (db.messages||[]).filter(function(m){ return m.studentId===s.id; });
+      return { s:s, last: msgs.length ? msgs[msgs.length-1] : null };
+    });
+    entries.sort(function(a,b){
+      if(a.last && b.last) return new Date(b.last.timestamp)-new Date(a.last.timestamp);
+      if(a.last) return -1;
+      if(b.last) return 1;
+      return a.s.name.localeCompare(b.s.name);
+    });
+    if(!activeChatStudentId && entries.length) activeChatStudentId = entries[0].s.id;
+    entries.forEach(function(entry){
+      var s = entry.s, last = entry.last;
+      var item = document.createElement('div');
+      item.className = 'chat-list-item' + (s.id===activeChatStudentId ? ' active' : '');
+      var nameRow = document.createElement('div'); nameRow.className = 'chat-list-name';
+      var nameText = document.createElement('span'); nameText.textContent = s.parentName;
+      nameRow.appendChild(nameText);
+      if(AKKDemo.hasUnread(db, 'teacher', s.id)){
+        var dot = document.createElement('span'); dot.className = 'chat-unread-dot';
+        nameRow.appendChild(dot);
+      }
+      var preview = document.createElement('div'); preview.className = 'chat-list-preview';
+      preview.textContent = last ? last.text : t('chat_no_messages');
+      item.appendChild(nameRow); item.appendChild(preview);
+      item.addEventListener('click', function(){ dlog('click:chatSelect', {studentId:s.id}); openChat(s.id); });
+      list.appendChild(item);
+    });
+  }
+
+  function openChat(studentId){
+    activeChatStudentId = studentId;
+    AKKDemo.markRead(db, 'teacher', studentId);
+    persist();
+    renderChatList();
+    renderChatThread();
+  }
+
+  function renderChatThread(){
+    var header = document.getElementById('chatThreadHeader');
+    var messagesEl = document.getElementById('chatMessages');
+    if(!header || !messagesEl) return;
+    messagesEl.innerHTML = '';
+    var s = db.students.find(function(x){ return x.id===activeChatStudentId; });
+    if(!s){ header.textContent = ''; return; }
+    header.textContent = s.parentName + ' · ' + s.name;
+    var msgs = (db.messages||[]).filter(function(m){ return m.studentId===activeChatStudentId; });
+    if(msgs.length===0){
+      var empty = document.createElement('p'); empty.className = 'chat-empty'; empty.textContent = t('chat_empty');
+      messagesEl.appendChild(empty);
+    }
+    msgs.forEach(function(m){
+      var bubble = document.createElement('div');
+      bubble.className = 'chat-bubble from-' + m.sender;
+      var textEl = document.createElement('div'); textEl.textContent = m.text;
+      var metaEl = document.createElement('div'); metaEl.className = 'chat-bubble-meta';
+      var who = m.sender==='parent' ? (m.senderName || t('chat_parent_label')) : (m.sender==='admin' ? t('chat_admin_label') : t('chat_teacher_label'));
+      var dt = new Date(m.timestamp);
+      metaEl.textContent = who + ' · ' + dt.toLocaleString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+      bubble.appendChild(textEl); bubble.appendChild(metaEl);
+      messagesEl.appendChild(bubble);
+    });
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function sendChatMessage(){
+    if(!activeChatStudentId) return;
+    var input = document.getElementById('chatInput');
+    var raw = input.value;
+    dlog('click:chatSend', {studentId:activeChatStudentId, len:raw.length});
+    var msg = AKKDemo.postMessage(db, activeChatStudentId, 'teacher', 'Kristina', raw);
+    if(!msg){ dlog('chatSend:empty-rejected'); return; }
+    AKKDemo.markRead(db, 'teacher', activeChatStudentId);
+    persist();
+    input.value = '';
+    renderChatList();
+    renderChatThread();
+  }
+  document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
+  document.getElementById('chatInput').addEventListener('keydown', function(e){
+    if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); sendChatMessage(); }
+  });
 
   // ---------- Week grid ----------
   var weekOffset = 0;
@@ -698,6 +839,8 @@
   }
 
   function renderAll(){
+    renderChatList();
+    renderChatThread();
     renderWeekGrid();
     renderTable();
     renderPayments();

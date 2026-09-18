@@ -46,7 +46,12 @@ window.AKKDemo = (function(){
       { id:uid(), studentId:'demo-kuba', datetime: at(-20,9), lessons:12, price:312 }
     ];
     var settings = { cancellationWindowHours: 2, minBookingLeadHours: 1 };
-    var db = { students: students, lessons: lessons, payments: payments, settings: settings, activityLog: [] };
+    var messages = [
+      { id:uid(), studentId:'demo-zofia', sender:'parent', senderName:'Anna Kowalska', text:'Dzień dobry! Czy Zofia potrzebuje coś przygotować przed jutrzejszą lekcją? 😊', timestamp: at(-1,18) },
+      { id:uid(), studentId:'demo-zofia', sender:'teacher', senderName:'Kristina', text:'Dzień dobry! Nie, wystarczy zeszyt i dobry humor 🙂', timestamp: at(-1,19) }
+    ];
+    var chatReads = { teacher:{}, admin:{}, parent:{} };
+    var db = { students: students, lessons: lessons, payments: payments, settings: settings, activityLog: [], messages: messages, chatReads: chatReads };
     save(db);
     return db;
   }
@@ -57,7 +62,50 @@ window.AKKDemo = (function(){
     if(typeof db.settings.cancellationWindowHours !== 'number') db.settings.cancellationWindowHours = 2;
     if(typeof db.settings.minBookingLeadHours !== 'number') db.settings.minBookingLeadHours = 1;
     if(!db.activityLog) db.activityLog = [];
+    if(!db.messages) db.messages = [];
+    if(!db.chatReads) db.chatReads = { teacher:{}, admin:{}, parent:{} };
+    if(!db.chatReads.teacher) db.chatReads.teacher = {};
+    if(!db.chatReads.admin) db.chatReads.admin = {};
+    if(!db.chatReads.parent) db.chatReads.parent = {};
     return db;
+  }
+
+  var MAX_MESSAGE_LEN = 2000;
+
+  // Plain text only — no HTML, no markup. Callers must render this with
+  // textContent (never innerHTML), which is what actually keeps chat to
+  // text/emoji and blocks embedded video/gif/images: nothing is ever
+  // parsed as markup, so nothing can render as media, no matter what a
+  // sender pastes in.
+  function sanitizeChatText(raw){
+    var text = String(raw == null ? '' : raw).replace(/\r\n/g, '\n').trim();
+    if(text.length > MAX_MESSAGE_LEN) text = text.slice(0, MAX_MESSAGE_LEN);
+    return text;
+  }
+
+  function postMessage(db, studentId, sender, senderName, rawText){
+    var text = sanitizeChatText(rawText);
+    if(!text) return null;
+    if(!db.messages) db.messages = [];
+    var msg = { id:uid(), studentId:studentId, sender:sender, senderName:senderName||'', text:text, timestamp:new Date().toISOString() };
+    db.messages.push(msg);
+    return msg;
+  }
+
+  function markRead(db, role, studentId){
+    if(!db.chatReads) db.chatReads = { teacher:{}, admin:{}, parent:{} };
+    if(!db.chatReads[role]) db.chatReads[role] = {};
+    db.chatReads[role][studentId] = new Date().toISOString();
+  }
+
+  function hasUnread(db, role, studentId){
+    var msgs = (db.messages||[]).filter(function(m){ return m.studentId===studentId; });
+    if(msgs.length===0) return false;
+    var last = msgs[msgs.length-1];
+    if(last.sender===role) return false;
+    var readAt = db.chatReads && db.chatReads[role] && db.chatReads[role][studentId];
+    if(!readAt) return true;
+    return new Date(last.timestamp) > new Date(readAt);
   }
 
   function load(){
@@ -126,5 +174,9 @@ window.AKKDemo = (function(){
     return entry.description;
   }
 
-  return { load:load, save:save, reset:reset, uid:uid, withLog:withLog, undoTop:undoTop };
+  return {
+    load:load, save:save, reset:reset, uid:uid, withLog:withLog, undoTop:undoTop,
+    postMessage:postMessage, markRead:markRead, hasUnread:hasUnread,
+    sanitizeChatText:sanitizeChatText, MAX_MESSAGE_LEN:MAX_MESSAGE_LEN
+  };
 })();

@@ -104,6 +104,17 @@
   .legend span{display:inline-flex;align-items:center;gap:5px;}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
 
+  .chat-thread{display:flex;flex-direction:column;}
+  .chat-messages{overflow-y:auto;max-height:340px;min-height:100px;display:flex;flex-direction:column;gap:8px;padding:4px;}
+  .chat-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
+  .chat-bubble.from-parent{align-self:flex-end;background:var(--mine);color:#fff;}
+  .chat-bubble.from-teacher{align-self:flex-start;background:var(--surface-alt);}
+  .chat-bubble.from-admin{align-self:flex-start;background:var(--accent-warm);color:#fff;}
+  .chat-bubble-meta{font-size:.68rem;opacity:.7;margin-top:4px;}
+  .chat-composer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
+  .chat-composer textarea{flex:1;resize:vertical;min-height:44px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--ink);font-family:inherit;font-size:.86rem;}
+  .chat-empty{color:var(--ink-soft);font-size:.85rem;padding:20px 0;text-align:center;margin:0;}
+
   .modal-overlay{position:fixed;inset:0;background:rgba(20,15,10,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
   .modal-box{background:var(--surface);border-radius:16px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.35);}
   .modal-box h3{font-family:'Baloo 2';margin:0 0 10px;font-size:1.15rem;color:var(--danger);}
@@ -152,6 +163,20 @@
     <h1 id="hello"></h1>
     <p class="sub" data-i18n="portal_sub">Twoje lekcje, pakiet i wolne terminy.</p>
     <div class="banner" data-i18n="banner">Tryb demo — logowanie i płatności są symulowane. Prawdziwe konta rodziców i prawdziwe płatności Paddle ruszą po podłączeniu bazy danych.</div>
+
+    <section>
+      <h2 data-i18n="chat_h2">Czat z Kristiną</h2>
+      <div class="card chat-card">
+        <div class="chat-thread">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-composer">
+            <textarea id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Napisz wiadomość..." maxlength="2000" rows="2"></textarea>
+            <button id="chatSendBtn" class="btn-sm" type="button" data-i18n="chat_send">Wyślij</button>
+          </div>
+          <p class="sub chat-note" data-i18n="chat_note" style="margin:8px 0 0;">Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.</p>
+        </div>
+      </div>
+    </section>
 
     <section>
       <h2 data-i18n="upcoming_h2">Twoje najbliższe lekcje</h2>
@@ -278,6 +303,14 @@
     no_history:{pl:"Brak historii lekcji.",en:"No lesson history yet."},
     payhist_h2:{pl:"Kalendarium wpłat",en:"Payment history"},
     no_payhist:{pl:"Brak wpłat.",en:"No payments yet."},
+    chat_h2:{pl:"Czat z Kristiną",en:"Chat with Kristina"},
+    chat_placeholder:{pl:"Napisz wiadomość...",en:"Write a message..."},
+    chat_send:{pl:"Wyślij",en:"Send"},
+    chat_note:{pl:"Tylko tekst i emoji — bez zdjęć, filmów i GIF-ów.",en:"Text and emoji only — no photos, videos or GIFs."},
+    chat_empty:{pl:"Napisz do Kristiny — na pewno odpowie 😊",en:"Message Kristina — she'll get back to you 😊"},
+    chat_parent_label:{pl:"Ty",en:"You"},
+    chat_teacher_label:{pl:"Kristina",en:"Kristina"},
+    chat_admin_label:{pl:"Administrator",en:"Admin"},
     modal_lose_title:{pl:"Stracisz tę lekcję",en:"You'll lose this lesson"},
     modal_lose_cancel_body:{pl:"Lekcja {time} jest już po czasie na bezpłatne odwołanie. Jeśli odwołasz teraz, ta lekcja przepada — nie wróci na Twoje saldo. Możesz też napisać do Kristiny — czasem da się to jeszcze ustalić inaczej.",en:"The lesson on {time} is already past the free-cancellation window. If you cancel now, this lesson is lost — it will not return to your balance. You can also message Kristina — sometimes there's still another way to work it out."},
     modal_lose_reschedule_body:{pl:"Lekcja {time} jest już po czasie na bezpłatną zmianę. Jeśli przesuniesz teraz, zostanie pobrana dodatkowa lekcja z Twojego pakietu. Możesz też napisać do Kristiny — czasem da się to jeszcze ustalić inaczej.",en:"The lesson on {time} is already past the free-change window. If you reschedule now, an extra lesson will be taken from your package. You can also message Kristina — sometimes there's still another way to work it out."},
@@ -303,6 +336,10 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el){
       var entry = dict[el.getAttribute('data-i18n')];
       if(entry) el.textContent = entry[currentLang];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var entry = dict[el.getAttribute('data-i18n-placeholder')];
+      if(entry) el.placeholder = entry[currentLang];
     });
   }
   function setLang(lang){
@@ -526,6 +563,48 @@
     });
   }
 
+  function renderChat(){
+    var s = currentStudent();
+    var messagesEl = document.getElementById('chatMessages');
+    if(!s || !messagesEl) return;
+    messagesEl.innerHTML = '';
+    var msgs = (db.messages||[]).filter(function(m){ return m.studentId===s.id; });
+    if(msgs.length===0){
+      var empty = document.createElement('p'); empty.className = 'chat-empty'; empty.textContent = t('chat_empty');
+      messagesEl.appendChild(empty);
+    }
+    msgs.forEach(function(m){
+      var bubble = document.createElement('div');
+      bubble.className = 'chat-bubble from-' + m.sender;
+      var textEl = document.createElement('div'); textEl.textContent = m.text;
+      var metaEl = document.createElement('div'); metaEl.className = 'chat-bubble-meta';
+      var who = m.sender==='parent' ? t('chat_parent_label') : (m.sender==='admin' ? t('chat_admin_label') : t('chat_teacher_label'));
+      var dt = new Date(m.timestamp);
+      metaEl.textContent = who + ' · ' + dt.toLocaleString(currentLang==='en'?'en-GB':'pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+      bubble.appendChild(textEl); bubble.appendChild(metaEl);
+      messagesEl.appendChild(bubble);
+    });
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    AKKDemo.markRead(db, 'parent', s.id);
+    persist();
+  }
+  function sendChatMessage(){
+    var s = currentStudent();
+    if(!s) return;
+    var input = document.getElementById('chatInput');
+    var raw = input.value;
+    dlog('click:chatSend', {studentId:s.id, len:raw.length});
+    var msg = AKKDemo.postMessage(db, s.id, 'parent', s.parentName, raw);
+    if(!msg){ dlog('chatSend:empty-rejected'); return; }
+    persist();
+    input.value = '';
+    renderChat();
+  }
+  document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
+  document.getElementById('chatInput').addEventListener('keydown', function(e){
+    if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); sendChatMessage(); }
+  });
+
   function renderHistory(){
     var s = currentStudent();
     var list = document.getElementById('historyList');
@@ -680,6 +759,7 @@
     var s = currentStudent();
     if(!s){ renderFamilyPicker(); return; }
     document.getElementById('hello').textContent = t('hello_prefix') + s.parentName + ' 👋';
+    renderChat();
     renderUpcoming();
     renderPackage();
     renderWeekGrid();
